@@ -23,7 +23,7 @@
 @media (max-width:1350px) { 
 
 .contact-info{
-    padding: 3.5rem 2rem;
+    padding: 3.5rem 10rem 2rem 3.5rem;
 }
     
 .wide-section-box{
@@ -83,6 +83,11 @@
 }
 
 @media (max-width:1100px) { 
+
+.contact-info{
+    padding: 3.5rem 2rem 2rem 3.5rem;
+}
+
 .form-box{
     max-width: 450px;
     position: relative;
@@ -696,12 +701,20 @@ a.btn-hover-corner {
 }
     
 .user-avatar{
-    width: 70px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
 }
-    
+
+.replies{
+    margin-left: 50px;
+}
+
 p.comment{
-    font-size: 13px;
+    font-size: 10px;
+}
+
+p.date{
+    font-size: 10px;
 }
     
 .section-title h2{
@@ -754,16 +767,14 @@ p.comment{
 }
     
 .user-avatar{
-    float: none;
-    margin: 0px auto 20px auto;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
 }
     
-.comment-details{
-    text-align: center;
+.replies{
+    margin-left: 20px;
 }
-    
+
 .nav-pills a {
     padding: 8px 15px;
 }

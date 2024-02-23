@@ -274,6 +274,7 @@ a.btn-hover-corner:hover:after {
     color: #516163;
     transition: 0.6s;
     padding: 0.2rem 0.7875rem;
+    border-radius: 5px;
     font-size: 14px;  
     background: #f0f5f5;
     border-radius: 0px;
@@ -284,7 +285,7 @@ a.btn-hover-corner:hover:after {
 
 .btn-tags:hover {
     color: #FFF;
-    background-color: #0A178F;
+    background-color: #EEC344;
 }
 
 .btn-tags:focus, .btn-tags.focus {
@@ -793,7 +794,7 @@ footer .container{
 }
 
 .contact-info{
-    padding: 4.5rem;
+    padding: 4.5rem 10rem 4.5rem 4.5rem;
     background-color: #46866C;
     height: 600px;
 }
@@ -818,25 +819,15 @@ footer .container{
 }
 
 .block-address, .block-phone, .block-email{
-    margin: 1rem 0rem;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0rem;
 }
 
 .address-icon, .phone-icon, .email-icon{
-    float: left;
-    margin-right: 15px;
-    width: 40px;
-}
-
-.address-icon img{
-    width: 100%;
-}
-
-.phone-icon img{
-    width: 100%;
-}
-
-.email-icon img{
-    width: 100%;
+  margin-right: 15px;
+  font-size: 40px;
+  color: #EEC344;
 }
 
 .inner-info h4{
@@ -1521,7 +1512,10 @@ a.active:after {
 .with-errors{
     font-size: 12px;
     font-family: 'Poppins', sans-serif;
-    color: red;
+}
+
+.with-errors li{
+  color: red;
 }
 
 .alert-success {
@@ -1562,6 +1556,7 @@ figure.post-preview{
 
 .post-preview img{
     width: 100%;
+    margin-bottom: 0;
 }
 
 .post-overlay {
@@ -1582,7 +1577,7 @@ figure.post-preview:hover .post-overlay {
 }
 
 .post-caption{
-    margin: 30px 25px;
+    margin: 20px 20px;
 }
 
 .post-caption h3{
@@ -1603,7 +1598,7 @@ figure.post-preview:hover .post-overlay {
 }
 
 .post-caption a:hover {
-	color: #EEC344;
+	color: #46866C;
     text-decoration: none;
 }
 
@@ -1624,8 +1619,8 @@ hr.posts{
 }
 
 .author-avatar{
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     float: left;
     margin-right: 10px;
 }
@@ -1640,13 +1635,13 @@ hr.posts{
 }
 
 .about-author h4{
-    font-size: 0.80rem;
+    font-size: 0.60rem;
     margin-bottom: 0px;
     font-weight: 500;
 }
 
 .about-author p{
-    font-size: 13px;
+    font-size: 10px;
 }
 
 aside h3{
@@ -1656,7 +1651,7 @@ aside h3{
 }
 
 aside h3:after {
-	background: #EEC344;
+	background: #46866C;
 	content: '';
 	display: block;
 	height: 3px;
@@ -1696,6 +1691,22 @@ aside h3:after {
     background: #04AA6D;
     color: #FFF;
     font-weight: 400;
+}
+
+.post-list .post-caption .badge{
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  background: #04AA6D;
+  color: #FFF;
+  font-weight: 400;
 }
 
 .badge .fa{
@@ -1771,6 +1782,7 @@ aside h3:after {
 .site-pagination .pagination {
     display: -ms-flexbox;
     display: flex;
+    gap: 10px;
     padding-left: 0;
     list-style: none;
     border-radius: 0rem;
@@ -1820,23 +1832,86 @@ aside h3:after {
   ---------- 17. BLOG SINGLE ------------
   #######################################*/
 .single-post-caption{
-    padding: 30px 0px;
+    padding-bottom: 30px;
 }
 
 .post-single a {
 	color: #333;
-    text-decoration: none;
-    transition: 0.6s;
+  text-decoration: none;
+  transition: 0.6s;
+}
+
+.post-single h5{
+  color: inherit;
+}
+
+.post-single p{
+  color: initial;
+}
+
+.post-single img{
+  max-width: 100%;
+  height: auto;  
+}
+
+.post-single ul,
+.post-single ol{
+  list-style-position: inside;
+  font-size: 15px;
+}
+
+.post-single ul{
+  list-style-type: disc;
+}
+
+.post-single ol{
+  list-style-type: decimal;
+}
+
+.post-single *{
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.post-single table{
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.post-single table thead tr{
+  background-color: #46866C;
+  color: #ffffff;
+  text-align: left;
+}
+
+.post-single table th,
+.post-single table td{
+  padding: 12px 15px;
+}
+
+.post-single tbody tr{
+  border-bottom: 1px solid #dddddd;
+}
+
+.post-single tbody tr:nth-of-type(even){
+  background-color: #f3f3f3;
+}
+
+.post-single tbody tr:last-of-type{
+  border-bottom: 2px solid #46866C;
 }
 
 .post-single a:hover {
 	color: #EEC344;
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .single-post-caption h2{
-    line-height: 1.3;
-    margin-bottom: 1rem;
+  line-height: 1.3;
+  margin-bottom: 1rem;
 }
 
 .single-post-caption p{
@@ -1867,6 +1942,14 @@ aside h3:after {
     margin-bottom: 0px;
 }
 
+.post-single .single-post-details .author-name{
+  font-size: 18;
+}
+.post-single .single-post-details .about-author p{
+  font-size: 12px;
+}
+
+.single-post-details .about-name
 .single-post-social{
     float: right;
 }
@@ -1983,11 +2066,28 @@ blockquote em{
     font-weight: 600;
 }
 
+.comment-block{
+  border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.comment-box{
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.replies{
+  margin-top: 10px;
+}
+
+.replies{
+  margin-left: 80px;
+}
+
 .user-avatar{
-    width: 90px;
-    height: 150px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    float: left;
     margin-right: 15px;
 }
 
@@ -1997,19 +2097,20 @@ blockquote em{
 }
 
 .comment-details h4{
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     font-weight: 500;
     margin-bottom: 2px;
 }
 
 p.comment-date{
-    font-size: 14px;
+    font-size: 13px;
     color: #9dadaf;
     margin-bottom: 2px;
 }
 
 p.comment{
-    line-height: 1.7;
+    font-size: 12px;
+    line-height: 1.5;
     margin-bottom: 10px;
 }
 
@@ -2018,13 +2119,19 @@ p.comment{
     transition: 0.6s;
 }
 
-.vote-up, .vote-down, .replay-box{
-    display: inline-block;
-    margin-right: 8px;
+.replay-box{
+  font-size: 15px;
+  width: fit-content;
 }
 
-.replay-box .fas{
-    font-size: 19px;
+.replay-box a{
+  display: flex;
+  align-items: center;
+  color: #000;
+}
+
+.replay-box a i{
+  margin-right: 8px;
 }
 
 hr.comments{
@@ -2052,6 +2159,20 @@ hr.comments{
     font-size: 1rem;
     color: #333;
     font-weight: 600;
+}
+
+.comment-form.reply{
+  display: none;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.comment-form.reply .btn-close{
+  padding: 5px 10px;
+  background-color: #EEC344;
+  color: #fff;
+  border-radius: 5px; 
+  outline: none;
+  border: none;
 }
 
 .customize {

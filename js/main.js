@@ -255,4 +255,24 @@
 		    (left + width) > window.pageXOffset
 		);
 	}
+
+	$(document).ready(function() {
+		// Toggle functionality 
+		$('[data-toggle]').click(function(e) {
+			e.preventDefault();
+			// Get the target ID from the 'data-toggle' attribute
+			var targetID = $(this).data('toggle');
+			
+			// Toggle the visibility of the target element
+			$('#' + targetID).toggle();
+		});
+
+		$('[data-dismiss]').click(function() {
+			// Get the target ID from the 'data-dismiss' attribute
+			var targetID = $(this).data('dismiss');
+			
+			// Hide the target element
+			$('#' + targetID).hide();
+		});
+	});
 }());

@@ -280,14 +280,12 @@ $('.post-list-carousel').slick({
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 2,
         slidesToScroll: 1,
-        infinite: true,
-        dots: true
       }
     },
     {
-      breakpoint: 768,
+      breakpoint: 576,
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1
@@ -492,34 +490,94 @@ function counter_up(){
 
 "use strict";
 $(function () {
+  $('#contact-form').validator();
+  $('#contact-form').on('submit', function (e) {
+    if (!e.isDefaultPrevented()) {
+      var url = "contact.php";
 
-    $('#contact-form').validator();
+      $.ajax({
+          type: "POST",
+          url: url,
+          data: $(this).serialize(),
+          success: function (data)
+          {
+              var messageAlert = 'alert-' + data.type;
+              var messageText = data.message;
 
-    $('#contact-form').on('submit', function (e) {
-        if (!e.isDefaultPrevented()) {
-            var url = "contact.php";
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: $(this).serialize(),
-                success: function (data)
-                {
-                    var messageAlert = 'alert-' + data.type;
-                    var messageText = data.message;
-
-                    var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-                    if (messageAlert && messageText) {
-                        $('#contact-form').find('.messages').html(alertBox);
-                        $('#contact-form')[0].reset();
-                    }
-                }
-            });
-            return false;
-        }
-    })
+              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+              if (messageAlert && messageText) {
+                  $('#contact-form').find('.messages').html(alertBox);
+                  $('#contact-form')[0].reset();
+              }
+          }
+      });
+      return false;
+    }
+  })
 });
 
+//#######################################
+// ---------- BLOG COMMENT/REPLY FORM ----------
+//#######################################
+
+$(function () {
+  $('#blog-comment').validator();
+
+  $('#blog-comment').on('submit', function (e) {
+    if (!e.isDefaultPrevented()) {
+      var url = "contact.php";
+
+      $.ajax({
+          type: "POST",
+          url: url,
+          data: $(this).serialize(),
+          success: function (data)
+          {
+              var messageAlert = 'alert-' + data.type;
+              var messageText = data.message;
+
+              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+              if (messageAlert && messageText) {
+                  $('#contact-form').find('.messages').html(alertBox);
+                  $('#contact-form')[0].reset();
+              }
+          }
+      });
+      return false;
+    }
+  })
+
+  $('.blog-reply').each(function(){
+    $el = $(this)
+
+    $el.validator();
+
+    $el.on('submit', function (e) {
+      if (!e.isDefaultPrevented()) {
+        var url = "contact.php";
+
+        console.log($(this).serialize());
+        // $.ajax({
+        //     type: "POST",
+        //     url: url,
+        //     data: $(this).serialize(),
+        //     success: function (data)
+        //     {
+        //         var messageAlert = 'alert-' + data.type;
+        //         var messageText = data.message;
+  
+        //         var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+        //         if (messageAlert && messageText) {
+        //             $('#contact-form').find('.messages').html(alertBox);
+        //             $('#contact-form')[0].reset();
+        //         }
+        //     }
+        // });
+        return false;
+      }
+    })
+  })
+});
 
 "use strict";
 +function ($) {
