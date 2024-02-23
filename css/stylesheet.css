@@ -686,30 +686,32 @@ section{
   #######################################*/
 
 footer{
-    height: auto;
-    width: 100%;
-    background: #fff;
-}
-
-footer .container{
-    margin: 2rem auto 3rem;;
+  height: auto;
+  width: 100%;
+  background: #000;
+  padding: 2rem 2rem 0rem;
 }
 
 footer h4{
-    font-weight: 600;
+  font-weight: 600;
+  color: #fff;
+}
+
+footer p{
+  color: #fff;
 }
 
 .footer-col p{
     margin-bottom: 0px;
 }
 
-.footer-col p.copyright{
+footer p.copyright{
     font-size: 13px;
     margin-top: 15px;
 }
 
 .footer-logo{
-    width: 150px;
+    width: 200px;
     margin-bottom: 1rem;
 }
 
@@ -773,7 +775,7 @@ p.cursive{
     font-size: 13px;
 }
 
-.footer-center-col, .footer-col-right{
+.footer-center-col, .footer-col-right, .footer-col{
     margin-top: 40px;
 }
 
@@ -786,9 +788,13 @@ p.cursive{
     margin-bottom: 0rem;
 }
 
+footer .container{
+  margin: 0 auto;
+}
+
 .contact-info{
     padding: 4.5rem;
-    background-color: #04AA6D;
+    background-color: #46866C;
     height: 600px;
 }
 
@@ -1568,7 +1574,7 @@ figure.post-preview{
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #EEC344;
+  background-color: #46866C;
 }
 
 figure.post-preview:hover .post-overlay {
