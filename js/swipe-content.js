@@ -2,6 +2,7 @@
 	// Swipe Content Plugin - by CodyHouse.co
 	// https://codyhouse.co/ds/components/info/swipe-content
 	var SwipeContent = function(element) {
+		console.log(element, " has been made swiper");
 		this.element = element;
 		this.delta = [false, false];
 		this.dragging = false;

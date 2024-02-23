@@ -131,13 +131,13 @@ footer .container{
     margin-bottom: 2rem;
 }
     
-.main-slider{
+/* .main-slider{
     height: 650px;
-}
+} */
 
-.carousel-item {
+/* .carousel-item {
   height: 650px;
-}
+} */
     
 .inner-service-bar{
     height: 100%;
@@ -171,6 +171,7 @@ aside.left {
 .wide-section-box{
     width: 90%;
     left: 0.80rem;
+    margin: auto;
 }
     
 section{
@@ -347,11 +348,12 @@ hr.divider{
 }
     
 .logo-brand{
-    width: 90px;
+    width: 200px;
     margin-top: 0px;
 }
     
 .logo-brand img{
+    margin-top: 20px;
     width: 100%;
 }
     
@@ -415,7 +417,7 @@ outline: none;
 }  
     
 .navbar-nav > li > a:hover {
-    color: #EEC344;
+    color: #04AA6D;
 }
     
 .navbar-nav > li > a:focus {
@@ -502,7 +504,7 @@ outline: none;
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
-    color: #EEC344;
+    color: #04AA6D;
     font-size: 20px;
 }
     
@@ -548,13 +550,13 @@ outline: none;
     width: 150px;
 }
     
-.main-slider{
+/* .main-slider{
     height: 600px;
-}
+} */
 
-.carousel-item {
+/* .carousel-item {
   height: 600px;
-}
+} */
     
 .error-page .middle{
     color: #FFF;
@@ -625,8 +627,10 @@ p.quote{
 .inner-grid-info{
     top: 35%;
 }
-   
-    
+
+.brand-box figure{
+    width: 100px;
+}
 }
 
 @media (max-width:576px) { 
@@ -646,7 +650,7 @@ a.btn-hover-corner {
 }
     
 .logo-brand{
-    width: 80px;
+    width: 200px;
 }
     
 .footer-logo{
@@ -679,13 +683,13 @@ a.btn-hover-corner {
     width: 120px;
 }
     
-.main-slider{
+/* .main-slider{
     height: 550px;
-}
+} */
 
-.carousel-item {
+/* .carousel-item {
   height: 550px;
-}
+} */
     
 .error-page-bg{
     height: 600px;
@@ -725,7 +729,10 @@ p.comment{
   height: 25px;
 }
 
-    
+
+.brand-box figure{
+    width: 80px;
+}
 }
 
 @media (max-width:480px) {
@@ -762,7 +769,7 @@ p.comment{
 }
     
 .section-hide{
-    top: 40%;
+    top: 10%;
     left: 50%;    
 }
     

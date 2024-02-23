@@ -3,15 +3,10 @@ jQuery(document).ready(function(){
 	"use strict";
 	
 	// here all ready functions
-	
-    
 	loader();
 	scroll_top();
 	magnific_popup();
-    counter_up();
-    
-    
-
+  counter_up();
 });
 
 //#############################
@@ -77,12 +72,31 @@ $('.portfolio-filter').on( 'click', 'a', function filter(e) {
 //#############################
 
 $('.inner-screens').owlCarousel({
-    items: 1,
-    singleItem:true,
-    nav: true,
-    dots: false,
-    loop: true,
-    autoPlay: 3000
+  items: 1,
+  singleItem:true,
+  nav: true,
+  dots: false,
+  loop: true,
+  autoPlay: 3000
+});
+
+$('.owl-slider-featured-brands').owlCarousel({
+  items: 5,
+  nav: true,
+  dots: false,
+  loop: true,
+  autoPlay: 3000,
+  responsive: {
+    0: {
+      items: 2
+    },
+    600: {
+      items: 3
+    },
+    1000: {
+      items: 5
+    }
+  },
 });
 
 

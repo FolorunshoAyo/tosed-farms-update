@@ -1,12 +1,9 @@
 /*###################################
   ---------- HOME FARMING -----------
   ##################################*/
-figure.icon-pic{
-    width: 60px;
-}
-
-figure.icon-pic img{
-    width: 100%;
+.home-icon-box > i{
+    color: #46866C;
+    font-size: 60px;
 }
 
 .home-icon-box{

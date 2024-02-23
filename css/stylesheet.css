@@ -129,7 +129,7 @@ h4, .h4 {
 
 h5, .h5 {
     font-size: 0.70rem;
-    color: #46866C;
+    color: #04AA6D;
     font-weight: 500;
     text-transform: uppercase;
 }
@@ -227,7 +227,7 @@ a:hover {
 a.btn-hover-corner {
   display: inline-block;
   text-decoration: none;
-  color: #EEC344;
+  color: #04AA6D;
   font-weight: bold;
   font-size: 14px;
   position: relative;
@@ -243,8 +243,8 @@ a.btn-hover-corner:before {
   display: block;
   height: 100%;
   width: 100%;
-  border-bottom: 2px solid #EEC344;
-  border-left: 2px solid #EEC344;
+  border-bottom: 2px solid #04AA6D;
+  border-left: 2px solid #04AA6D;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -256,8 +256,8 @@ a.btn-hover-corner:after {
   display: block;
   height: 100%;
   width: 100%;
-  border-top: 2px solid #EEC344;
-  border-right: 2px solid #EEC344;
+  border-top: 2px solid #04AA6D;
+  border-right: 2px solid #04AA6D;
   position: absolute;
   right: 0;
   top: 0;
@@ -385,13 +385,20 @@ section{
 }
 
 .logo-brand{
-  width: 120px;
+  width: 220px;
   transition: 0.5s;
   position: relative;
 }
 
 .logo-brand img{
-  width: 100%;
+  margin-right: 5px;
+}
+
+.logo-brand .text{
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
 }
 
 .navbar-toggler-icon {
@@ -431,8 +438,18 @@ section{
   position: static !important;
 }
 
+
+
 .megamenu ul.dropdown-menu > li > a{
   padding-left: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.megamenu ul.dropdown-menu > li > a > img{
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
 }
 
 .megamenu h6.title{
@@ -457,7 +474,7 @@ section{
 
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
-  color: #EEC344;
+  color: #04AA6D;
   text-decoration: none;
   background-color: transparent;
 }
@@ -490,12 +507,12 @@ section{
 
 .nav-link:hover .caret-drop{
   text-decoration: none;
-    color: #EEC344;
+    color: #04AA6D;
 }
 
 .nav-link:focus .caret-drop{
     text-decoration: none;
-    color: #EEC344;
+    color: #04AA6D;
 }
 
 .caret-drop:before{
@@ -519,16 +536,20 @@ section{
 /*#########################################
   ---------- 6. CAROUSEL SECTION ----------
   #########################################*/
+
+/* Owl Carousal Minor Tweaks */
+.owl-wrapper-outer{
+  overflow-x: hidden;
+}
+
 .main-slider{
-    height: 900px;
     margin-top: -80px;
     position: relative;
     z-index: 3;
 }
 
 .carousel-item {
-  height: 900px;
-  min-height: 350px;
+  min-height: 600px;
   background: no-repeat center center scroll;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -639,12 +660,13 @@ section{
   box-sizing: content-box;
   -ms-flex: 0 1 auto;
   flex: 0 1 auto;
-  width: 40px;
-  height: 4px;
+  width: 10px;
+  height: 10px;
   margin-right: 3px;
   margin-left: 3px;
   text-indent: -999px;
   cursor: pointer;
+  border-radius: 50%;
   background-color: #fff;
   background-clip: padding-box;
   border-top: 10px solid transparent;
@@ -656,7 +678,7 @@ section{
 
 .carousel-indicators .active {
   opacity: 1;
-    background-color: #EEC344;
+    background-color: #04AA6D;
 }
 
 /*#######################################
@@ -766,7 +788,7 @@ p.cursive{
 
 .contact-info{
     padding: 4.5rem;
-    background-color: #46866C;
+    background-color: #04AA6D;
     height: 600px;
 }
 
@@ -1004,9 +1026,9 @@ hr.divider{
 }
 
 .section-title{
-    width: 50%;
-    margin-bottom: 1.7rem;
-    border-left: solid 4px #EEC344;
+  width: 50%;
+  margin-bottom: 1.7rem;
+  border-left: solid 4px #46866C;
 
 }
 
@@ -1132,7 +1154,7 @@ figure.about-pic img{
 }
 
 .team-caption p{
-    color: #46866C;
+    color: #04AA6D;
     margin-bottom: 0px;
 }
 
@@ -1203,7 +1225,7 @@ figure.about-pic img{
 
 .icon-fa:hover{
     color: #FFF;
-    background: #46866C;
+    background: #04AA6D;
 }
 
 .slick-dots li {
@@ -1290,12 +1312,11 @@ figure.about-pic img{
 }
 
 .wide-section-bg{ 
-    background-image: url("../img/images/img4.jpg");
-    height: 500px; 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
+  height: 500px; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 .wide-section-bg:before {
@@ -1305,7 +1326,7 @@ figure.about-pic img{
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(to bottom right, #EEC344, #000);
+    background-image: linear-gradient(to bottom right, #46866C, #000);
     opacity: .4;
 }
 
@@ -1314,7 +1335,7 @@ figure.about-pic img{
     padding: 10px;
     z-index: 1;
     position: absolute;
-    margin: auto;
+    margin: auto auto 180px;
     top: 0;
     right: 0;
     bottom: 0;
@@ -1488,7 +1509,7 @@ a.active:after {
 
 .contact-icon .fas{
     font-size: 1.3rem;
-    color: #46866C;
+    color: #04AA6D;
 }
 
 .with-errors{
@@ -1666,7 +1687,7 @@ aside h3:after {
     border-radius: 5px;
     float: right;
     font-family: 'Poppins', sans-serif;
-    background: #46866C;
+    background: #04AA6D;
     color: #FFF;
     font-weight: 400;
 }
@@ -1765,7 +1786,7 @@ aside h3:after {
 
 .site-pagination .page-link:hover {
     z-index: 2;
-    color: #46866C;
+    color: #04AA6D;
     text-decoration: none;
     background-color: #F0F5F5;
     border-color: #F0F5F5;
@@ -1784,8 +1805,8 @@ aside h3:after {
 .site-pagination .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #46866C;
-  border-color: #46866C;
+  background-color: #04AA6D;
+  border-color: #04AA6D;
   border-radius: 0.25rem;
 }
 
@@ -1987,7 +2008,7 @@ p.comment{
 }
 
 .comment-interaction .fas{
-     color: #46866C;
+     color: #04AA6D;
     transition: 0.6s;
 }
 
@@ -2210,6 +2231,56 @@ aside.left .list-group-item:hover .fas{
     line-height: 1.7;
 }
 
+.owl-slider .item{
+  padding: 0.75rem;
+}
+
+.brand-box{
+  min-height: 150px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.brand-box{
+  position: relative;
+  display: block;
+  min-height: 120px;
+}
+
+.brand-box a{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-box figure{
+  max-width: 130px;
+  margin: 0 auto 30px;
+}
+
+.brand-box figure img{
+  width: 100%;
+  height: 100%;
+  transition: .3s all ease-in-out;
+}
+
+.brand-box h3{
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.brand-box a:hover + figure img {
+  transform: scale(1.1);
+}
+
 /*#########################################
   ---------- 20. COUNTER SECTION ----------
   #########################################*/
@@ -2237,7 +2308,7 @@ aside.left .list-group-item:hover .fas{
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
     font-weight: 600;
-    color: #46866C;
+    color: #04AA6D;
     text-align: center;
 }
 
@@ -2495,9 +2566,9 @@ xtab-filter
   }
   .cd-tab-filter a.selected {
     background: transparent;
-    color: #46866C;
+    color: #04AA6D;
     /* create border bottom using box-shadow property */
-    box-shadow: inset 0 -2px 0 #46866C;
+    box-shadow: inset 0 -2px 0 #04AA6D;
   }
   .cd-tab-filter.is-open ul li {
     display: inline-block;
@@ -2668,20 +2739,21 @@ xgallery
   }
 }
 
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
 * {
   margin: 0;
 }
 
-/* .loader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -27.5px;
-  margin-top: -27.5px;
-} */
+.loader {
+  animation: bounce 2s linear infinite; 
+}
 
 .square {
-  background: #46866C;
+  background: #04AA6D;
   width: 15px;
   height: 15px;
   float: left;
