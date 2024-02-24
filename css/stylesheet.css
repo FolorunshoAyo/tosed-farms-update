@@ -817,6 +817,10 @@ p.cursive{
     margin-top: 40px;
 }
 
+.footer-pages-col h4,
+.footer-pages-col p{
+  margin-left: 40px;
+}
 /*########################################
   ---------- 8. CONTACT SECTION ----------
   ########################################*/
@@ -1111,13 +1115,11 @@ figure.about-pic img{
 }
 
 .about-service-icon{
-    width: 60px;
-    float: left;
-    margin: 0px 15px 20px 0px;
-}
-
-.about-service-icon img{
-    width: 100%;
+  font-size: 60px;
+  float: left;
+  display: block;
+  color: #46866C;
+  margin: 0px 15px 20px 0px;
 }
 
 .inner-service-bar h3{
@@ -1933,10 +1935,11 @@ aside h3:after {
 }
 
 .post-single table{
+  font-size: 0.68rem;
   border-collapse: collapse;
   margin: 25px 0;
   font-family: 'Poppins', sans-serif;
-  min-width: 400px;
+  max-width: 400px;
 }
 
 .post-single table thead tr{
@@ -3083,6 +3086,11 @@ xgallery
     font-size: 0.68rem;
   }
 
+  table.dataTable .table-description{
+    text-wrap: wrap;
+    text-align: justify;
+  }
+
   table.dataTable thead tr{
     background-color: #46866C;
     color: #ffffff;
@@ -3139,5 +3147,8 @@ xgallery
   @media screen and (max-width: 767px){
     div.dt-container .dt-paging{
       justify-content: center;
+    }
+    table.dataTable .table-description{
+      width: 250px;
     }
   }

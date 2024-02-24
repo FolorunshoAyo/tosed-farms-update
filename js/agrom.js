@@ -231,13 +231,13 @@ function video_popup(){
 
 "use strict";
 $('.team-carousel').slick({
-  dots: true,
-	prevArrow: $('.prev'),
-	nextArrow: $('.next'),
-  infinite: false,
-  speed: 300,
   slidesToShow: 3,
   slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  arrows: false,
+  dots: false,
+  pauseOnHover: false,
   responsive: [
     {
       breakpoint: 1024,
@@ -252,7 +252,7 @@ $('.team-carousel').slick({
       breakpoint: 768,
       settings: {
         slidesToShow: 1,
-        slidesToScroll: 2
+        slidesToScroll: 1
       }
     },
     {

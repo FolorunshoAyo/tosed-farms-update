@@ -265,6 +265,11 @@ hr.divider{
 .footer-center-col{
     margin: 2rem 0rem;
 }
+
+.footer-pages-col h4,
+.footer-pages-col p{
+  margin-left: 0px;
+}
     
 .box-steps{
     height: 100%;
@@ -732,7 +737,7 @@ p.date{
 }
     
 .about-service-icon{
-    width: 50px;
+    font-size: 50px;
 }
     
 .carousel-control-prev-icon,
