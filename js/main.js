@@ -274,5 +274,16 @@
 			// Hide the target element
 			$('#' + targetID).hide();
 		});
+
+		//_______________Alphabet Smooth Scroll
+		$("button[data-target^='alpha']").on("click", function () {
+			$("html, body").animate(
+			  {
+				scrollTop: $("#" + $(this).data("target")).offset().top,
+			  },
+			  0
+			);
+			return false;
+		});
 	});
 }());

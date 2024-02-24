@@ -672,9 +672,9 @@ a.btn-hover-corner {
     line-height: 1.5;
 }
  
-.address-icon, .phone-icon, .email-icon{
+/* .address-icon, .phone-icon, .email-icon{
     width: 25px;
-}
+} */
     
 .form-box{
     margin: 2.5rem auto 3rem auto;
