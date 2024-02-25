@@ -206,7 +206,9 @@ footer .container{
 }
 
 @media (max-width:991px) { 
-
+.logo-brand{
+    width: 180px;
+}
 hr.divider{
     display: none;
 }
