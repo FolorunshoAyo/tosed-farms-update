@@ -574,20 +574,20 @@
         .dataTable( {
           responsive: true,
           columnDefs: [
-              {
-                  target: 3,
-                  render: DataTable.render.number(null, null, 0, '₦ '),
-              },
-              {
-                  targets: [3, 4],
-                  className: 'dt-body-right'
-              },
-              {
-                  "targets": [1], 
-                  "render": function ( data, type, row ) {
-                      return '<div class="table-description">'+data+'</div>';
-                  }
-              }    
+            {
+                target: 3,
+                render: DataTable.render.number(null, null, 0, '₦ '),
+            },
+            {
+                targets: [3, 4],
+                className: 'dt-body-right'
+            },
+            {
+                "targets": [1], 
+                "render": function ( data, type, row ) {
+                    return '<div class="table-description">'+data+'</div>';
+                }
+            }    
           ]
         });
       });

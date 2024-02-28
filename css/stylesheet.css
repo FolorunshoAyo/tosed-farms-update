@@ -1348,17 +1348,16 @@ figure.about-pic img{
   ---------- 13. SERVICES PAGE ----------
   #######################################*/
 .box-services{
+  position: relative;
+    overflow: hidden;
     border: solid 3px #EEC344;
     padding: 30px;
     margin: 0.80rem 0rem;
 }
 
 .service-icon{
-    width: 60px;
-}
-
-.service-icon img{
-    width: 100%;
+  font-size: 60px;
+  color: #46866C;
 }
 
 .box-services h3{
@@ -2442,7 +2441,8 @@ aside.left .list-group-item:hover .fas{
   margin-bottom: 20px;
 }
 
-.brand-box a.overlay{
+.brand-box a.overlay,
+.box-services a.overlay{
   position: absolute;
   top: 0;
   left: 0;
