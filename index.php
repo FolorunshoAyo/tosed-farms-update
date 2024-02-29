@@ -24,9 +24,11 @@ $router->get('/tosed-farms/admin/login', 'AdminController@login');
 $router->post('/tosed-farms/admin/authenticate', 'AdminController@authenticate');
 $router->get('/tosed-farms/admin/logout', 'AdminController@logout');
 $router->get('/tosed-farms/admin/', 'AdminController@dashboard');   
-$router->get('/tosed-farms/admin/brands', 'AdminController@listBrands');   
+$router->get('/tosed-farms/admin/brands/', 'AdminController@listBrands');   
 $router->get('/tosed-farms/admin/brand/new', 'AdminController@newBrandForm');   
 $router->post('/tosed-farms/admin/brand/new', 'AdminController@newBrand');   
+$router->get('/tosed-farms/admin/brand/edit', 'AdminController@editBrand');   
+
 
 // Dispatch the request
 $router->dispatch();

@@ -9,22 +9,26 @@
 
                         <li class="menu-title">Navigation</li>
 
-                        <li class="mm-active">
-                            <a href="#" class="waves-effect waves-light <?= $data['current_page'] === "/tosed-farms/admin/"? "active" : "" ?>">
+                        <li class="<?= $data['current_page'] === "/tosed-farms/admin/"? "mm-active" : "" ?>">
+                            <a href="<?= BASE_URL ?>/admin/" class="waves-effect waves-light <?= $data['current_page'] === "/tosed-farms/admin/"? "active" : "" ?>">
                                 <i class="mdi mdi-view-dashboard"></i>
                                 <span> Home </span>
                             </a>
                         </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="waves-effect waves-light">
+                        <li class="<?= $data['current_page'] === "/tosed-farms/brands/"? "mm-active" : "" ?>">
+                            <a href="javascript: void(0);" class="waves-effect waves-light <?= $data['current_page'] === "/tosed-farms/brands/"? "active" : "" ?>">
                                 <i class="mdi mdi-diamond-stone"></i>
                                 <span> Brands </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li><a href="brands.html">View all</a></li>
-                                <li><a href="new-brand.html">Add New</a></li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/brands/"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/brands/"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brands/">View all</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/brand/new"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/brand/new"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brand/new">Add New</a>
+                                </li>
                             </ul>
                         </li>
 

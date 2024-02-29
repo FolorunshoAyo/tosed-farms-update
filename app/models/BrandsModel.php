@@ -1,5 +1,5 @@
 <?php
-class BrandModel
+class BrandsModel
 {
     public static function createBrand($name, $category, $image_url, $featured_status, $visibility_status)
     {
@@ -10,6 +10,7 @@ class BrandModel
             $stmt = $pdo->prepare($query);
             $stmt->execute([$name, $category, $image_url, $featured_status, $visibility_status]);
 
+            return true;
         }catch (PDOException $e) {
             return false;
         }
@@ -32,11 +33,11 @@ class BrandModel
         }
     }
 
-    public function getAllBrands() {
+    public static function getAllBrands() {
         try{
             global $pdo;
 
-            $query = "SELECT * FROM brands";
+            $query = "SELECT * FROM brands ORDER BY brand_id DESC";
             $stmt = $pdo->prepare($query);
             $stmt->execute();
 
@@ -58,6 +59,22 @@ class BrandModel
             WHERE brand_id = ?";
             $stmt = $pdo->prepare($query);
             return $stmt->execute([$name, $category, $image_url, $featured_status, $visibility_status, $brand_id]);
+
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function updateBrandWithoutImage($brand_id, $name, $category, $featured_status, $visibility_status)
+    {
+        try{
+            global $pdo;
+
+            $query = "UPDATE brands
+            SET name = ?, category = ?, featured_status = ?, visibility_status = ?
+            WHERE brand_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$name, $category, $featured_status, $visibility_status, $brand_id]);
 
         }catch (PDOException $e) {
             return false;

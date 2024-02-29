@@ -21,9 +21,8 @@ class Router
 
         if (isset($this->routes[$method][$url])) {
 
-            if (
-                strpos($url, '/tosed-farms/admin') === 0
-                &&
+            if (strpos($url, '/tosed-farms/admin') === 0){
+                if(
                 $url !== "/tosed-farms/admin/login"
                 &&
                 $url !== "/tosed-farms/admin/register"
@@ -31,9 +30,12 @@ class Router
                 $url !== "/tosed-farms/admin/authenticate"
                 &&
                 $url !== "/tosed-farms/admin/logout"
-                ) {
-                // Perform session check for admin area
-                $this->checkAdminSession();
+                ){
+                    // Perform session check for admin area
+                    $this->checkAdminSession();
+                }else{
+                    $this->checkAdminLoginAreaSession();
+                }
             }
 
             // Extract controller and method from route
@@ -58,6 +60,15 @@ class Router
         // Check if user is still in session
         if (!isset($_SESSION['admin_id'])) {
             redirect(BASE_URL . '/admin/login');
+            exit();
+        }
+    }
+
+    private function checkAdminLoginAreaSession()
+    {
+        // Check if user is still in session
+        if (isset($_SESSION['admin_id'])) {
+            redirect(BASE_URL . '/admin/');
             exit();
         }
     }
