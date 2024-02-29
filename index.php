@@ -12,16 +12,21 @@ require_once 'core/router.php'; // Router class
 // Initialize the router
 $router = new Router();
 
-// Define routes
-$router->get('/', 'HomeController@index'); // Home page
-$router->get('/about', 'AboutController@index'); // About page
-$router->post('/contact', 'ContactController@store'); // Contact form submission
+// Define front routes
+$router->get('/', 'HomeController@index');
+$router->get('/about', 'AboutController@index');
+$router->post('/contact', 'ContactController@store');
 
 // Admin routes
-$router->get('/tosed-farms/admin/login', 'AdminController@login'); // Admin login page
-$router->post('/tosed-farms/admin/authenticate', 'AdminController@authenticate'); // Admin authentication
-$router->get('/tosed-farms/admin/logout', 'AdminController@logout'); // Admin logout
-$router->get('/tosed-farms/admin/', 'AdminController@dashboard'); // Admin dashboard
+$router->get('/tosed-farms/admin/register', 'AdminController@registrationForm'); // Display registration form
+$router->post('/tosed-farms/admin/register', 'AdminController@register');
+$router->get('/tosed-farms/admin/login', 'AdminController@login');
+$router->post('/tosed-farms/admin/authenticate', 'AdminController@authenticate');
+$router->get('/tosed-farms/admin/logout', 'AdminController@logout');
+$router->get('/tosed-farms/admin/', 'AdminController@dashboard');   
+$router->get('/tosed-farms/admin/brands', 'AdminController@listBrands');   
+$router->get('/tosed-farms/admin/brand/new', 'AdminController@newBrandForm');   
+$router->post('/tosed-farms/admin/brand/new', 'AdminController@newBrand');   
 
 // Dispatch the request
 $router->dispatch();

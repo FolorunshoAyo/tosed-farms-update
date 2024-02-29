@@ -26,6 +26,8 @@ ini_set('display_errors', 1);
 // Timezone
 date_default_timezone_set('UTC');
 
+global $pdo;
+
 try {
     // Create a new PDO instance
     $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
