@@ -27,8 +27,10 @@ $router->get('/tosed-farms/admin/', 'AdminController@dashboard');
 $router->get('/tosed-farms/admin/brands/', 'AdminController@listBrands');   
 $router->get('/tosed-farms/admin/brand/new', 'AdminController@newBrandForm');   
 $router->post('/tosed-farms/admin/brand/new', 'AdminController@newBrand');   
-$router->get('/tosed-farms/admin/brand/edit', 'AdminController@editBrand');   
-
+$router->post('/tosed-farms/admin/brand/edit', 'AdminController@editBrand');   
+$router->get('/tosed-farms/admin/products/branded/poultry-feeds', 'AdminController@listPoultryFeeds'); 
+$router->get('/tosed-farms/admin/products/branded/fish-feeds', 'AdminController@listFishFeeds'); 
+$router->get('/tosed-farms/admin/products/branded/veterinary-products', 'AdminController@listVeteribaryProducts'); 
 
 // Dispatch the request
 $router->dispatch();

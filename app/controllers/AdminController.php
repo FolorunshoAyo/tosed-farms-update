@@ -148,16 +148,16 @@ class AdminController {
     public function editBrand() { 
         // Collect form data
         $brandId = $_POST['editBrandId'];
-        $brandImage = $_FILES['brandImage'];
-        $brandName = $_POST['brandName'] ?? '';
-        $brandCategory = $_POST['brandCategory'] ?? '';
+        $brandImage = $_FILES['editBrandImage'];
+        $brandName = $_POST['editBrandName'] ?? '';
+        $brandCategory = $_POST['editBrandCategory'] ?? '';
         $visibility = isset($_POST['visibility']);
         $featured = isset($_POST['featured']);
-
+        
         // Server-side validation
         if (empty($brandName) || empty($brandCategory)) {
             $_SESSION['error_message'] = 'The Name and category fields are required.';
-            redirect(BASE_URL . '/admin/brand/new');
+            redirect(BASE_URL . '/admin/brands/');
             return;
         }
 
@@ -174,7 +174,7 @@ class AdminController {
                 } else {
                     // Insertion failed, redirect back to new brand form with error
                     $_SESSION['error_message'] = 'Update failed. Please try again.';
-                    redirect(BASE_URL . '/admin/brand/new');
+                    redirect(BASE_URL . '/admin/brands/');
                 }
             }
             return;
@@ -186,7 +186,7 @@ class AdminController {
         } else {
             // Insertion failed, redirect back to new brand form with error
             $_SESSION['error_message'] = 'Update failed. Please try again.';
-            redirect(BASE_URL . '/admin/brand/new');
+            redirect(BASE_URL . '/admin/brands/');
         }
     }
 
@@ -197,5 +197,38 @@ class AdminController {
         ];
 
         include VIEW_PATH . '/admin/new-brand.php';
+    }
+
+    public function listPoultryFeeds(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => BrandedProductsModel::getAllBrandedProducts('poultry'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'poultry'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function listFishFeeds(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => BrandedProductsModel::getAllBrandedProducts('fish'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'fish'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function listVeteribaryProducts(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => BrandedProductsModel::getAllBrandedProducts('drugs'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'drugs'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
     }
 }

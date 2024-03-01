@@ -29,40 +29,25 @@ class BrandedProductsModel
     //     }
     // }
 
-    // public static function getBrandById($brand_id)
-    // {
-    //     try{
-    //         global $pdo;
+    public static function getAllBrandedProducts($product_type) {
+        try{
+            global $pdo;
 
-    //         $query = "SELECT * FROM brands WHERE brand_id = ?";
-    //         $stmt = $pdo->prepare($query);
-    //         $stmt->execute([$brand_id]);
+            $query = "SELECT branded_products.*, brands.name as brand_name
+            FROM branded_products
+            INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.catergory = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$product_type]);
 
-    //         $brand = $stmt->fetch(PDO::FETCH_ASSOC);
+            $brandedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    //         return $brand;
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
-
-    // public static function getAllBrands() {
-    //     try{
-    //         global $pdo;
-
-    //         $query = "SELECT * FROM brands ORDER BY brand_id DESC";
-    //         $stmt = $pdo->prepare($query);
-    //         $stmt->execute();
-
-    //         $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    //         return $brands;
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
+            return $brandedProducts;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     
-    // public static function updateBrand($brand_id, $name, $category, $image_url, $featured_status, $visibility_status)
+    // public static function updateBrandedProduct($brand_id, $name, $category, $image_url, $featured_status, $visibility_status)
     // {
     //     try{
     //         global $pdo;
@@ -80,7 +65,7 @@ class BrandedProductsModel
 
 
 
-    // public static function deleteBrand($brand_id)
+    // public static function deleteBrandedProduct($brand_id)
     // {
     //     $query = "DELETE FROM brands WHERE brand_id = ?";
     //     $stmt = $this->db->prepare($query);

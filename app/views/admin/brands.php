@@ -197,7 +197,7 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                  <form id="editBrandForm" action="<?= BASE_URL ?>/admin/brand/edit" onsubmit="return validateForm()" enctype="multipart/form-data">
+                  <form id="editBrandForm" method="post" action="<?= BASE_URL ?>/admin/brand/edit" onsubmit="return validateForm()" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="image-placeholder">
                             <!-- Image placeholder frame -->
@@ -216,14 +216,14 @@
                     <div class="form-group row">
                         <label for="editBrandName" class="col-md-2 control-label">Brand Name</label>
                         <div class="col-md-10">
-                            <input required id="editBrandName" name="brandName" type="text" class="form-control" placeholder="Enter Brand Name e.g Kepro">
+                            <input required id="editBrandName" name="editBrandName" type="text" class="form-control" placeholder="Enter Brand Name e.g Kepro">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="brandCategory" class="col-sm-2 control-label">Brand Category</label>
+                        <label for="editBrandCategory" class="col-sm-2 control-label">Brand Category</label>
                         <div class="col-sm-10">
-                            <select id="editBrandCategory" class="form-control" required name="brandCategory">
+                            <select id="editBrandCategory" class="form-control" required name="editBrandCategory">
                                 <option value="">Select Brand Category</option>
                                 <option value="poultry">Poultry Feed</option>
                                 <option value="fish">Fish Feed</option>
@@ -237,16 +237,16 @@
                     <div class="form-group row">
                         <label class="col-sm-2 control-label">Visibility</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" id="editVisible" data-switch="success"/>
-                            <label for="editVisible" data-on-label="Yes" data-off-label="No"></label>
+                            <input name="visibility" type="checkbox" id="visibility" data-switch="success"/>
+                            <label for="visibility" data-on-label="Yes" data-off-label="No"></label>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-sm-2 control-label">Featured</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" id="editFeatured" data-switch="success"/>
-                            <label for="editFeatured" data-on-label="Yes" data-off-label="No"></label>
+                            <input type="checkbox" name="featured"  id="featured" data-switch="success"/>
+                            <label for="featured" data-on-label="Yes" data-off-label="No"></label>
                         </div>
                     </div>
 
@@ -343,8 +343,8 @@
             $('#datatable-buttons tbody').on('click', '.editBtn', function() {
                 var row = $(this).closest('tr');
 
-                // clear file input
-                // $('#brandImage').val("")
+                // clear previous form
+                $('#editBrandForm')[0].reset();
 
                 if (row.hasClass('child')) {
                     row = row.prev('tr');
@@ -377,8 +377,8 @@
                 $('#preview').attr("src", brandImage);
                 $('#editBrandName').val(brandName);
                 $('#editBrandCategory').val(category);
-                $('#editVisible').attr('checked', visible === 'Yes');
-                $('#editFeatured').attr ('checked', featured === 'Yes');
+                $('#visibility').attr('checked', visible === 'Yes');
+                $('#featured').attr ('checked', featured === 'Yes');
                 $('[name="editBrandId"]').attr("value", brandId);
 
                 // Show the modal
