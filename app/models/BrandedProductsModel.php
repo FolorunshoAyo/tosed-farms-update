@@ -15,19 +15,19 @@ class BrandedProductsModel
         }
     }
     
-    // public static function create($name, $category, $image_url, $featured_status, $visibility_status)
-    // {
-    //     try{
-    //         global $pdo;
-    //         $query = "INSERT INTO brands (name, category, image_url, featured_status, visibility_status) 
-    //                   VALUES (?, ?, ?, ?, ?)";
-    //         $stmt = $pdo->prepare($query);
-    //         $stmt->execute([$name, $category, $image_url, $featured_status, $visibility_status]);
+    public static function create($brand_id, $name, $net_weight, $availability_status, $description, $price)
+    {
+        try{
+            global $pdo;
+            $query = "INSERT INTO branded_products (brand_id, name, net_weight, availability_status, description, price) 
+                      VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$brand_id, $name, $net_weight, $availability_status, $description, $price]);
 
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 
     public static function getAllBrandedProducts($product_type) {
         try{
@@ -35,7 +35,7 @@ class BrandedProductsModel
 
             $query = "SELECT branded_products.*, brands.name as brand_name
             FROM branded_products
-            INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.catergory = ?";
+            INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.category = ?";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$product_type]);
 
@@ -46,22 +46,40 @@ class BrandedProductsModel
             return false;
         }
     }
+
+    public static function getAllSingleBrandProducts($brand_name){
+        try{
+            global $pdo;
+
+            $query = "SELECT branded_products.*, brands.name as brand_name
+            FROM branded_products
+            INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.name = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$brand_name]);
+
+            $brandedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brandedProducts;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     
-    // public static function updateBrandedProduct($brand_id, $name, $category, $image_url, $featured_status, $visibility_status)
-    // {
-    //     try{
-    //         global $pdo;
+    public static function update($product_id, $brand_id, $name, $net_weight, $availability_status, $description, $price)
+    {
+        try{
+            global $pdo;
 
-    //         $query = "UPDATE brands
-    //         SET name = ?, category = ?, image_url = ?, featured_status = ?, visibility_status = ?
-    //         WHERE brand_id = ?";
-    //         $stmt = $pdo->prepare($query);
-    //         return $stmt->execute([$name, $category, $image_url, $featured_status, $visibility_status, $brand_id]);
+            $query = "UPDATE branded_products
+            SET brand_id = ?, name = ?, net_weight = ?, availability_status = ?, description = ?, price = ?
+            WHERE product_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$brand_id, $name, $net_weight, $availability_status, $description, $price, $product_id]);
 
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 
 
 

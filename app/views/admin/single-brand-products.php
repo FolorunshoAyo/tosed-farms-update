@@ -1,24 +1,12 @@
 <?php
-    $productTypeTitle = $data['product_type'];
-
-    switch ($productTypeTitle) {
-        case 'poultry':
-            $productTypeTitle = "Poultry Feeds";
-            break;
-        case 'fish':
-            $productTypeTitle = "Fish Feeds";
-            break;
-        case 'drugs':
-            $productTypeTitle = "Veterinary";
-            break;
-    }
+    $brandName = ucwords($data['brand_name']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
-    <title><?= $productTypeTitle ?> Products | Tosed Integrated Farm Ventures</title>
+    <title><?= $brandName ?> Products | Tosed Integrated Farm Ventures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Responsive bootstrap 4 admin template" name="description" />
     <meta content="Coderthemes" name="author" />
@@ -73,10 +61,10 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Tosed Integrated Farm Ventures</a></li>
-                                        <li class="breadcrumb-item active"><?= $productTypeTitle ?> Products</li>
+                                        <li class="breadcrumb-item active"><?= $brandName ?> Products</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title"><?= $productTypeTitle ?> Products</h4>
+                                <h4 class="page-title"><?= $brandName ?> Products</h4>
                             </div>
                         </div>
                     </div>
@@ -152,7 +140,7 @@
 
                                 <div class="mt-4 text-right">
                                     <a href="<?= BASE_URL ?>/admin/products/branded/new" class="btn btn-primary waves-effect waves-light"> 
-                                        <i class="fas fa-plus mr-1"></i> <span>Add New  <?= $productTypeTitle ?> Product</span> 
+                                        <i class="fas fa-plus mr-1"></i> <span>Add New <?= $brandName ?> Product</span> 
                                     </a>
                                 </div>
                             </div>

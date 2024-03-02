@@ -30,7 +30,11 @@ $router->post('/tosed-farms/admin/brand/new', 'AdminController@newBrand');
 $router->post('/tosed-farms/admin/brand/edit', 'AdminController@editBrand');   
 $router->get('/tosed-farms/admin/products/branded/poultry-feeds', 'AdminController@listPoultryFeeds'); 
 $router->get('/tosed-farms/admin/products/branded/fish-feeds', 'AdminController@listFishFeeds'); 
-$router->get('/tosed-farms/admin/products/branded/veterinary-products', 'AdminController@listVeteribaryProducts'); 
+$router->get('/tosed-farms/admin/products/branded/veterinary-products', 'AdminController@listVeterinaryProducts'); 
+$router->get('/tosed-farms/admin/products/branded/new', 'AdminController@newBrandedProductForm'); 
+$router->post('/tosed-farms/admin/products/branded/new', 'AdminController@newBrandedProduct'); 
+$router->post('/tosed-farms/admin/products/branded/edit', 'AdminController@editBrandedProduct'); 
+$router->get('/tosed-farms/admin/products/brand/:name/', 'AdminController@listSingleBrandProducts', true); 
 
 // Dispatch the request
 $router->dispatch();

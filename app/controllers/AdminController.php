@@ -221,14 +221,127 @@ class AdminController {
         include VIEW_PATH . '/admin/branded-products.php'; 
     }
 
-    public function listVeteribaryProducts(){
+    public function listVeterinaryProducts(){
         $data = [
             'admin_details' => AdminModel::findById($_SESSION['admin_id']),
-            'products' => BrandedProductsModel::getAllBrandedProducts('drugs'),
+            'products' => BrandedProductsModel::getAllBrandedProducts('drug'),
             'current_page' => $_SERVER['REQUEST_URI'],
             'product_type' => 'drugs'
         ];
 
         include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function listSingleBrandProducts($params){
+
+        $brand_name = $params[0];
+
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => BrandedProductsModel::getAllSingleBrandProducts($brand_name),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'brand_name' => join(" ",explode("-", $brand_name))
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function newBrandedProductForm(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/new-branded-product.php';
+    }
+
+    public function newBrandedProduct(){
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productBrand = $_POST['brand'] ?? '';
+        $productNetWeight = $_POST['net_weight'] ?? '';
+        $productPrice = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productName) || empty($productDesc) || empty($productBrand) || empty($productNetWeight) || empty($productPrice)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/branded/new');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPrice)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (BrandedProductsModel::create($productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Product Added Successfully!';
+
+            // Retrieve Brand Category i.e (poultry, fish or drug) for proper redirect
+            $redirect = "";
+            switch (BrandsModel::getBrandById($productBrand)['category']) {
+                case 'poultry':
+                    $redirect = BASE_URL . "/admin/products/branded/poultry-feeds";
+                    break;
+                case 'fish':
+                    $redirect = BASE_URL . "/admin/products/branded/fish-feeds";
+                    break;
+                case 'drug':
+                    $redirect = BASE_URL . "/admin/products/branded/veterinary-products";
+                    break;
+            }
+
+            redirect($redirect);
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/branded/new');
+        }
+
+    }
+
+    public function editBrandedProduct(){
+        $productId = $_POST['productId'] ?? '';
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productBrand = $_POST['brand'] ?? '';
+        $productNetWeight = $_POST['net_weight'] ?? '';
+        $productPrice = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Retrieve Brand Category i.e (poultry, fish or drug) for proper redirect
+        $redirect = "";
+        switch (BrandsModel::getBrandById($productBrand)['category']) {
+            case 'poultry':
+                $redirect = BASE_URL . "/admin/products/branded/poultry-feeds";
+                break;
+            case 'fish':
+                $redirect = BASE_URL . "/admin/products/branded/fish-feeds";
+                break;
+            case 'drug':
+                $redirect = BASE_URL . "/admin/products/branded/veterinary-products";
+                break;
+        }
+        
+        // Server-side validation
+        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productBrand) || empty($productNetWeight) || empty($productPrice)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect($redirect);
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPrice)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (BrandedProductsModel::update($productId, $productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Product Updated Successfully!';
+            redirect($redirect);
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect($redirect);
+        }
+
     }
 }

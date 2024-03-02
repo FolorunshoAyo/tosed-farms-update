@@ -48,6 +48,22 @@ class BrandsModel
             return false;
         }
     }
+
+    public static function getBrandsAlphabetically($brand_category){
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM brands where category = ? ORDER BY name";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$brand_category]);
+
+            $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brands;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     
     public static function updateBrand($brand_id, $name, $category, $image_url, $featured_status, $visibility_status)
     {

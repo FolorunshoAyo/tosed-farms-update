@@ -9,7 +9,7 @@
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>/admin-assets/images/favicon.ico">
 
     <link href="<?= BASE_URL ?>/admin-assets/libs/switchery/switchery.min.css" rel="stylesheet" type="text/css" />
 

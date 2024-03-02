@@ -9,40 +9,46 @@
 
                         <li class="menu-title">Navigation</li>
 
-                        <li class="<?= $data['current_page'] === "/tosed-farms/admin/"? "mm-active" : "" ?>">
+                        <li class="<?= strpos($data['current_page'], "/tosed-farms/admin/") === 0? "mm-active" : "" ?>">
                             <a href="<?= BASE_URL ?>/admin/" class="waves-effect waves-light <?= $data['current_page'] === "/tosed-farms/admin/"? "active" : "" ?>">
                                 <i class="mdi mdi-view-dashboard"></i>
                                 <span> Home </span>
                             </a>
                         </li>
 
-                        <li class="<?= $data['current_page'] === "/tosed-farms/brands/"? "mm-active" : "" ?>">
-                            <a href="javascript: void(0);" class="waves-effect waves-light <?= $data['current_page'] === "/tosed-farms/brands/"? "active" : "" ?>">
+                        <li class="<?= strpos($data['current_page'], "/tosed-farms/admin/brand") === 0?  "mm-active" : "" ?>">
+                            <a href="javascript: void(0);" class="waves-effect waves-light <?= strpos($data['current_page'], "/tosed-farms/admin/brand") === 0? "active" : "" ?>">
                                 <i class="mdi mdi-diamond-stone"></i>
                                 <span> Brands </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li class="<?= $data['current_page'] === "/tosed-farms/brands/"? "mm-active" : "" ?>">
-                                    <a class="<?= $data['current_page'] === "/tosed-farms/brands/"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brands/">View all</a>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/brands/"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/brands/"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brands/">View all</a>
                                 </li>
-                                <li class="<?= $data['current_page'] === "/tosed-farms/brand/new"? "mm-active" : "" ?>">
-                                    <a class="<?= $data['current_page'] === "/tosed-farms/brand/new"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brand/new">Add New</a>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/brand/new"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/brand/new"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/brand/new">Add New</a>
                                 </li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="waves-effect waves-light">
+                        <li class="<?= strpos($data['current_page'], "/tosed-farms/admin/products/") === 0? "mm-active" : "" ?>">
+                            <a href="javascript: void(0);" class="waves-effect waves-light <?= strpos($data['current_page'], "/tosed-farms/admin/products/") === 0? "active" : "" ?>">
                                 <i class="mdi mdi-shopping"></i>
                                 <span> Products </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li class="menu-title mt-2">Branded</li>
-                                <li><a href="branded-products-collections.html">Poultry Feeds</a></li>
-                                <li><a href="branded-products-collections.html">Fish Feeds</a></li>
-                                <li><a href="branded-products-collections.html">Veterinary Drugs</a></li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/poultry-feeds"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/poultry-feeds"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/branded/poultry-feeds">Poultry Feeds</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/fish-feeds"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/fish-feeds"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/branded/fish-feeds">Fish Feeds</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/veterinary-products"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/veterinary-products"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/branded/veterinary-products">Veterinary Drugs</a>
+                                </li>
                                 <li class="menu-title mt-2">Unbranded</li>
                                 <li><a href="feed-ingredients-collection.html">Feed Ingredients</a></li>
                                 <li><a href="feed-additives-collection.html">Feed Additives</a></li>

@@ -19,39 +19,65 @@ class Router
         $method = $_SERVER['REQUEST_METHOD'];
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        if (isset($this->routes[$method][$url])) {
+        if (strpos($url, '/tosed-farms/admin') === 0){
+            if(
+            $url !== "/tosed-farms/admin/login"
+            &&
+            $url !== "/tosed-farms/admin/register"
+            &&
+            $url !== "/tosed-farms/admin/authenticate"
+            &&
+            $url !== "/tosed-farms/admin/logout"
+            ){
+                // Perform session check for admin area
+                $this->checkAdminSession();
+            }else{
+                $this->checkAdminLoginAreaSession();
+            }
+        }
 
-            if (strpos($url, '/tosed-farms/admin') === 0){
-                if(
-                $url !== "/tosed-farms/admin/login"
-                &&
-                $url !== "/tosed-farms/admin/register"
-                &&
-                $url !== "/tosed-farms/admin/authenticate"
-                &&
-                $url !== "/tosed-farms/admin/logout"
-                ){
-                    // Perform session check for admin area
-                    $this->checkAdminSession();
+        foreach ($this->routes[$method] as $pattern => $controller) {
+            if(urlHasColon($pattern)){
+                if (matchUrlPattern($url, $pattern)) {  
+
+                    $params = array_slice(extractDynamicValues($url, $pattern), 1);
+                    
+                    // Extract controller and method from route
+                    
+                    list($controller, $method) = explode('@', $controller);
+
+                    // Include the controller file
+                    require_once 'app/controllers/' . $controller . '.php';
+                    // Create an instance of the controller
+                    $controllerInstance = new $controller();
+                    // Call the method
+                    $controllerInstance->$method($params);
+
+                    return;
                 }else{
-                    $this->checkAdminLoginAreaSession();
+                    continue;
+                }
+            }else{
+                if(isset($pattern) && $pattern === $url){
+                    // Extract controller and method from route
+                    list($controller, $method) = explode('@', $controller);
+                    // Include the controller file
+                    require_once 'app/controllers/' . $controller . '.php';
+                    // Create an instance of the controller
+                    $controllerInstance = new $controller();
+                    // Call the method
+                    $controllerInstance->$method();
+                    return;
+                }else{
+                    continue;
                 }
             }
+        }
 
-            // Extract controller and method from route
-            list($controller, $method) = explode('@', $this->routes[$method][$url]);
-            // Include the controller file
-            require_once 'app/controllers/' . $controller . '.php';
-            // Create an instance of the controller
-            $controllerInstance = new $controller();
-            // Call the method
-            $controllerInstance->$method();
+        if (strpos($url, '/tosed-farms/admin') === 0) {
+            include VIEW_PATH . '/admin/404.php';
         } else {
-            if (strpos($url, '/tosed-farms/admin') === 0) {
-                include VIEW_PATH . '/admin/404.php';
-            } else {
-                include VIEW_PATH . '/404.php';
-            }
+            include VIEW_PATH . '/404.php';
         }
     }
 

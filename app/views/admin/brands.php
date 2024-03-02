@@ -126,7 +126,7 @@
                                                     $category = "Fish Feeds";
                                                     break;
                                                 case 'drug':
-                                                    $category = "Veterinary Product";
+                                                    $category = "Veterinary Products";
                                                     break;
                                             }
                                         ?>
@@ -136,7 +136,7 @@
                                             </td>
                                             <td><?= $brand['name'] ?></td>
                                             <td><?= BrandedProductsModel::countAll($brand['brand_id']) ?></td>
-                                            <td><a href="#"><?= $category ?></a></td>
+                                            <td><a href="<?= BASE_URL . "/admin/products/branded/" . strtolower(join("-",explode(" ", $category))) ?>"><?= $category ?></a></td>
                                             <td>
                                                 <?= $brand['visibility_status'] === 1? "Yes" : "No" ?>
                                             </td>
@@ -146,7 +146,7 @@
                                             <td>
                                                 <div class="btn-toolbar" style="text-align: left;">
                                                     <div class="btn-group btn-group-sm" style="float: none;">
-                                                        <button type="button" class="editBtn btn btn-primary" style="float: none;" data-brand-id="1">
+                                                        <button type="button" class="editBtn btn btn-primary" style="float: none;" data-brand-id="<?= $brand['brand_id'] ?>">
                                                             <span class="mdi mdi-pencil"></span>
                                                         </button>
                                                     </div>
@@ -365,7 +365,7 @@
                     case "Poultry Feeds":
                         category = "poultry"
                         break;
-                    case "Veterinary Product":
+                    case "Veterinary Products":
                         category = "drug"
                         break;
                     default:
@@ -380,6 +380,8 @@
                 $('#visibility').attr('checked', visible === 'Yes');
                 $('#featured').attr ('checked', featured === 'Yes');
                 $('[name="editBrandId"]').attr("value", brandId);
+
+                console.log(brandId);
 
                 // Show the modal
                 $('#editBrandModal').modal('show');
