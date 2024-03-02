@@ -69,8 +69,8 @@
 
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox checkbox-success">
-                                        <input type="checkbox" class="custom-control-input" id="checkbox-signin">
-                                        <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                                        <input type="checkbox" name="remember_me" class="custom-control-input" id="remember_me">
+                                        <label for="remember_me" class="custom-control-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>
 

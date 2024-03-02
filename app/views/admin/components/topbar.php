@@ -85,7 +85,7 @@
         <li class="dropdown notification-list">
             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt="user-image" class="rounded-circle">
-                <span class="d-none d-sm-inline-block ml-1"><?= $data['admin_details']['first_name'] . " " . $data['admin_details']['first_name'][0] .  "." ?></span>
+                <span class="d-none d-sm-inline-block ml-1"><?= $data['admin_details']['first_name'] . " " . $data['admin_details']['last_name'][0] .  "." ?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                 <!-- item-->

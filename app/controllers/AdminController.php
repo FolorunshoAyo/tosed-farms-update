@@ -3,6 +3,7 @@
 require_once MODEL_PATH . '/AdminModel.php';
 require_once MODEL_PATH . '/BrandsModel.php';
 require_once MODEL_PATH . '/BrandedProductsModel.php';
+require_once MODEL_PATH . '/UnbrandedProductsModel.php';
 
 class AdminController {
     public function login() {
@@ -234,16 +235,16 @@ class AdminController {
 
     public function listSingleBrandProducts($params){
 
-        $brand_name = $params[0];
+        $brand_name = join(" ",explode("-", $params[0]));
 
         $data = [
             'admin_details' => AdminModel::findById($_SESSION['admin_id']),
             'products' => BrandedProductsModel::getAllSingleBrandProducts($brand_name),
             'current_page' => $_SERVER['REQUEST_URI'],
-            'brand_name' => join(" ",explode("-", $brand_name))
+            'brand_name' => $brand_name
         ];
 
-        include VIEW_PATH . '/admin/branded-products.php'; 
+        include VIEW_PATH . '/admin/single-brand-products.php'; 
     }
 
     public function newBrandedProductForm(){
@@ -341,6 +342,240 @@ class AdminController {
         } else {
             $_SESSION['error_message'] = 'Update failed. Please try again.';
             redirect($redirect);
+        }
+
+    }
+
+    public function feedIngredientsList(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('ingredients'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/admin/feed-ingredients.php'; 
+    }
+
+    public function newFeedIngredientForm(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/new-feed-ingredient.php';
+    }
+
+    public function newFeedIngredient(){
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredient/new');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::create('ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Feed Ingredient Added Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/feed-ingredients");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredient/new');
+        }
+
+    }
+
+    public function editFeedIngredient(){
+        $productId = $_POST['productId'] ?? '';
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredients');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Feed Ingredient Updated Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/feed-ingredients");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredients');
+        }
+
+    }
+
+    public function feedAdditivesList(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('additives'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/admin/feed-additives.php'; 
+    }
+
+    public function newFeedAdditivesForm(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/new-feed-additive.php';
+    }
+
+    public function newFeedAdditive(){
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredient/new');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::create('additives', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Feed Additive Added Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/feed-additives");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-additive/new');
+        }
+
+    }
+
+    public function editFeedAdditive(){
+        $productId = $_POST['productId'] ?? '';
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-ingredients');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Feed Additive Updated Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/feed-additives");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/feed-additives');
+        }
+
+    }
+
+    public function miscellaneousList(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('miscellaneous'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/admin/miscellaneous.php'; 
+    }
+
+    public function newMiscellaneousForm(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/new-miscellaneous.php';
+    }
+
+    public function newMiscellaneous(){
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/miscellaneous/new');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::create('miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Miscellaneous Product Added Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/miscellaneous");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/miscellaneous/new');
+        }
+
+    }
+
+    public function editMiscellaneous(){
+        $productId = $_POST['productId'] ?? '';
+        $productName = $_POST['name'] ?? '';
+        $productDesc = $_POST['desc'] ?? '';
+        $productManufacturer = $_POST['manufacturer'] ?? '';
+        $productPricePerKg = $_POST['price'] ?? '';
+        $productInStock = isset($_POST['in_stock']);
+
+        // Server-side validation
+        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/products/unbranded/miscellaneous');
+            return;
+        }   
+
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::update($productId, 'miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Miscellaneous Product Updated Successfully!';
+            redirect(BASE_URL . "/admin/products/unbranded/miscellaneous");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/miscellaneous');
         }
 
     }

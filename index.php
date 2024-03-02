@@ -34,7 +34,19 @@ $router->get('/tosed-farms/admin/products/branded/veterinary-products', 'AdminCo
 $router->get('/tosed-farms/admin/products/branded/new', 'AdminController@newBrandedProductForm'); 
 $router->post('/tosed-farms/admin/products/branded/new', 'AdminController@newBrandedProduct'); 
 $router->post('/tosed-farms/admin/products/branded/edit', 'AdminController@editBrandedProduct'); 
-$router->get('/tosed-farms/admin/products/brand/:name/', 'AdminController@listSingleBrandProducts', true); 
+$router->get('/tosed-farms/admin/products/brand/:name/', 'AdminController@listSingleBrandProducts'); 
+$router->get('/tosed-farms/admin/products/unbranded/feed-ingredients', 'AdminController@feedIngredientsList'); 
+$router->get('/tosed-farms/admin/products/unbranded/feed-ingredient/new', 'AdminController@newFeedIngredientForm'); 
+$router->post('/tosed-farms/admin/products/unbranded/feed-ingredient/new', 'AdminController@newFeedIngredient'); 
+$router->post('/tosed-farms/admin/products/unbranded/feed-ingredient/edit', 'AdminController@editFeedIngredient'); 
+$router->get('/tosed-farms/admin/products/unbranded/feed-additives', 'AdminController@feedAdditivesList'); 
+$router->get('/tosed-farms/admin/products/unbranded/feed-additive/new', 'AdminController@newFeedAdditivesForm'); 
+$router->post('/tosed-farms/admin/products/unbranded/feed-additive/new', 'AdminController@newFeedAdditive'); 
+$router->post('/tosed-farms/admin/products/unbranded/feed-additive/edit', 'AdminController@editFeedAdditive'); 
+$router->get('/tosed-farms/admin/products/unbranded/miscellaneous', 'AdminController@miscellaneousList'); 
+$router->get('/tosed-farms/admin/products/unbranded/miscellaneous/new', 'AdminController@newMiscellaneousForm'); 
+$router->post('/tosed-farms/admin/products/unbranded/miscellaneous/new', 'AdminController@newMiscellaneous'); 
+$router->post('/tosed-farms/admin/products/unbranded/miscellaneous/edit', 'AdminController@editMiscellaneous'); 
 
 // Dispatch the request
 $router->dispatch();

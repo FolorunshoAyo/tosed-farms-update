@@ -50,9 +50,15 @@
                                     <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/branded/veterinary-products"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/branded/veterinary-products">Veterinary Drugs</a>
                                 </li>
                                 <li class="menu-title mt-2">Unbranded</li>
-                                <li><a href="feed-ingredients-collection.html">Feed Ingredients</a></li>
-                                <li><a href="feed-additives-collection.html">Feed Additives</a></li>
-                                <li><a href="miscellaneous-collection.html">Miscellaneous</a></li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/feed-ingredients"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/feed-ingredients"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/feed-ingredients">Feed Ingredients</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/feed-additives"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/feed-additives"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/feed-additives">Feed Additives</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/miscellaneous"? "mm-active" : "" ?>">
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/miscellaneous"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/m iscellaneous">Miscellaneous</a>
+                                </li>
                             </ul>
                         </li>
 

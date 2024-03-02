@@ -26,8 +26,6 @@ class Router
             $url !== "/tosed-farms/admin/register"
             &&
             $url !== "/tosed-farms/admin/authenticate"
-            &&
-            $url !== "/tosed-farms/admin/logout"
             ){
                 // Perform session check for admin area
                 $this->checkAdminSession();

@@ -112,13 +112,14 @@
                                         <?php
                                             foreach ($data['products'] as $product) {
                                             $in_stock = $product['availability_status'] === 1; 
+                                            $formatted_brand_name = strtolower(join("-", explode(" ", $product['brand_name'])));
                                         ?>
                                         <tr>
                                             <td><?= $product['name'] ?></td>
                                             <td><?= $product['description'] ?></td>
-                                            <td data-brand-id="<?= $product['brand_id'] ?>"><a href="#"><?= $product['brand_name'] ?></a></td>
+                                            <td data-brand-id="<?= $product['brand_id'] ?>"><a href="<?= BASE_URL . "/admin/products/brand/" . $formatted_brand_name . "/"?>"><?= $product['brand_name'] ?></a></td>
                                             <td><?= $product['net_weight'] ?></td>
-                                            <td>₦ <?= $product['price'] ?></td>
+                                            <td>₦ <?= number_format($product['price'], 2, '.', ',') ?></td>
                                             <td>
                                                 <span class="badge badge-<?= $in_stock? "success" : "danger" ?>"><?= $in_stock? "In Stock" : "Out of stock" ?></span>
                                             </td>

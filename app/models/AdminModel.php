@@ -18,8 +18,8 @@ class AdminModel {
                     $token = bin2hex(random_bytes(16));
                     setcookie('remember_token', $token, time() + (86400 * 30), '/');
                     // Update 'remember_token' field in database
-                    $stmt = $pdo->prepare("UPDATE admins SET remember_token = :token WHERE id = :id");
-                    $stmt->execute([':token' => $token, ':id' => $admin['id']]);
+                    $stmt = $pdo->prepare("UPDATE admins SET remember_token = :token WHERE admin_id = :id");
+                    $stmt->execute([':token' => $token, ':id' => $admin['admin_id']]);
                 }
 
                 return $admin;
