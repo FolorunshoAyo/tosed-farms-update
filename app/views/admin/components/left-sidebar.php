@@ -57,7 +57,7 @@
                                     <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/feed-additives"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/feed-additives">Feed Additives</a>
                                 </li>
                                 <li class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/miscellaneous"? "mm-active" : "" ?>">
-                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/miscellaneous"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/m iscellaneous">Miscellaneous</a>
+                                    <a class="<?= $data['current_page'] === "/tosed-farms/admin/products/unbranded/miscellaneous"? "active" : "" ?>" href="<?= BASE_URL ?>/admin/products/unbranded/miscellaneous">Miscellaneous</a>
                                 </li>
                             </ul>
                         </li>

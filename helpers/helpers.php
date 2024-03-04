@@ -41,3 +41,8 @@ function matchUrlPattern($realUrl, $patternUrl) {
     return preg_match($pattern, $realUrl);
 }
 
+
+function convertToSlug($string){
+    return strtolower(join("-", explode(" ", $string)));
+}
+

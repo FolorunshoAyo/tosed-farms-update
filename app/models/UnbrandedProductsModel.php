@@ -1,19 +1,33 @@
 <?php
 class UnBrandedProductsModel
 {
-    // public static function countAll($category){
-    //     try{
-    //         global $pdo;
+    public static function total(){
+        try{
+            global $pdo;
 
-    //         $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM unbranded_products WHERE category = '$category'");
-    //         $stmt->execute();
-    //         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM unbranded_products");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    //         return $result['total'];
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
+            return $result['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function countAll($category){
+        try{
+            global $pdo;
+
+            $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM unbranded_products WHERE category = '$category'");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     
     public static function create($category, $name, $manufacturer, $availability_status, $description, $price)
     {

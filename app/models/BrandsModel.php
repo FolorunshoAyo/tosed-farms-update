@@ -1,6 +1,22 @@
 <?php
 class BrandsModel
 {
+    public static function total() {
+        try{
+            global $pdo;
+
+            $query = "SELECT COUNT(*) as total FROM brands";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brandsTotal = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $brandsTotal['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function createBrand($name, $category, $image_url, $featured_status, $visibility_status)
     {
         try{

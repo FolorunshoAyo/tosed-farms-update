@@ -1,6 +1,20 @@
 <?php
 class BrandedProductsModel
 {
+    public static function total(){
+        try{
+            global $pdo;
+
+            $stmt = $pdo->prepare("SELECT COUNT(*) AS total FROM branded_products");
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function countAll($brand_id){
         try{
             global $pdo;

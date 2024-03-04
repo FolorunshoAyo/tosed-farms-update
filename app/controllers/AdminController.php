@@ -4,6 +4,7 @@ require_once MODEL_PATH . '/AdminModel.php';
 require_once MODEL_PATH . '/BrandsModel.php';
 require_once MODEL_PATH . '/BrandedProductsModel.php';
 require_once MODEL_PATH . '/UnbrandedProductsModel.php';
+require_once MODEL_PATH . '/BlogPostsModel.php';
 
 class AdminController {
     public function login() {
@@ -99,6 +100,9 @@ class AdminController {
     public function dashboard() { 
         $data = [
             'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'total_products' => UnBrandedProductsModel::total() + BrandedProductsModel::total(),
+            'total_brands' => BrandsModel::total(),
+            'brands' => BrandsModel::getAllBrands(),
             'current_page' => $_SERVER['REQUEST_URI']
         ];
 
@@ -578,5 +582,141 @@ class AdminController {
             redirect(BASE_URL . '/admin/products/unbranded/miscellaneous');
         }
 
+    }
+
+    public function blogsList($category = ""){
+        $category = ($category !== "") ? join(" ",explode("-", $category[0])) : "";
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        $totalPosts = BlogPostsModel::total();
+        $totalPages = ceil($totalPosts / $limit);
+        
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'blogs' => BlogPostsModel::getAllBlogPosts($category, $limit, $offset),
+            'totalPages' => $totalPages,
+            'categories' => BlogPostsModel::getAllBlogCategories(),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/blogs.php';
+    } 
+
+    public function blogSingle($params){
+        $post_title = join(" ", explode("-", $params[0]));
+
+        $post = BlogPostsModel::getBlogPostByTitle($post_title);
+
+        if(!$post){
+            redirect(BASE_URL . "/admin/blogs");
+            return;
+        }
+
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'post' => $post,
+            'categories' => BlogPostsModel::getAllBlogCategories(),
+            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3)
+        ];
+
+        include VIEW_PATH . '/admin/single-post.php';
+    }
+
+    public function newBlogPostForm(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'categories' => BlogPostsModel::getAllBlogCategories()
+        ];
+
+        include VIEW_PATH . '/admin/new-blog.php';
+    }
+
+    public function newBlogPost(){
+        $admin_id = $_SESSION['admin_id'];
+        $featured_image = $_FILES['featured_image'];
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $action = $_POST['action'] ?? '';
+        $category= $_POST['category'] ?? '';
+
+        if (empty($featured_image['name']) || empty($title) || empty($content) || empty($action) || empty($category)) {
+            $_SESSION['error_message'] = 'The brand image, name and category fields are required.';
+            redirect(BASE_URL . '/admin/post/new');
+            return;
+        }
+
+        $file = basename($featured_image["name"]);
+        $targetDir = "blog-images/";
+        $targetPath = $targetDir . $file;
+        
+        if(move_uploaded_file($featured_image["tmp_name"], $targetPath)){
+            // Create new blog post record in the database
+            if (BlogPostsModel::create($admin_id, $category, $file, $title, $content, $action)) {
+                $_SESSION['success_message'] = 'New Post Added Successfully!';
+                redirect(BASE_URL . '/admin/blogs');
+            } else {
+                // Insertion failed, redirect back to new post form with error
+                $_SESSION['error_message'] = 'Update failed. Please try again.';
+                $_SESSION['content_recover'] = $content;
+                redirect(BASE_URL . '/admin/post/new');
+            }
+        }
+    }
+
+    public function editBlogPostForm($params){
+        $post_id = $params[0];
+        $post = BlogPostsModel::getBlogPost($post_id);
+
+        if(!$post){
+            redirect(BASE_URL . "/admin/blogs");
+            return;
+        }
+
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'post' => $post,
+            'categories' => BlogPostsModel::getAllBlogCategories()
+        ];
+
+        include VIEW_PATH . '/admin/new-blog.php';
+    }
+
+    public function editBlogPost($params) { 
+        // Collect form data
+        $post_id = $params[0];
+        $featured_image = $_FILES['featured_image'];
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
+        $action = $_POST['action'] ?? '';
+        $category= $_POST['category'] ?? '';
+        
+        // Server-side validation
+        if (empty($featured_image['name']) || empty($title) || empty($content) || empty($action) || empty($category)) {
+            $_SESSION['error_message'] = 'All fields are required.';
+            redirect(BASE_URL . '/admin/blogs/');
+            return;
+        }
+
+        $file = basename($featured_image["name"]);
+        $targetDir = "brand-images/";
+        $targetPath = $targetDir . $file;
+        
+        if(move_uploaded_file($featured_image["tmp_name"], $targetPath)){
+            // Create new brand record in the database
+            if (BlogPostsModel::update($post_id, $file, $category, $category, $title, $content, $action)) {
+                $_SESSION['success_message'] = 'Blog Post Updated Successfully!';
+                redirect(BASE_URL . "/admin/post/$post_id/edit");
+            } else {
+                // Insertion failed, redirect back to new brand form with error
+                $_SESSION['error_message'] = 'Update failed. Please try again.';
+                redirect(BASE_URL . "/admin/post/$post_id/edit");
+            }
+        }
+        
     }
 }

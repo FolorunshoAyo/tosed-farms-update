@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Admin Login | Tosed Integrated Farm Ventures</title>
+    <title>Welcome <?= $data['admin_details']['first_name'] . " " . $data['admin_details']['last_name']  ?> | Tosed Integrated Farm Ventures</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Responsive bootstrap 4 admin template" name="description" />
     <meta content="Coderthemes" name="author" />
@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="wigdet-two-content media-body text-right">
                                         <p class="mt-1 text-uppercase font-weight-medium">Brands</p>
-                                        <h2 class="mb-2"><span data-plugin="counterup">2,562</span></h2>
+                                        <h2 class="mb-2"><span data-plugin="counterup"><?= $data['total_brands'] ?></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="wigdet-two-content media-body text-right">
                                         <p class="mt-1 text-uppercase font-weight-medium">Products</p>
-                                        <h2 class="mb-2"><span data-plugin="counterup">257</span></h2>
+                                        <h2 class="mb-2"><span data-plugin="counterup"><?= $data['total_products'] ?></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -110,62 +110,25 @@
                                 <h4 class="header-title mb-4">Recent Brands</h4>
 
                                 <div class="inbox-widget slimscroll" style="max-height: 360px;">
-                                    <a href="#">
+                                    <?php
+                                    foreach($data['brands'] as $brand){
+                                        $brandName = strtolower(join("-", explode(" ",$brand['name'])));
+                                    ?>
+                                    <a href="<?= BASE_URL . "/admin/products/brand/" . $brandName . "/"?>">
                                         <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author"><a href="#">Kapro</a></p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span> <i class="mdi mdi-star mdi-18px" style="vertical-align: middle; color: yellow;"></i></p>
+                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/brand-images/<?= $brand['image_url'] ?>" class="rounded-circle" alt=""></div>
+                                            <p class="inbox-item-author"><a href="<?= BASE_URL . "/admin/products/brand/" . $brandName . "/"?>"><?= $brand['name'] ?></a></p>
+                                            <p class="inbox-item-date">
+                                                <?php
+                                                    echo $brand['visibility_status'] === 1? "<span class='badge badge-success'>Published</span>" : "<span class='badge badge-warning'>Hidden</span>";
+                                                    echo $brand['featured_status'] === 1? "<i class='mdi mdi-star mdi-18px' style='vertical-align: middle; color: yellow;''></i>" : "";
+                                                ?>
+                                            </p>
                                         </div>
                                     </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-warning">Hidden</span></p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span></p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date">12:20 PM</p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span></p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span></p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span></p>
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img"><img src="<?= BASE_URL ?>/admin-assets/images/tosed-logo/kapro-logo.png" class="rounded-circle" alt=""></div>
-                                            <p class="inbox-item-author">Kapro</p>
-                                            <p class="inbox-item-date"><span class="badge badge-success">Published</span></p>
-                                        </div>
-                                    </a>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
 
                             </div>
@@ -265,9 +228,9 @@
     <!-- END wrapper -->
 
     <!-- Vendor js -->
-    <script src="<?= BASE_URL ?>/admin-assets//js/vendor.min.js"></script>
+    <script src="<?= BASE_URL ?>/admin-assets/js/vendor.min.js"></script>
     <!-- App js -->
-    <script src="<?= BASE_URL ?>/admin-assets//js/app.min.js"></script>
+    <script src="<?= BASE_URL ?>/admin-assets/js/app.min.js"></script>
 
 </body>
 </html>
