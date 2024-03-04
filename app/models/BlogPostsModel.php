@@ -107,8 +107,10 @@ class BlogPostsModel{
         try{
             global $pdo;
 
-            $query = "SELECT *
+            $query = "SELECT blog_posts.*, blog_categories.*, admins.*
             FROM blog_posts
+            INNER JOIN blog_categories ON  blog_posts.category_id = blog_categories.category_id
+            INNER JOIN admins ON blog_posts.admin_id = admins.admin_id
             WHERE post_id = ?";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$post_id]);

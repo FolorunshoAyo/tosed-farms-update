@@ -598,7 +598,8 @@ class AdminController {
             'blogs' => BlogPostsModel::getAllBlogPosts($category, $limit, $offset),
             'totalPages' => $totalPages,
             'categories' => BlogPostsModel::getAllBlogCategories(),
-            'current_page' => $_SERVER['REQUEST_URI']
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3)
         ];
 
         include VIEW_PATH . '/admin/blogs.php';
@@ -683,7 +684,7 @@ class AdminController {
             'categories' => BlogPostsModel::getAllBlogCategories()
         ];
 
-        include VIEW_PATH . '/admin/new-blog.php';
+        include VIEW_PATH . '/admin/edit-blog.php';
     }
 
     public function editBlogPost($params) { 

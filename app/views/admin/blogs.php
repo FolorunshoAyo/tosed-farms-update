@@ -99,6 +99,7 @@
                                                                 <?= $post['status'] === "1"? '<span class="badge badge-warning">Draft</span>' : '<span class="badge badge-success">Published</span>' ?>
                                                                 </div>
                                                                 <div class="text-right">
+                                                                <a href="<?= BASE_URL . "/admin/post/". $post['post_id'] .  "/edit" ?>" class="btn btn-warning btn-sm waves-effect waves-light">Edit <i class="mdi mdi-arrow-right ml-1"></i></a>
                                                                     <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                                                                 </div>
 
@@ -175,52 +176,34 @@
                                             <h5 class="text-uppercase mb-4">Categories</h5>
 
                                             <ul class="blog-categories-list list-unstyled">
-                                                <li><a href="#">Lifestyle</a></li>
-                                                <li><a href="#">Music</a></li>
-                                                <li><a href="#">Travel</a></li>
-                                                <li><a href="#">Fashion</a></li>
-                                                <li><a href="#">Videos</a></li>
+                                                <?php
+                                                foreach($data['categories'] as $category):
+                                                ?>
+                                                    <li><a href="<?= BASE_URL . "/admin/blogs/category/" . $category['name'] ?>"><?= $category['name'] ?></a></li>
+                                                <?php endforeach; ?>
                                             </ul>
                                         </div>
 
                                         <div class="mt-5">
                                             <h5 class="text-uppercase mb-4">Latest Post</h5>
 
+                                            <?php
+                                                foreach($data['latest_posts'] as $latest_post):
+                                            ?>
+
                                             <div class="media latest-post-item mt-3 mt-lg-0">
                                                 <div class="media-left mr-2">
-                                                    <a href="#"> <img class="rounded" alt="64x64" src="assets/images/small/img-1.jpg" style="width: 100px; height: 66px;"> </a>
+                                                    <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($latest_post['title']) ?>"> <img class="rounded" alt="" src="<?= BASE_URL . "/blog-images/" . $latest_post['featured_image'] ?>" style="width: 100px; height: 66px;"> </a>
                                                 </div>
                                                 <div class="media-body">
-                                                    <h5 class="media-heading mt-0 mb-1"><a href="#" class="text-muted font-15" >Exclusive: Get a First Look at the Fall Collection</a> </h5>
+                                                    <h5 class="media-heading mt-0 mb-1"><a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($latest_post['title']) ?>" class="text-muted font-15" ><?= $latest_post['title'] ?></a> </h5>
                                                     <p class="font-12 text-muted">
-                                                        Dec 03, 2018 | John Deo
+                                                        <?= date("M d, Y", strtotime($latest_post['date_posted'])) ?> | <?= $latest_post['first_name'] . " " . $latest_post['last_name'] ?>
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <div class="media latest-post-item mt-3 mt-lg-0">
-                                                <div class="media-left mr-2">
-                                                    <a href="#"> <img class="rounded" alt="64x64" src="assets/images/small/img-3.jpg" style="width: 100px; height: 66px;"> </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading mt-0 mb-1"><a href="#" class="text-muted font-15" >The Most overtt Impressive London Streets</a> </h5>
-                                                    <p class="font-12 text-muted">
-                                                        Dec 07, 2018 | John Deo
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="media latest-post-item mt-3 mt-lg-0">
-                                                <div class="media-left mr-2">
-                                                    <a href="#"> <img class="rounded" alt="64x64" src="assets/images/small/img-4.jpg" style="width: 100px; height: 66px;"> </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading mt-0 mb-1"><a href="#" class="text-muted font-15" >How To Beat The Heat</a> </h5>
-                                                    <p class="font-12 text-muted">
-                                                        Dec 21, 2018 | John Deo
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            <?php endforeach; ?>
 
                                         </div>
                                     </div>
