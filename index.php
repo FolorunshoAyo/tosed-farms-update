@@ -47,8 +47,8 @@ $router->get('/tosed-farms/admin/products/unbranded/miscellaneous', 'AdminContro
 $router->get('/tosed-farms/admin/products/unbranded/miscellaneous/new', 'AdminController@newMiscellaneousForm'); 
 $router->post('/tosed-farms/admin/products/unbranded/miscellaneous/new', 'AdminController@newMiscellaneous'); 
 $router->post('/tosed-farms/admin/products/unbranded/miscellaneous/edit', 'AdminController@editMiscellaneous'); 
-$router->get('/tosed-farms/admin/blogs', 'AdminController@blogsList'); 
-$router->get('/tosed-farms/admin/blogs/category/:category', 'AdminController@blogsList'); 
+$router->get('/tosed-farms/admin/posts', 'AdminController@blogsList'); 
+$router->get('/tosed-farms/admin/posts/category/:category', 'AdminController@blogsList'); 
 $router->get('/tosed-farms/admin/post/single/:title', 'AdminController@blogSingle'); 
 $router->get('/tosed-farms/admin/post/new', 'AdminController@newBlogPostForm'); 
 $router->post('/tosed-farms/admin/post/new', 'AdminController@newBlogPost'); 

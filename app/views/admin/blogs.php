@@ -60,6 +60,7 @@
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="p-4">
+                                        
                                         <?php if (isset($_SESSION['error_message'])): ?>
                                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                                 <i class="mdi mdi-block-helper mr-2"></i> <?= $_SESSION['error_message'] ?>
@@ -95,11 +96,11 @@
                                                                 <div class="post-title">
                                                                     <h5><a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>"><?= $post['title'] ?></a></h5>
                                                                 </div>
-                                                                <div>
+                                                                <div class="mb-2">
                                                                 <?= $post['status'] === "1"? '<span class="badge badge-warning">Draft</span>' : '<span class="badge badge-success">Published</span>' ?>
                                                                 </div>
                                                                 <div class="text-right">
-                                                                <a href="<?= BASE_URL . "/admin/post/". $post['post_id'] .  "/edit" ?>" class="btn btn-warning btn-sm waves-effect waves-light">Edit <i class="mdi mdi-arrow-right ml-1"></i></a>
+                                                                    <a href="<?= BASE_URL . "/admin/post/". $post['post_id'] .  "/edit" ?>" class="btn btn-warning btn-sm waves-effect waves-light">Edit <i class="mdi mdi-arrow-right ml-1"></i></a>
                                                                     <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                                                                 </div>
 
@@ -179,7 +180,7 @@
                                                 <?php
                                                 foreach($data['categories'] as $category):
                                                 ?>
-                                                    <li><a href="<?= BASE_URL . "/admin/blogs/category/" . $category['name'] ?>"><?= $category['name'] ?></a></li>
+                                                    <li><a href="<?= BASE_URL . "/admin/posts/category/" . $category['name'] ?>"><?= $category['name'] ?></a></li>
                                                 <?php endforeach; ?>
                                             </ul>
                                         </div>

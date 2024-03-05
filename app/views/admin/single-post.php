@@ -77,7 +77,10 @@
                                             </div>
 
                                             <div class="card-body">
-                                                <div class="text-muted"><span>by <a class="text-dark"><?= $post['first_name'] . " " . $post['last_name'] ?></a>,</span> <span><?= date("M d, Y", strtotime($post['date_posted'])) ?>.</span></div>
+                                                <div class="text-muted d-flex align-items-center justify-content-between flex-wrap">
+                                                    <span>by <a class="text-dark mb-2"><?= $post['first_name'] . " " . $post['last_name'] ?></a>, <?= date("M d, Y", strtotime($post['date_posted'])) ?>.</span>
+                                                    <a href="<?= BASE_URL . "/admin/post/". $post['post_id'] .  "/edit" ?>" class="btn btn-warning btn-sm waves-effect waves-light">Edit Post</a>
+                                                </div>
                                                 <div class="post-title">
                                                     <h5><?= $post['title'] ?></h5>
                                                 </div>
@@ -85,7 +88,6 @@
                                                     <?= $post['content'] ?>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <hr/>
@@ -292,7 +294,7 @@
                                                 <?php
                                                 foreach($data['categories'] as $category):
                                                 ?>
-                                                    <li><a href="<?= BASE_URL . "/admin/blogs/category/" . $category['name'] ?>"><?= $category['name'] ?></a></li>
+                                                    <li><a href="<?= BASE_URL . "/admin/posts/category/" . $category['name'] ?>"><?= $category['name'] ?></a></li>
                                                 <?php endforeach; ?>
                                             </ul>
                                         </div>
@@ -334,15 +336,7 @@
             
 
             <!-- Footer Start -->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
-                            2018 - 2020 &copy; Zircos theme by <a href="#">Coderthemes</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <?php include VIEW_PATH . "/admin/components/footer.php" ?>
             <!-- end Footer -->
 
         </div>

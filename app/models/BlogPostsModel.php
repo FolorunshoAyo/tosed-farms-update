@@ -38,28 +38,28 @@ class BlogPostsModel{
             SET category_id = ?, featured_image = ?, title = ?, content = ?, status = ?
             WHERE post_id = ?";
             $stmt = $pdo->prepare($query);
-            return $stmt->execute([$category_id, $title, $featured_image, $content, $status, $post_id]);
+            return $stmt->execute([$category_id, $featured_image, $title, $content, $status, $post_id]);
 
         }catch (PDOException $e) {
             return false;
         }
     }
 
-    // public static function updateWithoutImage($post_id, $name, $category_id, $title, $content, $status)
-    // {
-    //     try{
-    //         global $pdo;
+    public static function updateWithoutImage($post_id, $category_id, $title, $content, $status)
+    {
+        try{
+            global $pdo;
 
-    //         $query = "UPDATE blog_posts
-    //         SET name = ?, category_id = ?, title = ?, content = ?, status = ?
-    //         WHERE post_id = ?";
-    //         $stmt = $pdo->prepare($query);
-    //         return $stmt->execute([$name, $category_id, $title, $content, $status, $post_id]);
+            $query = "UPDATE blog_posts
+            SET category_id = ?, title = ?, content = ?, status = ?
+            WHERE post_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$category_id, $title, $content, $status, $post_id]);
 
-    //     }catch (PDOException $e) {
-    //         return false;
-    //     }
-    // }
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 
     public static function getAllBlogPosts($category, $limit, $offset) {
         if($category === ''){

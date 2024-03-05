@@ -62,16 +62,19 @@
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="javascript: void(0);" class="waves-effect waves-light">
+                        <li class="<?= strpos($data['current_page'], "/tosed-farms/admin/post") === 0? "mm-active" : "" ?>">
+                            <a href="javascript: void(0);" class="waves-effect waves-light <?= strpos($data['current_page'], "/tosed-farms/admin/post") === 0? "active" : "" ?>">
                                 <i class="mdi mdi-comment-text-outline"></i>
-                                <span>  Blog  </span>
+                                <span>  Posts  </span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="nav-second-level" aria-expanded="false">
-                                <li><a href="blogs-blog-list.html">Blog List</a></li>
-                                <li><a href="blogs-blog-post.html">Blog Post</a></li>
-                                <li><a href="blogs-blog-add.html">Add Blog</a></li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/posts"? "mm-active" : "" ?>">
+                                    <a href="<?= BASE_URL ?>/admin/posts" class="<?= $data['current_page'] === "/tosed-farms/admin/posts"? "active" : "" ?>">View All</a>
+                                </li>
+                                <li class="<?= $data['current_page'] === "/tosed-farms/admin/post/new"? "mm-active" : "" ?>">
+                                    <a href="<?= BASE_URL ?>/admin/post/new" class="<?= $data['current_page'] === "/tosed-farms/admin/post/new"? "active" : "" ?>">Add New Post</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>

@@ -72,11 +72,32 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-10">
                             <div class="card-box">
+
+                                <?php if (isset($_SESSION['error_message'])): ?>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-block-helper mr-2"></i> <?= $_SESSION['error_message'] ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <?php unset($_SESSION['error_message']); ?>
+                                <?php endif; ?>
+
+                                <?php if (isset($_SESSION['success_message'])): ?>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <i class="mdi mdi-check-all mr-2"></i> <?= $_SESSION['success_message'] ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <?php unset($_SESSION['success_message']); ?>
+                                <?php endif; ?>
+                                
                                 <div class="">
                                     <form id="new-blog-form" action="<?= BASE_URL ?>/admin/post/<?= $post['post_id']?>/edit" method="post" enctype="multipart/form-data">
                                         <div class="form-group mb-4">
                                             <label for="featured_image">Featured Image Upload</label>
-                                            <input id="featured_image" type="file" name="featured_image" class="dropify" accept="image/*" data-height="210" data-default-file="<?= BASE_URL . "/blog-images/" . $post['featured_image'] ?>" required/>
+                                            <input id="featured_image" type="file" name="featured_image" class="dropify" accept="image/*" data-height="210" data-show-remove="false" data-default-file="<?= BASE_URL . "/blog-images/" . $post['featured_image'] ?>"/>
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="title">Post Title</label>
@@ -104,7 +125,7 @@
                                         </div>
                                         <button type="submit" name="action" value="2" class="btn btn-success waves-effect waves-light mr-1">Save and Republish</button>
                                         <button type="submit" name="action" value="1" class="btn btn-warning waves-effect waves-light mr-1">Save as Draft</button>
-                                        <a href="<?= BASE_URL ?>/admin/blogs" class="btn btn-danger waves-effect waves-light">Discard</a>
+                                        <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['post_id']) ?>" class="btn btn-danger waves-effect waves-light">Cancel</a>
                                     </form>
                                 </div>
                             </div>

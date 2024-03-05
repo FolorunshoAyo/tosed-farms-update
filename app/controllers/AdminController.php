@@ -695,28 +695,49 @@ class AdminController {
         $content = $_POST['content'] ?? '';
         $action = $_POST['action'] ?? '';
         $category= $_POST['category'] ?? '';
-        
+
         // Server-side validation
-        if (empty($featured_image['name']) || empty($title) || empty($content) || empty($action) || empty($category)) {
+        if (empty($title) || empty($content) || empty($action) || empty($category)) {
             $_SESSION['error_message'] = 'All fields are required.';
-            redirect(BASE_URL . '/admin/blogs/');
+            redirect(BASE_URL . "/admin/post/$post_id/edit");
             return;
         }
 
-        $file = basename($featured_image["name"]);
-        $targetDir = "brand-images/";
-        $targetPath = $targetDir . $file;
-        
-        if(move_uploaded_file($featured_image["tmp_name"], $targetPath)){
-            // Create new brand record in the database
-            if (BlogPostsModel::update($post_id, $file, $category, $category, $title, $content, $action)) {
-                $_SESSION['success_message'] = 'Blog Post Updated Successfully!';
-                redirect(BASE_URL . "/admin/post/$post_id/edit");
-            } else {
-                // Insertion failed, redirect back to new brand form with error
-                $_SESSION['error_message'] = 'Update failed. Please try again.';
-                redirect(BASE_URL . "/admin/post/$post_id/edit");
+        if(!empty($featured_image['name'])){
+            $file = basename($featured_image["name"]);
+            $targetDir = "blog-images/";
+            $targetPath = $targetDir . $file;
+
+            if(move_uploaded_file($featured_image["tmp_name"], $targetPath)){
+                // Create new brand record in the database
+                if (BlogPostsModel::update($post_id, $file, $category, $title, $content, $action)) {
+                    if($action === "1"){
+                        $_SESSION['success_message'] = 'Blog Post Updated and Saved As Draft Successfully!';
+                    }else{
+                        $_SESSION['success_message'] = 'Blog Post Updated Successfully!';
+                    }
+
+                    redirect(BASE_URL . "/admin/post/$post_id/edit");
+                } else {
+                    // Insertion failed, redirect back to new brand form with error
+                    $_SESSION['error_message'] = 'Update failed. Please try again.';
+                    redirect(BASE_URL . "/admin/post/$post_id/edit");
+                }
             }
+        }
+
+        if (BlogPostsModel::updateWithoutImage($post_id, $title, $category, $title, $content, $action)) {
+            if($action === "1"){
+                $_SESSION['success_message'] = 'Blog Post Updated and Saved As Draft Successfully!';
+            }else{
+                $_SESSION['success_message'] = 'Blog Post Updated Successfully!';
+            }
+
+            redirect(BASE_URL . "/admin/post/$post_id/edit");
+        } else {
+            // Insertion failed, redirect back to new brand form with error
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/$post_id/edit");
         }
         
     }
