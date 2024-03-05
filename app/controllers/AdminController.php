@@ -5,6 +5,8 @@ require_once MODEL_PATH . '/BrandsModel.php';
 require_once MODEL_PATH . '/BrandedProductsModel.php';
 require_once MODEL_PATH . '/UnbrandedProductsModel.php';
 require_once MODEL_PATH . '/BlogPostsModel.php';
+require_once MODEL_PATH . '/BlogCommentsModel.php';
+require_once MODEL_PATH . '/BlogCommentRepliesModel.php';
 
 class AdminController {
     public function login() {
@@ -620,7 +622,9 @@ class AdminController {
             'current_page' => $_SERVER['REQUEST_URI'],
             'post' => $post,
             'categories' => BlogPostsModel::getAllBlogCategories(),
-            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3)
+            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3),
+            'comments_total' => BlogCommentsModel::total($post['post_id']),
+            'comments' => BlogCommentsModel::getAllComments($post['post_id'])
         ];
 
         include VIEW_PATH . '/admin/single-post.php';
@@ -740,5 +744,37 @@ class AdminController {
             redirect(BASE_URL . "/admin/post/$post_id/edit");
         }
         
+    }
+
+    public function newPostComment($params){
+        $post_id = $params[0];
+        $admin_id = $_SESSION['admin_id'];
+        $message = $_POST['message'] ?? '';
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']); 
+
+        if (empty($message)) {
+            $_SESSION['new_comment_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#commentForm");
+            return;
+        }
+
+        if (BlogCommentsModel::createComment($post_id, $message, $admin_id)) {
+            // insertion successful, redirect to post page with uploaded comment
+            $_SESSION['new_comment_success_message'] = 'Comment Added Successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#commentForm");
+        }
+
+    }
+
+    public function approveComment($params){
+        
+    }
+
+    public function disproveComment($params){
+
     }
 }

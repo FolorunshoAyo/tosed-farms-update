@@ -54,6 +54,9 @@ $router->get('/tosed-farms/admin/post/new', 'AdminController@newBlogPostForm');
 $router->post('/tosed-farms/admin/post/new', 'AdminController@newBlogPost'); 
 $router->get('/tosed-farms/admin/post/:id/edit', 'AdminController@editBlogPostForm');
 $router->post('/tosed-farms/admin/post/:id/edit', 'AdminController@editBlogPost'); 
+$router->post('/tosed-farms/admin/post/:id/comment/new', 'AdminController@newPostComment'); 
+$router->post('/tosed-farms/admin/post/comment/approve/:id', 'AdminController@approveComment'); 
+$router->get('/tosed-farms/admin/post/comment/unapprove/:id', 'AdminController@disproveComment'); 
 
 // Dispatch the request
 $router->dispatch();

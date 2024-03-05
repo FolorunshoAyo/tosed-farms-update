@@ -92,167 +92,157 @@
 
                                         <hr/>
 
-                                        <div class="mt-5 blog-post-comment">
-                                            <h5 class="text-uppercase mb-4">Comments <small>(4)</small></h5>
+                                        <div id="comments" class="mt-5 blog-post-comment">
+                                            <h5 class="text-uppercase mb-4">Comments (<?= $data['comments_total'] ?>)</h5>
 
-                                            <ul class="media-list pl-0">
+                                            <?php if (isset($_SESSION['new_comment_success_message'])): ?>
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    <i class="mdi mdi-check-all mr-2"></i> <?= $_SESSION['new_comment_success_message'] ?>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <?php unset($_SESSION['new_comment_success_message']); ?>
+                                            <?php endif; ?>
 
-                                                <li class="media">
-                                                    <a class="mr-2" href="#">
-                                                        <img class="media-object rounded-circle" src="assets/images/avatar.jpg" alt="img">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <h5 class="font-18 media-heading mt-0">Johnathan deo</h5>
-                                                        <h6 class="text-muted">Nov 23, 2016, 11:45 am</h6>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-                                                        <div class="my-1 d-flex flex-wrap">
-                                                            <a href="#" class="text-danger mr-2">Unapprove</a>
-                                                            <a href="#" data-comment-type="comment" data-edit-id="1" class="text-success mr-2">Edit</a>
-                                                            <a href="#" data-toggle="comment-1" class="text-success">Reply</a>
-                                                        </div>
-                                                        <div class="reply_form my-4" id="comment-1" style="display: none;">
-                                                            <button
-                                                            style="float: right;"
-                                                            type="button"
-                                                            class="btn btn-danger mb-4"
-                                                            data-dismiss="comment-1"
-                                                            aria-label="Close"
-                                                            >
-                                                            <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            <h5 class="text-uppercase my-2">Reply to Johnathan deo</h5>
-                                                            <form>
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" id="message2" name="message" rows="5" placeholder="Message" required=""></textarea>
-                                                                </div>
-                                                                <!-- /Form Msg -->
-                
-                                                                <div class="row">
-                                                                    <div class="col-12">
-                                                                        <div class="">
-                                                                            <button type="submit" class="btn btn-primary" id="send">Submit</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /col -->
-                                                                </div>
-                                                                <!-- /row -->
-                
-                                                            </form>
-                                                        </div>            
-                                                    </div>
-                                                </li>
-
-                                                <li class="media">
-                                                    <a class="mr-2" href="#">
-                                                        <img class="media-object rounded-circle" src="assets/images/avatar.jpg" alt="img">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <h5 class="font-18 media-heading mt-0">John deo</h5>
-                                                        <h6 class="text-muted">Nov 25, 2018, 11:45 am</h6>
-                                                        <p>Nulla venenatis. In pede mi, aliquet sit amet, euismod in, auctor ut, ligula. Aliquam dapibus tincidunt metus. Praesent justo dolor, lobortis quis, lobortis dignissim, pulvinar ac, lorem. Vestibulum sed ante.</p>
-                                                        <div class="my-1 d-flex flex-wrap">
-                                                            <a href="#" class="text-warning mr-2">Approve</a>
-                                                            <a href="#" data-comment-type="comment" data-edit-id="2" class="text-success mr-2">Edit</a>
-                                                            <a href="#" data-toggle="comment-2" class="text-success">Reply</a>
-                                                        </div>
-                                                        <div class="reply_form my-4" id="comment-2" style="display: none;">
-                                                            <button
-                                                            style="float: right;"
-                                                            type="button"
-                                                            class="btn btn-danger mb-4"
-                                                            data-dismiss="comment-2"
-                                                            aria-label="Close"
-                                                            >
-                                                            <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            <h5 class="text-uppercase my-2">Reply to John Deo</h5>
-                                                            <form>
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" id="message2" name="message" rows="5" placeholder="Message" required=""></textarea>
-                                                                </div>
-                                                                <!-- /Form Msg -->
-                
-                                                                <div class="row">
-                                                                    <div class="col-12">
-                                                                        <div class="">
-                                                                            <button type="submit" class="btn btn-primary" id="send">Submit</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- /col -->
-                                                                </div>
-                                                                <!-- /row -->
-                
-                                                            </form>
-                                                        </div>
-                                                        <div class="media sub_media">
-                                                            <a class="mr-2" href="#">
-                                                                <img class="media-object rounded-circle" src="assets/images/avatar.jpg" alt="img">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <h5 class="font-18 media-heading mt-0">Johnathan deo</h5>
-                                                                <h6 class="text-muted">Nov 25, 2018, 03:15 am</h6>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-                                                                <div class="my-1 d-flex flex-wrap">
-                                                                    <a href="#" class="text-danger mr-2">Unapprove</a>
-                                                                    <a href="#" data-comment-type="reply" data-edit-id="3" class="text-success mr-2">Edit</a>
-                                                                </div>
+                                            <?php if($data['comments_total'] > 0): ?>
+                                                <ul class="media-list pl-0">
+                                                    <?php
+                                                        foreach($data['comments'] as $comment):
+                                                    ?>
+                                                    <li class="media">
+                                                        <a class="mr-2" href="#">
+                                                            <img class="media-object rounded-circle" src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt="img">
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <h5 class="font-18 media-heading mt-0">
+                                                                <?php if(!empty($comment['admin_id'])){
+                                                                    // is admin
+                                                                    $admin = AdminModel::findById($comment['admin_id']);
+                                                                    if($admin['admin_id'] === $data['admin_details']['admin_id']){
+                                                                        $commenter = "You";
+                                                                        echo $commenter;
+                                                                    }else{
+                                                                        $commenter = $admin['first_name'] . " " . $admin['last_name'];
+                                                                        echo $commenter;
+                                                                    }
+                                                                 }elseif(!empty($user_id)){ 
+                                                                    // is registered user
+                                                                 } else {
+                                                                    $commenter = $comment['name'];
+                                                                    echo $commenter;
+                                                                 }
+                                                                ?>
+                                                            </h5>
+                                                            <h6 class="text-muted">
+                                                             <?= date('M d, Y, h:i a', strtotime($comment['date_posted'])) ?>
+                                                            </h6>
+                                                            <p>
+                                                                <?= $comment['message'] ?>
+                                                            </p>
+                                                            <div class="my-1 d-flex flex-wrap">
+                                                                <a href="#" data-comment-action="approve" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
+                                                                <a href="#" data-comment-type="comment" data-edit-id="<?= $comment['comment_id'] ?>" class="text-success mr-2">Edit</a>
+                                                                <a href="#" data-toggle="comment-<?= $comment['comment_id'] ?>" class="text-success">Reply</a>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                <li class="media">
-                                                    <a class="mr-2" href="#">
-                                                        <img class="media-object rounded-circle" src="assets/images/avatar.jpg" alt="">
-                                                    </a>
-                                                    <div class="media-body">
-                                                        <h5 class="font-18 media-heading mt-0">John deo</h5>
-                                                        <h6 class="text-muted">Nov 27, 2018, 11:45 am</h6>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-                                                        <div class="my-1 d-flex flex-wrap">
-                                                            <a href="#" class="text-danger mr-2">Unapprove</a>
-                                                            <a href="#" data-comment-type="comment" data-edit-id="3" class="text-success mr-2">Edit</a>
-                                                            <a href="#" data-toggle="comment-3" class="text-success">Reply</a>
-                                                        </div>
-                                                        <div class="reply_form my-4" id="comment-3" style="display: none;">
-                                                            <button
-                                                            style="float: right;"
-                                                            type="button"
-                                                            class="btn btn-danger mb-4"
-                                                            data-dismiss="comment-3"
-                                                            aria-label="Close"
-                                                            >
-                                                            <span aria-hidden="true">×</span>
-                                                            </button>
-                                                            <h5 class="text-uppercase my-2">Reply to John Deo</h5>
-                                                            <form>
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" id="message2" name="message" rows="5" placeholder="Message" required=""></textarea>
-                                                                </div>
-                                                                <!-- /Form Msg -->
-                
-                                                                <div class="row">
-                                                                    <div class="col-12">
-                                                                        <div class="">
-                                                                            <button type="submit" class="btn btn-primary" id="send">Submit</button>
+                                                            <div class="reply_form my-4" id="comment-<?= $comment['comment_id'] ?>" style="display: none;">
+                                                                <button
+                                                                style="float: right;"
+                                                                type="button"
+                                                                class="btn btn-danger mb-4"
+                                                                data-dismiss="comment-<?= $comment['comment_id'] ?>"
+                                                                aria-label="Close"
+                                                                >
+                                                                <span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h5 class="text-uppercase my-2">Reply to <?= $commenter ?></h5>
+                                                                <form id="replyForm-<?= $comment['comment_id'] ?>" action="#" method="post" onsubmit="return validateReplyForm(<?= $comment['comment_id'] ?>)">
+                                                                    <div class="form-group">
+                                                                        <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+                                                                    </div>
+                                                                    <!-- /Form Msg -->
+                    
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="">
+                                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /col -->
+                                                                    </div>
+                                                                    <!-- /row -->
+                    
+                                                                </form>
+                                                            </div>
+                                                            <?php
+                                                                $replies = BlogCommentsRepliesModel::getAllCommentReplies($comment['comment_id'])
+                                                            ?>
+                                                            <?php if(count($replies) > 0): ?>
+                                                                <?php foreach($replies as $reply): ?>
+                                                                    <div class="media sub_media">
+                                                                        <a class="mr-2" href="#">
+                                                                            <img class="media-object rounded-circle" src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt="img">
+                                                                        </a>
+                                                                        <div class="media-body">
+                                                                            <h5 class="font-18 media-heading mt-0">
+                                                                            <?php 
+                                                                                if(!empty($reply['admin_id'])){
+                                                                                    // is admin
+                                                                                    $admin = AdminModel::findById($reply['admin_id']);
+                                                                                    if($admin['admin_id'] === $data['admin_details']['admin_id']){
+                                                                                        $replier = "You";
+                                                                                        echo $replier;
+                                                                                    }else{
+                                                                                        $replier = $admin['first_name'] . " " . $admin['last_name'];
+                                                                                        echo $replier;
+                                                                                    }
+                                                                                }elseif(!empty($user_id)){ 
+                                                                                    // is registered user
+                                                                                } else {
+                                                                                    $replier = $reply['name'];
+                                                                                    echo $replier;
+                                                                                }
+                                                                            ?>
+                                                                            </h5>
+                                                                            <h6 class="text-muted">
+                                                                            <?= date('M d, Y, h:i a', strtotime($reply['date_posted'])) ?>
+                                                                            </h6>
+                                                                            <p>
+                                                                                <?= $reply['message'] ?>
+                                                                            </p>
+                                                                            <div class="my-1 d-flex flex-wrap">
+                                                                                <a href="#" data-reply-action="approve" data-reply-id="<?= $reply['reply_id'] ?>" class="text-danger mr-2">Unapprove</a>
+                                                                                <a href="#" data-comment-type="reply" data-edit-id="<?= $reply['reply_id'] ?>" class="text-success mr-2">Edit</a>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- /col -->
-                                                                </div>
-                                                                <!-- /row -->
-                
-                                                            </form>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
                                                         </div>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
+                                                    </li>
+                                                    <?php
+                                                        endforeach;
+                                                    ?>
+                                                </ul>
+                                            <?php else: ?>
+                                                <p class="text-center text-muted font-15">No comment in this post. Be the first to comment below.</p>
+                                            <?php endif; ?>
 
                                             <h5 class="text-uppercase mt-5 mb-4">Leave a comment</h5>
 
-                                            <form>
+                                            <?php if (isset($_SESSION['new_comment_error_message'])): ?>
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <i class="mdi mdi-block-helper mr-2"></i> <?= $_SESSION['new_comment_error_message'] ?>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <?php unset($_SESSION['new_comment_error_message']); ?>
+                                            <?php endif; ?>
+
+                                            <form id="commentForm" action="<?= BASE_URL ?>/admin/post/<?= $post['post_id'] ?>/comment/new" method="post" onsubmit="return validateCommentForm()">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" id="message2" name="message" rows="5" placeholder="Message" required=""></textarea>
+                                                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required=""></textarea>
                                                 </div>
                                                 <!-- /Form Msg -->
 
@@ -355,7 +345,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form id="editBrandForm" onsubmit="return validateForm()">
+                  <form id="editBrandForm" action="#" method="post" onsubmit="return validateForm()">
                     <div class="form-group">
                         <textarea id="comment" name="comment" class="form-control" rows="5"></textarea>
                     </div>
@@ -368,6 +358,122 @@
                         </button>
                         <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">
                             Close
+                        </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="approveCommentModal" tabindex="-1" aria-labelledby="approveCommentModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Approve Comment?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="approveCommentForm" action="#" method="post">
+
+                    <input id="hiddenId" type="hidden" name="commentId" value="1" />
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="disproveCommentModal" tabindex="-1" aria-labelledby="disproveCommentModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Unappprove Comment?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="disproveCommentForm" action="#" method="post">
+
+                    <input id="hiddenId" type="hidden" name="commentId" value="1" />
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="approveReplyModal" tabindex="-1" aria-labelledby="approveReplyModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Approve Reply?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="approveReplyForm" action="#" method="post">
+
+                    <input id="hiddenId" type="hidden" name="replyId" value="1" />
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="disproveReplyModal" tabindex="-1" aria-labelledby="disproveReplyModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Unappprove Reply?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="disproveReplyForm" action="#" method="post">
+
+                    <input id="hiddenId" type="hidden" name="replyId" value="1" />
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
                         </button>
                     </div>
                   </form>
@@ -405,27 +511,68 @@
 
                 const commentType = $(this).data("comment-type");
 
-                console.log("clicked");
-
                 if(commentType === "comment"){
                     $("#editCommentModal .modal-title").text("Edit Comment");
 
-                    $("#hiddenId").attr("name", "commentId");
-                    $("#hiddenId").attr("value", $(this).data("edit-id"));
+                    $("#editCommentModal #hiddenId").attr("name", "commentId");
+                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id"));
 
-                    $("#comment").val($(this).parent().prev('p').text());
+                    $("#editCommentModal #comment").val($(this).parent().prev('p').text().trim());
 
                 }else{
                     $("#editCommentModal .modal-title").text("Edit Reply");
 
-                    $("#hiddenId").attr("name", "replyId");
-                    $("#hiddenId").attr("value", $(this).data("edit-id"));
+                    $("#editCommentModal #hiddenId").attr("name", "replyId");
+                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id"));
 
-                    $("#comment").val($(this).parent().prev('p').text());
+                    $("#editCommentModal #comment").val($(this).parent().prev('p').text());
                 }
 
                 // Show the modal
                 $('#editCommentModal').modal('show');
+            });
+
+            $('.media-list').on('click', '[data-comment-action="approve"]', function(e) {
+                e.preventDefault();
+
+                $("#approveCommentModal #hiddenId").attr("name", "commentId");
+                $("#approveCommentModal #hiddenId").attr("value", $(this).data("comment-id"));
+
+                // Show the modal
+                $('#approveCommentModal').modal('show');
+            });
+
+            $('.media-list').on('click', '[data-comment-action="unapprove"]', function(e) {
+                e.preventDefault();
+
+                $("#disproveCommentModal #hiddenId").attr("name", "commentId");
+                $("#disproveCommentModal #hiddenId").attr("value", $(this).data("comment-id"));
+
+
+                // Show the modal
+                $('#approveCommentModal').modal('show');
+            });
+
+            $('.media-list').on('click', '[data-reply-action="approve"]', function(e) {
+                e.preventDefault();
+
+                $("#approveCommentModal #hiddenId").attr("name", "replyId");
+                $("#approveCommentModal #hiddenId").attr("value", $(this).data("reply-id"));
+
+
+                // Show the modal
+                $('#approveCommentModal').modal('show');
+            });
+
+            $('.media-list').on('click', '[data-reply-action="unapprove"]', function(e) {
+                e.preventDefault();
+
+                $("#disproveCommentModal #hiddenId").attr("name", "replyId");
+                $("#disproveCommentModal #hiddenId").attr("value", $(this).data("reply-id"));
+
+
+                // Show the modal
+                $('#approveCommentModal').modal('show');
             });
         
         });
@@ -441,6 +588,30 @@
 
             return true;
         }   
+
+        function validateCommentForm(){
+            // Get form inputs
+            var comment = document.querySelector('#commentForm textarea').value;
+
+            if (comment === '') {
+                alert('Please enter comment.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateReplyForm(comment_id){
+            // Get form inputs
+            var comment = document.querySelector(`#replyForm-${comment_id} textarea`).value;
+
+            if (comment === '') {
+                alert('Please enter comment.');
+                return false;
+            }
+
+            return true;
+        }
     </script>
     <!-- App js -->
     <script src="<?= BASE_URL ?>/admin-assets/js/app.min.js"></script>

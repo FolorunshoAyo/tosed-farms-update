@@ -68,7 +68,7 @@ class AdminModel {
         try {
             global $pdo;
 
-            $stmt = $pdo->prepare("SELECT first_name, last_name, username, email FROM admins WHERE admin_id = ?");
+            $stmt = $pdo->prepare("SELECT admin_id, first_name, last_name, username, email FROM admins WHERE admin_id = ?");
             $stmt->execute([$id]);
 
             // Fetch admin record

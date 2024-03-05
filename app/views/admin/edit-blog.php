@@ -125,7 +125,7 @@
                                         </div>
                                         <button type="submit" name="action" value="2" class="btn btn-success waves-effect waves-light mr-1">Save and Republish</button>
                                         <button type="submit" name="action" value="1" class="btn btn-warning waves-effect waves-light mr-1">Save as Draft</button>
-                                        <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['post_id']) ?>" class="btn btn-danger waves-effect waves-light">Cancel</a>
+                                        <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>" class="btn btn-danger waves-effect waves-light">Cancel</a>
                                     </form>
                                 </div>
                             </div>
