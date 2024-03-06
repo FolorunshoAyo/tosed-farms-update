@@ -7,10 +7,10 @@ class BlogCommentsRepliesModel
             // $admin_id has a value
             try{
                 global $pdo;
-                $query = "INSERT INTO blog_comment_replies (comment_id, admin_id, message) 
-                          VALUES (?, ?, ?)";
+                $query = "INSERT INTO blog_comment_replies (comment_id, admin_id, message, approved) 
+                          VALUES (?, ?, ?, ?)";
                 $stmt = $pdo->prepare($query);
-                $stmt->execute([$comment_id, $admin_id, $reply]);
+                $stmt->execute([$comment_id, $admin_id, $reply, 1]);
     
                 return true;
             }catch (PDOException $e) {
@@ -51,7 +51,7 @@ class BlogCommentsRepliesModel
         try{
             global $pdo;
 
-            $query = "SELECT * FROM blog_comment_replies WHERE comment_id = ? AND (approved IS NULL OR approved = 1) ORDER BY date_posted DESC";
+            $query = "SELECT * FROM blog_comment_replies WHERE comment_id = ? ORDER BY date_posted DESC";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$comment_id]);
 

@@ -814,6 +814,30 @@ class AdminController {
         }
     }
 
+    public function newCommentReply($params){
+        $comment_id = $params[0];
+        $admin_id = $_SESSION['admin_id'];
+        $message = $_POST['message'] ?? '';
+        $post_id = $_POST['post_id'] ?? '';
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']); 
+
+        if (empty($message)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::createReply($comment_id, $message, $admin_id)) {
+            // insertion successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Reply Added Successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+    }
+
     public function approveReply(){
         $reply_id = $_POST['replyId'];
         $post_id = $_POST['postId'];
@@ -857,4 +881,5 @@ class AdminController {
             redirect(BASE_URL . "/admin/post/single/$post_title#comments");
         }
     }
+
 }

@@ -128,7 +128,8 @@
                                             <?php if($data['comments_total'] > 0): ?>
                                                 <ul class="media-list pl-0">
                                                     <?php
-                                                        foreach($data['comments'] as $comment):
+                                                        foreach($data['comments'] as $comment){
+                                                            if($comment['approved'] !== 0){
                                                     ?>
                                                     <li class="media">
                                                         <a class="mr-2" href="#">
@@ -179,10 +180,12 @@
                                                                 <span aria-hidden="true">×</span>
                                                                 </button>
                                                                 <h5 class="text-uppercase my-2">Reply to <?= $commenter ?></h5>
-                                                                <form id="replyForm-<?= $comment['comment_id'] ?>" action="#" method="post" onsubmit="return validateReplyForm(<?= $comment['comment_id'] ?>)">
+                                                                <form id="replyForm-<?= $comment['comment_id'] ?>" action="<?= BASE_URL . "/admin/comment/" . $comment['comment_id'] . "/reply/new"?>" method="post" onsubmit="return validateReplyForm(<?= $comment['comment_id'] ?>)">
                                                                     <div class="form-group">
                                                                         <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
                                                                     </div>
+                                                                    
+                                                                    <input type="hidden" name="post_id" value="<?= $post['post_id']?>">
                                                                     <!-- /Form Msg -->
                     
                                                                     <div class="row">
@@ -201,7 +204,10 @@
                                                                 $replies = BlogCommentsRepliesModel::getAllCommentReplies($comment['comment_id'])
                                                             ?>
                                                             <?php if(count($replies) > 0): ?>
-                                                                <?php foreach($replies as $reply): ?>
+                                                                <?php 
+                                                                    foreach($replies as $reply){ 
+                                                                        if($reply['approved'] !== 0){
+                                                                ?>
                                                                     <div class="media sub_media">
                                                                         <a class="mr-2" href="#">
                                                                             <img class="media-object rounded-circle" src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt="img">
@@ -234,17 +240,24 @@
                                                                                 <?= $reply['message'] ?>
                                                                             </p>
                                                                             <div class="my-1 d-flex flex-wrap">
-                                                                                <a href="#" data-reply-action="approve" data-reply-id="<?= $reply['reply_id'] ?>" class="text-danger mr-2">Unapprove</a>
+                                                                                <?php if(empty($reply['admin_id']) && ($reply['approved'] === "null")): ?>
+                                                                                    <a href="#" data-comment-action="approve" data-action-type="reply" data-reply-id="<?= $reply['reply_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
+                                                                                    <a href="#" data-comment-action="unapprove" data-action-type="reply" data-reply-id="<?= $comment['reply_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
+                                                                                <?php endif; ?>
                                                                                 <a href="#" data-comment-type="reply" data-edit-id="<?= $reply['reply_id'] ?>" class="text-success mr-2">Edit</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                <?php endforeach; ?>
+                                                                <?php
+                                                                        } 
+                                                                    } 
+                                                                ?>
                                                             <?php endif; ?>
                                                         </div>
                                                     </li>
                                                     <?php
-                                                        endforeach;
+                                                            }
+                                                        }
                                                     ?>
                                                 </ul>
                                             <?php else: ?>
@@ -461,7 +474,7 @@
                     $("#editCommentModal .modal-title").text("Edit Reply");
 
                     $("#editCommentModal #hiddenId").attr("name", "replyId");
-                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id"));
+                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id").trim());
 
                     $("#editCommentModal #comment").val($(this).parent().prev('p').text());
                 }
