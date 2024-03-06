@@ -105,6 +105,26 @@
                                                 <?php unset($_SESSION['new_comment_success_message']); ?>
                                             <?php endif; ?>
 
+                                            <?php if (isset($_SESSION['comment_action_success_message'])): ?>
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    <i class="mdi mdi-check-all mr-2"></i> <?= $_SESSION['comment_action_success_message'] ?>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <?php unset($_SESSION['comment_action_success_message']); ?>
+                                            <?php endif; ?>
+
+                                            <?php if (isset($_SESSION['comment_action_error_message'])): ?>
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    <i class="mdi mdi-block-helper mr-2"></i> <?= $_SESSION['comment_action_error_message'] ?>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <?php unset($_SESSION['comment_action_error_message']); ?>
+                                            <?php endif; ?>
+
                                             <?php if($data['comments_total'] > 0): ?>
                                                 <ul class="media-list pl-0">
                                                     <?php
@@ -141,7 +161,10 @@
                                                                 <?= $comment['message'] ?>
                                                             </p>
                                                             <div class="my-1 d-flex flex-wrap">
-                                                                <a href="#" data-comment-action="approve" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
+                                                                <?php if(empty($comment['admin_id']) && ($comment['approved'] === "null")): ?>
+                                                                    <a href="#" data-comment-action="approve" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
+                                                                    <a href="#" data-comment-action="unapprove" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
+                                                                <?php endif; ?>
                                                                 <a href="#" data-comment-type="comment" data-edit-id="<?= $comment['comment_id'] ?>" class="text-success mr-2">Edit</a>
                                                                 <a href="#" data-toggle="comment-<?= $comment['comment_id'] ?>" class="text-success">Reply</a>
                                                             </div>
@@ -366,7 +389,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="approveCommentModal" tabindex="-1" aria-labelledby="approveCommentModal" aria-hidden="true">
+        <div class="modal fade" id="commentActionModal" tabindex="-1" aria-labelledby="commentActionModal" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -377,96 +400,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
-                  <form id="approveCommentForm" action="#" method="post">
+                  <form id="commentActionForm" action="#" method="post">
 
-                    <input id="hiddenId" type="hidden" name="commentId" value="1" />
+                    <input id="hiddenId" type="hidden"/>
 
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
-                            <span>Yes</span> 
-                        </button>
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
-                            No
-                        </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="disproveCommentModal" tabindex="-1" aria-labelledby="disproveCommentModal" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Unappprove Comment?</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
-                  <form id="disproveCommentForm" action="#" method="post">
-
-                    <input id="hiddenId" type="hidden" name="commentId" value="1" />
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
-                            <span>Yes</span> 
-                        </button>
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
-                            No
-                        </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="approveReplyModal" tabindex="-1" aria-labelledby="approveReplyModal" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Approve Reply?</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
-                  <form id="approveReplyForm" action="#" method="post">
-
-                    <input id="hiddenId" type="hidden" name="replyId" value="1" />
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
-                            <span>Yes</span> 
-                        </button>
-                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
-                            No
-                        </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="disproveReplyModal" tabindex="-1" aria-labelledby="disproveReplyModal" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Unappprove Reply?</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
-                  <form id="disproveReplyForm" action="#" method="post">
-
-                    <input id="hiddenId" type="hidden" name="replyId" value="1" />
+                    <input type="hidden" name="postId" value="<?= $post['post_id'] ?>" />
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success waves-effect waves-light"> 
@@ -532,47 +470,69 @@
                 $('#editCommentModal').modal('show');
             });
 
-            $('.media-list').on('click', '[data-comment-action="approve"]', function(e) {
+            // <a href="#" data-comment-action="approve" data-comment-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
+            //<a href="#" data-comment-action="unapprove" data-comment-type="reply" data-reply-id="<?= $comment['comment_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
+
+            $('.media-list').on('click', '[data-comment-action]', function(e) {
                 e.preventDefault();
 
-                $("#approveCommentModal #hiddenId").attr("name", "commentId");
-                $("#approveCommentModal #hiddenId").attr("value", $(this).data("comment-id"));
+                // Between approve and unapprove;
+                const actionType = $(this).data("comment-action");
+
+                if(actionType === "approve"){
+                    // approve comment or reply
+                    const actionType = $(this).data("action-type");
+
+                    if(actionType === "comment"){
+                        const commentId = $(this).data("comment-id");
+
+                        $('#commentActionModal .modal-title').html("Approve Comment?");
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/comment/approve/`);
+
+                        $("#commentActionForm #hiddenId").attr("name","commentId");
+                        $("#commentActionForm #hiddenId").attr("value", commentId);
+                    }
+
+                    if(actionType === "reply"){
+                        const replyId = $(this).data("reply-id");
+
+                        $('#commentActionModal .modal-title').html("Approve Reply?");
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/reply/approve/`);
+
+                        $("#commentActionForm #hiddenId").attr("name", "replyId");
+                        $("#commentActionForm #hiddenId").attr("value", replyId);
+                    }
+                }
+
+                if(actionType === "unapprove"){
+                    //unapprove comment or reply
+                    const actionType = $(this).data("action-type");
+
+                    if(actionType === "comment"){
+                        const commentId = $(this).data("comment-id");
+
+                        $('#commentActionModal .modal-title').html("Unapprove Comment?");
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/comment/unapprove/`);
+
+                        $("#commentActionForm #hiddenId").attr("name", "commentId");
+                        $("#commentActionForm #hiddenId").attr("value", commentId);
+
+                    }
+
+                    if(actionType === "reply"){
+                        const replyId = $(this).data("reply-id");
+
+                        $('#commentActionModal .modal-title').html("Unapprove Reply?");
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/reply/unapprove/`);
+
+                        $("#commentActionForm #hiddenId").attr("name", "replyId");
+                        $("#commentActionForm #hiddenId").attr("value", replyId);
+
+                    }
+                }
 
                 // Show the modal
-                $('#approveCommentModal').modal('show');
-            });
-
-            $('.media-list').on('click', '[data-comment-action="unapprove"]', function(e) {
-                e.preventDefault();
-
-                $("#disproveCommentModal #hiddenId").attr("name", "commentId");
-                $("#disproveCommentModal #hiddenId").attr("value", $(this).data("comment-id"));
-
-
-                // Show the modal
-                $('#approveCommentModal').modal('show');
-            });
-
-            $('.media-list').on('click', '[data-reply-action="approve"]', function(e) {
-                e.preventDefault();
-
-                $("#approveCommentModal #hiddenId").attr("name", "replyId");
-                $("#approveCommentModal #hiddenId").attr("value", $(this).data("reply-id"));
-
-
-                // Show the modal
-                $('#approveCommentModal').modal('show');
-            });
-
-            $('.media-list').on('click', '[data-reply-action="unapprove"]', function(e) {
-                e.preventDefault();
-
-                $("#disproveCommentModal #hiddenId").attr("name", "replyId");
-                $("#disproveCommentModal #hiddenId").attr("value", $(this).data("reply-id"));
-
-
-                // Show the modal
-                $('#approveCommentModal').modal('show');
+                $('#commentActionModal').modal('show');
             });
         
         });

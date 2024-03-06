@@ -764,17 +764,97 @@ class AdminController {
             $_SESSION['new_comment_success_message'] = 'Comment Added Successfully!';
             redirect(BASE_URL . "/admin/post/single/$post_title#comments");
         } else {
-            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            $_SESSION['new_comment_error_message'] = 'Update failed. Please try again.';
             redirect(BASE_URL . "/admin/post/single/$post_title#commentForm");
         }
 
     }
 
-    public function approveComment($params){
-        
+    public function approveComment(){
+        $comment_id = $_POST['commentId'];
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($comment_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsModel::updateCommentStatus($comment_id, 1)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Comment was approved successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
     }
 
-    public function disproveComment($params){
+    public function disproveComment(){
+        $comment_id = $_POST['commentId'];
+        $post_id = $_POST['postId'];
 
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($comment_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsModel::updateCommentStatus($comment_id, 0)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Comment was unapproved successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+    }
+
+    public function approveReply(){
+        $reply_id = $_POST['replyId'];
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($reply_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::updateCommentStatus($reply_id, 1)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Reply was approved successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+    }
+
+    public function disproveReply(){
+        $reply_id = $_POST['replyId'];
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($reply_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::updateCommentStatus($reply_id, 0)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Reply was unapproved successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
     }
 }

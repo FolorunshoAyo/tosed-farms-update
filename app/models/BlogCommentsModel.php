@@ -5,7 +5,7 @@ class BlogCommentsModel
         try{
             global $pdo;
 
-            $query = "SELECT COUNT(*) as total FROM blog_comments WHERE post_id = ?";
+            $query = "SELECT COUNT(*) as total FROM blog_comments WHERE post_id = ? AND (approved IS NULL OR approved = 1)";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$post_id]);
 
@@ -23,10 +23,10 @@ class BlogCommentsModel
             // $admin_id has a value
             try{
                 global $pdo;
-                $query = "INSERT INTO blog_comments (post_id, admin_id, message) 
-                          VALUES (?, ?, ?)";
+                $query = "INSERT INTO blog_comments (post_id, admin_id, message, approved) 
+                          VALUES (?, ?, ?, ?)";
                 $stmt = $pdo->prepare($query);
-                $stmt->execute([$post_id, $admin_id, $comment]);
+                $stmt->execute([$post_id, $admin_id, $comment, 1]);
     
                 return true;
             }catch (PDOException $e) {
@@ -67,13 +67,29 @@ class BlogCommentsModel
         try{
             global $pdo;
 
-            $query = "SELECT * FROM blog_comments WHERE post_id = ? ORDER BY date_posted DESC";
+            $query = "SELECT * FROM blog_comments WHERE post_id = ? AND (approved IS NULL OR approved = 1) ORDER BY date_posted DESC";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$post_id]);
 
             $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             return $comments;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function getComment($comment_id) {
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM blog_comments WHERE comment_id = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$comment_id]);
+
+            $comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $comment;
         }catch (PDOException $e) {
             return false;
         }

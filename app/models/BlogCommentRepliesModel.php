@@ -51,7 +51,7 @@ class BlogCommentsRepliesModel
         try{
             global $pdo;
 
-            $query = "SELECT * FROM blog_comment_replies WHERE comment_id = ? ORDER BY date_posted DESC";
+            $query = "SELECT * FROM blog_comment_replies WHERE comment_id = ? AND (approved IS NULL OR approved = 1) ORDER BY date_posted DESC";
             $stmt = $pdo->prepare($query);
             $stmt->execute([$comment_id]);
 
