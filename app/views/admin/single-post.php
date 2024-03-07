@@ -129,6 +129,8 @@
                                                 <ul class="media-list pl-0">
                                                     <?php
                                                         foreach($data['comments'] as $comment){
+                                                            $replies = BlogCommentsRepliesModel::getAllCommentReplies($comment['comment_id']);
+
                                                             if($comment['approved'] !== 0){
                                                     ?>
                                                     <li class="media">
@@ -167,7 +169,8 @@
                                                                     <a href="#" data-comment-action="unapprove" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
                                                                 <?php endif; ?>
                                                                 <a href="#" data-comment-type="comment" data-edit-id="<?= $comment['comment_id'] ?>" class="text-success mr-2">Edit</a>
-                                                                <a href="#" data-toggle="comment-<?= $comment['comment_id'] ?>" class="text-success">Reply</a>
+                                                                <a href="#" data-toggle="comment-<?= $comment['comment_id'] ?>" class="text-success mr-2">Reply</a>
+                                                                <a href="#" data-comment-action="delete" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" data-has-replies="<?= count($replies) > 0 ?>" href="#" class="text-danger mr-2">Delete</a>
                                                             </div>
                                                             <div class="reply_form my-4" id="comment-<?= $comment['comment_id'] ?>" style="display: none;">
                                                                 <button
@@ -200,9 +203,6 @@
                     
                                                                 </form>
                                                             </div>
-                                                            <?php
-                                                                $replies = BlogCommentsRepliesModel::getAllCommentReplies($comment['comment_id'])
-                                                            ?>
                                                             <?php if(count($replies) > 0): ?>
                                                                 <?php 
                                                                     foreach($replies as $reply){ 
@@ -245,6 +245,7 @@
                                                                                     <a href="#" data-comment-action="unapprove" data-action-type="reply" data-reply-id="<?= $comment['reply_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
                                                                                 <?php endif; ?>
                                                                                 <a href="#" data-comment-type="reply" data-edit-id="<?= $reply['reply_id'] ?>" class="text-success mr-2">Edit</a>
+                                                                                <a href="#" data-comment-action="delete" data-action-type="reply" data-reply-id="<?= $reply['reply_id'] ?>" href="#" class="text-danger mr-2">Delete</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -381,12 +382,12 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form id="editBrandForm" action="#" method="post" onsubmit="return validateForm()">
+                  <form action="#" method="post" onsubmit="return validateForm()">
                     <div class="form-group">
                         <textarea id="comment" name="comment" class="form-control" rows="5"></textarea>
                     </div>
 
-                    <input id="hiddenId" type="hidden" name="commentId" value="1" />
+                    <input type="hidden" name="postId" value="<?= $post['post_id'] ?>" />
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary waves-effect waves-light"> 
@@ -465,18 +466,16 @@
                 if(commentType === "comment"){
                     $("#editCommentModal .modal-title").text("Edit Comment");
 
-                    $("#editCommentModal #hiddenId").attr("name", "commentId");
-                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id"));
+                    $("#editCommentModal form").attr("action", `<?= BASE_URL ?>/admin/post/${$(this).data("edit-id")}/comment/edit`)
 
                     $("#editCommentModal #comment").val($(this).parent().prev('p').text().trim());
 
                 }else{
                     $("#editCommentModal .modal-title").text("Edit Reply");
 
-                    $("#editCommentModal #hiddenId").attr("name", "replyId");
-                    $("#editCommentModal #hiddenId").attr("value", $(this).data("edit-id").trim());
+                    $("#editCommentModal form").attr("action", `<?= BASE_URL ?>/admin/post/${$(this).data("edit-id")}/reply/edit`)
 
-                    $("#editCommentModal #comment").val($(this).parent().prev('p').text());
+                    $("#editCommentModal #comment").val($(this).parent().prev('p').text().trim());
                 }
 
                 // Show the modal
@@ -499,7 +498,7 @@
                     if(actionType === "comment"){
                         const commentId = $(this).data("comment-id");
 
-                        $('#commentActionModal .modal-title').html("Approve Comment?");
+                        $('#commentActionModal .modal-title').html("Approve comment?");
                         $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/comment/approve/`);
 
                         $("#commentActionForm #hiddenId").attr("name","commentId");
@@ -509,7 +508,7 @@
                     if(actionType === "reply"){
                         const replyId = $(this).data("reply-id");
 
-                        $('#commentActionModal .modal-title').html("Approve Reply?");
+                        $('#commentActionModal .modal-title').html("Approve reply?");
                         $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/reply/approve/`);
 
                         $("#commentActionForm #hiddenId").attr("name", "replyId");
@@ -524,7 +523,7 @@
                     if(actionType === "comment"){
                         const commentId = $(this).data("comment-id");
 
-                        $('#commentActionModal .modal-title').html("Unapprove Comment?");
+                        $('#commentActionModal .modal-title').html("Unapprove comment?");
                         $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/comment/unapprove/`);
 
                         $("#commentActionForm #hiddenId").attr("name", "commentId");
@@ -535,8 +534,36 @@
                     if(actionType === "reply"){
                         const replyId = $(this).data("reply-id");
 
-                        $('#commentActionModal .modal-title').html("Unapprove Reply?");
+                        $('#commentActionModal .modal-title').html("Unapprove reply?");
                         $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/reply/unapprove/`);
+
+                        $("#commentActionForm #hiddenId").attr("name", "replyId");
+                        $("#commentActionForm #hiddenId").attr("value", replyId);
+
+                    }
+                }
+
+                if(actionType === "delete"){
+                    //unapprove comment or reply
+                    const actionType = $(this).data("action-type");
+
+                    if(actionType === "comment"){
+                        const commentId = $(this).data("comment-id");
+
+                        const modalTitle = $(this).data("has-replies") === 1? "Delete this comment and it's replies?" : 'Delete this comment?';
+                        $('#commentActionModal .modal-title').html(modalTitle);
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/comment/delete/`);
+
+                        $("#commentActionForm #hiddenId").attr("name", "commentId");
+                        $("#commentActionForm #hiddenId").attr("value", commentId);
+
+                    }
+
+                    if(actionType === "reply"){
+                        const replyId = $(this).data("reply-id");
+
+                        $('#commentActionModal .modal-title').html("Delete this reply?");
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>admin/post/reply/delete/`);
 
                         $("#commentActionForm #hiddenId").attr("name", "replyId");
                         $("#commentActionForm #hiddenId").attr("value", replyId);

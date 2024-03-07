@@ -63,7 +63,7 @@ class BlogCommentsRepliesModel
         }
     }
 
-    public static function updateCommentStatus($reply_id, $status)
+    public static function updateCommentReplyStatus($reply_id, $status)
     {
         try{
             global $pdo;
@@ -79,10 +79,33 @@ class BlogCommentsRepliesModel
         }
     }
 
-    // public static function deleteComment($comment_id)
-    // {
-    //     $query = "DELETE FROM brands WHERE brand_id = ?";
-    //     $stmt = $this->db->prepare($query);
-    //     return $stmt->execute([$brand_id]);
-    // }
+    public static function updateCommentReply($reply_id, $message)
+    {
+        try{
+            global $pdo;
+
+            $query = "UPDATE blog_comment_replies
+            SET message = ?
+            WHERE reply_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$message, $reply_id]);
+
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function deleteReply($reply_id)
+    {
+        try{
+            global $pdo;
+
+            $query = "DELETE FROM blog_comment_replies WHERE reply_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$reply_id]);
+
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 }

@@ -152,51 +152,23 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                foreach($data['posts'] as $post):
+                                            ?>
                                             <tr>
                                                 <td>
-                                                    <a href="#"> <img class="rounded" alt="" src="<?= BASE_URL ?>/admin-assets/images/small/img-1.jpg" style="width: 100px; height: 66px;"> </a>
+                                                    <a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>"> <img class="rounded" alt="" src="<?= BASE_URL . "/blog-images/" . $post['featured_image'] ?>" style="width: 100px; height: 66px;"> </a>
                                                 </td>
-                                                <td><a href="#">Exclusive: Get a First Look at the Fall Collection</a></td>
-                                                <td>Lifestyle</td>
-                                                <td>984</td>
-                                                <td><span class="badge badge-success">Published</span></td>
-                                            </tr>
-                                            <tr>
+                                                <td><a href="<?= BASE_URL . "/admin/post/single/" . convertToSlug($post['title']) ?>"><?= $post['title'] ?></a></td>
+                                                <td><a href="<?= BASE_URL . "/admin//posts/category/" . $post['category_name'] ?>"><?= ucfirst($post['category_name']) ?></a></td>
+                                                <td><?= BlogCommentsModel::total($post['post_id']) ?></td>
                                                 <td>
-                                                    <a href="#"> <img class="rounded" alt="" src="<?= BASE_URL ?>/admin-assets/images/small/img-2.jpg" style="width: 100px; height: 66px;"> </a>
+                                                    <?= $post['status'] === 1? "<span class='badge badge-warning'>Draft</span>" : ($post['status'] === 2? "<span class='badge badge-success'>Pubished</span>" : "<span class='badge badge-danger'>Deleted</span>") ?>
                                                 </td>
-                                                <td><a href="#">How To Beat The Heat</a></td>
-                                                <td>Lifestyle</td>
-                                                <td>651</td>
-                                                <td><span class="badge badge-danger">Deleted</span></td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#"> <img class="rounded" alt="" src="<?= BASE_URL ?>/admin-assets//images/small/img-3.jpg" style="width: 100px; height: 66px;"> </a>
-                                                </td>
-                                                <td><a href="#">The Most Impressive London Streets</a></td>
-                                                <td>Travel</td>
-                                                <td>124</td>
-                                                <td><span class="badge badge-success">Published</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#"> <img class="rounded" alt="" src="<?= BASE_URL ?>/admin-assets/images/small/img-4.jpg" style="width: 100px; height: 66px;"> </a>
-                                                </td>
-                                                <td><a href="#">Stay Cool Italian Style</a></td>
-                                                <td>Style</td>
-                                                <td>512</td>
-                                                <td><span class="badge badge-warning">Draft</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a href="#"> <img class="rounded" alt="" src="<?= BASE_URL ?>/admin-assets/images/small/img-5.jpg" style="width: 100px; height: 66px;"> </a>
-                                                </td>
-                                                <td><a href="#">The Best Places to Visit in the UK</a></td>
-                                                <td>Travel</td>
-                                                <td>235</td>
-                                                <td><span class="badge badge-success">Published</span></td>
-                                            </tr>
+                                            <?php
+                                                endforeach;
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>

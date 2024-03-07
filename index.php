@@ -55,9 +55,13 @@ $router->post('/tosed-farms/admin/post/new', 'AdminController@newBlogPost');
 $router->get('/tosed-farms/admin/post/:id/edit', 'AdminController@editBlogPostForm');
 $router->post('/tosed-farms/admin/post/:id/edit', 'AdminController@editBlogPost'); 
 $router->post('/tosed-farms/admin/post/:id/comment/new', 'AdminController@newPostComment'); 
+$router->post('/tosed-farms/admin/post/:id/comment/edit', 'AdminController@editPostComment'); 
+$router->post('/tosed-farms/admin/post/comment/delete/', 'AdminController@deleteComment'); 
 $router->post('/tosed-farms/admin/post/comment/approve/', 'AdminController@approveComment'); 
 $router->post('/tosed-farms/admin/post/comment/unapprove/', 'AdminController@disproveComment'); 
-$router->post('/tosed-farms/admin/comment/:id/reply/new', 'AdminController@newCommentReply'); 
+$router->post('/tosed-farms/admin/comment/:id/reply/new', 'AdminController@newCommentReply');
+$router->post('/tosed-farms/admin/post/:id/reply/edit', 'AdminController@editCommentReply'); 
+$router->post('/tosed-farms/admin/post/reply/delete/', 'AdminController@deleteReply'); 
 $router->post('/tosed-farms/admin/post/reply/approve/', 'AdminController@approveReply'); 
 $router->post('/tosed-farms/admin/post/reply/unapprove/', 'AdminController@disproveReply'); 
 

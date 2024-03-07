@@ -111,10 +111,33 @@ class BlogCommentsModel
         }
     }
 
-    // public static function deleteComment($comment_id)
-    // {
-    //     $query = "DELETE FROM brands WHERE brand_id = ?";
-    //     $stmt = $this->db->prepare($query);
-    //     return $stmt->execute([$brand_id]);
-    // }
+    public static function updateComment($comment_id, $message)
+    {
+        try{
+            global $pdo;
+
+            $query = "UPDATE blog_comments
+            SET message = ?
+            WHERE comment_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$message, $comment_id]);
+
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function deleteComment($comment_id)
+    {
+        try{
+            global $pdo;
+
+            $query = "DELETE FROM blog_comments WHERE comment_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$comment_id]);
+
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 }

@@ -105,6 +105,7 @@ class AdminController {
             'total_products' => UnBrandedProductsModel::total() + BrandedProductsModel::total(),
             'total_brands' => BrandsModel::total(),
             'brands' => BrandsModel::getAllBrands(),
+            'posts' => BlogPostsModel::getLatestBlogPosts(5),
             'current_page' => $_SERVER['REQUEST_URI']
         ];
 
@@ -770,6 +771,52 @@ class AdminController {
 
     }
 
+    public function editPostComment($params){
+        $comment_id = $params[0];
+        $message = $_POST['comment'] ?? '';
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']); 
+
+        if (empty($message)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsModel::updateComment($comment_id, $message)) {
+            // insertion successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Comment Updated Successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+
+    }
+
+    public function deleteComment(){
+        $comment_id = $_POST['commentId'];
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($comment_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsModel::deleteComment($comment_id)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Comment was approved successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+    }
+
     public function approveComment(){
         $comment_id = $_POST['commentId'];
         $post_id = $_POST['postId'];
@@ -838,6 +885,52 @@ class AdminController {
         }
     }
 
+    public function editCommentReply($params){
+        $reply_id = $params[0];
+        $message = $_POST['comment'] ?? '';
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']); 
+
+        if (empty($message)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::updateCommentReply($reply_id, $message)) {
+            // insertion successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Reply Updated Successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+
+    }
+
+    public function deleteReply(){
+        $reply_id = $_POST['replyId'];
+        $post_id = $_POST['postId'];
+
+        $post_title = convertToSlug(BlogPostsModel::getBlogPost($post_id)['title']);
+
+        if (empty($reply_id)) {
+            $_SESSION['comment_action_error_message'] = 'All fields are required.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::deleteReply($reply_id)) {
+            // upadte successful, redirect to post page with uploaded comment
+            $_SESSION['comment_action_success_message'] = 'Reply was deleted successfully!';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        } else {
+            $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . "/admin/post/single/$post_title#comments");
+        }
+    }
+
     public function approveReply(){
         $reply_id = $_POST['replyId'];
         $post_id = $_POST['postId'];
@@ -850,7 +943,7 @@ class AdminController {
             return;
         }
 
-        if (BlogCommentsRepliesModel::updateCommentStatus($reply_id, 1)) {
+        if (BlogCommentsRepliesModel::updateCommentReplyStatus($reply_id, 1)) {
             // upadte successful, redirect to post page with uploaded comment
             $_SESSION['comment_action_success_message'] = 'Reply was approved successfully!';
             redirect(BASE_URL . "/admin/post/single/$post_title#comments");
@@ -872,7 +965,7 @@ class AdminController {
             return;
         }
 
-        if (BlogCommentsRepliesModel::updateCommentStatus($reply_id, 0)) {
+        if (BlogCommentsRepliesModel::updateCommentReplyStatus($reply_id, 0)) {
             // upadte successful, redirect to post page with uploaded comment
             $_SESSION['comment_action_success_message'] = 'Reply was unapproved successfully!';
             redirect(BASE_URL . "/admin/post/single/$post_title#comments");
