@@ -120,6 +120,9 @@
                                                         <button type="button" class="editBtn btn btn-primary" style="float: none;" data-product-id="<?= $product['product_id'] ?>">
                                                             <span class="mdi mdi-pencil"></span>
                                                         </button>
+                                                        <button type="button" class="deleteBtn btn btn-danger" style="float: none;" data-product-id="<?= $product['product_id'] ?>">
+                                                            <span class="mdi mdi-trash-can-outline"></span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -213,6 +216,35 @@
                         </button>
                     </div>
 
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="productActionModal" tabindex="-1" aria-labelledby="commentActionModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete this product?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="productActionForm" action="<?= BASE_URL ?>/admin/products/unbranded/feed-additives/delete" method="post">
+
+                    <input id="hiddenProductId" type="hidden"/>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -323,6 +355,22 @@
 
                 // Show the modal
                 $('#editProductModal').modal('show');
+            });
+
+            $('#datatable-buttons tbody').on('click', '.deleteBtn', function() {
+                var row = $(this).closest('tr');
+
+                if (row.hasClass('child')) {
+                    row = row.prev('tr');
+                }
+
+                var productId = $(this).data("product-id");
+
+                $("#productActionForm #hiddenProductId").attr("name", "productId");
+                $("#productActionForm #hiddenProductId").attr("value", productId);
+
+                // Show the modal
+                $('#productActionModal').modal('show');
             });
         });
     

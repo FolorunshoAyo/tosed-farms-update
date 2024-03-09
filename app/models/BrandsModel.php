@@ -115,10 +115,17 @@ class BrandsModel
 
 
 
-    // public static function deleteBrand($brand_id)
-    // {
-    //     $query = "DELETE FROM brands WHERE brand_id = ?";
-    //     $stmt = $this->db->prepare($query);
-    //     return $stmt->execute([$brand_id]);
-    // }
+    public static function deleteBrand($brand_id)
+    {
+        try{
+            global $pdo;
+
+            $query = "DELETE FROM brands WHERE brand_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$brand_id]);
+            
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 }

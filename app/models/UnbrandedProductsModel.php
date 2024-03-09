@@ -79,10 +79,17 @@ class UnBrandedProductsModel
 
 
 
-    // public static function deleteBrandedProduct($brand_id)
-    // {
-    //     $query = "DELETE FROM brands WHERE brand_id = ?";
-    //     $stmt = $this->db->prepare($query);
-    //     return $stmt->execute([$brand_id]);
-    // }
+    public static function deleteProduct($product_id)
+    {
+        try{
+            global $pdo;
+
+            $query = "DELETE FROM unbranded_products WHERE product_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$product_id]);
+            
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 }

@@ -95,7 +95,7 @@
                                     </div>
                                     <div class="wigdet-two-content media-body text-right">
                                         <p class="mt-1 text-uppercase font-weight-medium">Posts</p>
-                                        <h2 class="mb-2"><span data-plugin="counterup">10</span></h2>
+                                        <h2 class="mb-2"><span data-plugin="counterup"><?= $data['total_posts'] ?></span></h2>
                                     </div>
                                 </div>
                             </div>

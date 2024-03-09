@@ -116,7 +116,7 @@
                                             <th>Net weight</th>
                                             <th>Price</th>
                                             <th>Availability</th>
-                                            <th>Edit</th>
+                                            <th>Edit/Delete</th>
                                         </tr>
                                     </thead>
 
@@ -140,6 +140,9 @@
                                                     <div class="btn-group btn-group-sm" style="float: none;">
                                                         <button type="button" class="editBtn btn btn-primary" style="float: none;" data-product-id="<?= $product['product_id'] ?>">
                                                             <span class="mdi mdi-pencil"></span>
+                                                        </button>
+                                                        <button type="button" class="deleteBtn btn btn-danger" style="float: none;" data-product-id="<?= $product['product_id'] ?>" data-brand-id="<?= $product['brand_id'] ?>">
+                                                            <span class="mdi mdi-trash-can-outline"></span>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -299,6 +302,36 @@
               </div>
             </div>
         </div>
+
+        <div class="modal fade" id="productActionModal" tabindex="-1" aria-labelledby="commentActionModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Delete this product?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please <b>Note:</b>This is a one time action and cannot be undone. Proceed?</p>
+                  <form id="productActionForm" action="<?= BASE_URL ?>/admin/products/branded/delete" method="post">
+
+                    <input id="hiddenProductId" type="hidden"/>
+                    <input id="hiddenBrandId" type="hidden"/>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success waves-effect waves-light"> 
+                            <span>Yes</span> 
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">
+                            No
+                        </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+        </div>
     </div>
     <!-- END wrapper -->
 
@@ -396,7 +429,7 @@
                 var netWeight = row.find('td:eq(3)').text().trim();
                 var price = row.find('td:eq(4)').text().trim().toLowerCase();
                 var availability = row.find('td:eq(5)').text().trim().toLowerCase();
-                var productId = $(this).data("product-id");
+                var productId = $(this).data("brand-id");
 
                 // Populate the modal fields with the data
                 $('#name').val(name);
@@ -410,7 +443,28 @@
                 // Show the modal
                 $('#editProductModal').modal('show');
             });
+
+
+            $('#datatable-buttons tbody').on('click', '.deleteBtn', function() {
+                var row = $(this).closest('tr');
+
+                if (row.hasClass('child')) {
+                    row = row.prev('tr');
+                }
+
+                var productId = $(this).data("product-id");
+                var brandId = $(this).data("brand-id");
+
+                $("#productActionForm #hiddenProductId").attr("name", "productId");
+                $("#productActionForm #hiddenProductId").attr("value", productId);
+                $("#productActionForm #hiddenBrandId").attr("name", "brandId");
+                $("#productActionForm #hiddenBrandId").attr("value", brandId);
+                // Show the modal
+                $('#productActionModal').modal('show');
+            });
         });
+
+
     
         function validateForm() {
             // Get form inputs

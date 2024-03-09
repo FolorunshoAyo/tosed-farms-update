@@ -11,7 +11,7 @@ class BlogCommentsRepliesModel
                           VALUES (?, ?, ?, ?)";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute([$comment_id, $admin_id, $reply, 1]);
-    
+
                 return true;
             }catch (PDOException $e) {
                 return false;
@@ -20,7 +20,7 @@ class BlogCommentsRepliesModel
             // $user_id has a value
             try{
                 global $pdo;
-                $query = "INSERT INTO blog_comment_replies (comment_id_id, user_id, message) 
+                $query = "INSERT INTO blog_comment_replies (comment_id, user_id, message) 
                           VALUES (?, ?, ?)";
                 $stmt = $pdo->prepare($query);
                 $stmt->execute([$comment_id, $user_id, $reply]);
@@ -29,7 +29,7 @@ class BlogCommentsRepliesModel
             }catch (PDOException $e) {
                 return false;
             }
-        } elseif (!empty($comment_details)) {
+        } elseif (!empty($reply_details)) {
             // $comment_details is an array and has elements
             try{
                 global $pdo;

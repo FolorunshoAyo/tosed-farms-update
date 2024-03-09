@@ -152,7 +152,7 @@
 
                                                             if(count($drug_brands) > 0){
                                                         ?>
-                                                        <optgroup label="Fish Feeds">
+                                                        <optgroup label="Vertinary Products">
                                                             <?php
                                                                 foreach ($drug_brands as $drug_brand) {
                                                             ?>

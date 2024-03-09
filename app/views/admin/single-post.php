@@ -51,7 +51,7 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="javascript: void(0);">Tosed Integrated Farm Ventures</a></li>
-                                        <li class="breadcrumb-item"><a href="<?= BASE_URL . "/admin/blogs" ?>">Blogs</a></li>
+                                        <li class="breadcrumb-item"><a href="<?= BASE_URL . "/admin/posts" ?>">Blogs</a></li>
                                         <li class="breadcrumb-item active">Blog Post</li>
                                     </ol>
                                 </div>
@@ -563,7 +563,7 @@
                         const replyId = $(this).data("reply-id");
 
                         $('#commentActionModal .modal-title').html("Delete this reply?");
-                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>admin/post/reply/delete/`);
+                        $("#commentActionForm").attr("action", `<?= BASE_URL ?>/admin/post/reply/delete/`);
 
                         $("#commentActionForm #hiddenId").attr("name", "replyId");
                         $("#commentActionForm #hiddenId").attr("value", replyId);

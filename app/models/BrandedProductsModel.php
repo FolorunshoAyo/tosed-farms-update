@@ -47,7 +47,7 @@ class BrandedProductsModel
         try{
             global $pdo;
 
-            $query = "SELECT branded_products.*, brands.name as brand_name
+            $query = "SELECT branded_products.*, brands.name as brand_name, brands.brand_id as brand_id
             FROM branded_products
             INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.category = ?";
             $stmt = $pdo->prepare($query);
@@ -97,10 +97,17 @@ class BrandedProductsModel
 
 
 
-    // public static function deleteBrandedProduct($brand_id)
-    // {
-    //     $query = "DELETE FROM brands WHERE brand_id = ?";
-    //     $stmt = $this->db->prepare($query);
-    //     return $stmt->execute([$brand_id]);
-    // }
+    public static function deleteProduct($product_id)
+    {
+        try{
+            global $pdo;
+
+            $query = "DELETE FROM branded_products WHERE product_id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$product_id]);
+            
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
 }

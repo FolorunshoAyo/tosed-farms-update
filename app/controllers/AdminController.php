@@ -104,6 +104,7 @@ class AdminController {
             'admin_details' => AdminModel::findById($_SESSION['admin_id']),
             'total_products' => UnBrandedProductsModel::total() + BrandedProductsModel::total(),
             'total_brands' => BrandsModel::total(),
+            'total_posts' => BlogPostsModel::total(),
             'brands' => BrandsModel::getAllBrands(),
             'posts' => BlogPostsModel::getLatestBlogPosts(5),
             'current_page' => $_SERVER['REQUEST_URI']
@@ -190,6 +191,19 @@ class AdminController {
 
         if (BrandsModel::updateBrandWithoutImage($brandId, $brandName, $brandCategory, $featured, $visibility)) {
             $_SESSION['success_message'] = 'Brand Updated Successfully!';
+            redirect(BASE_URL . '/admin/brands/');
+        } else {
+            // Insertion failed, redirect back to new brand form with error
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/brands/');
+        }
+    }
+
+    public function deleteBrand(){
+        $brandId = $_POST['brandId'];
+
+        if (BrandsModel::deleteBrand($brandId)) {
+            $_SESSION['success_message'] = 'Brand Deleted Successfully!';
             redirect(BASE_URL . '/admin/brands/');
         } else {
             // Insertion failed, redirect back to new brand form with error
@@ -351,6 +365,35 @@ class AdminController {
             redirect($redirect);
         }
 
+    }
+
+    public function deleteBrandedProduct(){
+        $productId = $_POST['productId'];
+        $productBrand = $_POST['brandId'];
+
+        // Retrieve Brand Category i.e (poultry, fish or drug) for proper redirect
+        $redirect = "";
+        switch (BrandsModel::getBrandById($productBrand)['category']) {
+            case 'poultry':
+                $redirect = BASE_URL . "/admin/products/branded/poultry-feeds";
+                break;
+            case 'fish':
+                $redirect = BASE_URL . "/admin/products/branded/fish-feeds";
+                break;
+            case 'drug':
+                $redirect = BASE_URL . "/admin/products/branded/veterinary-products";
+                break;
+        }
+
+         // Create new admin record in the database using AdminModel
+         if (BrandedProductsModel::deleteProduct($productId)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = 'Product Deleted Successfully!';
+            redirect($redirect);
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect($redirect);
+        }
     }
 
     public function feedIngredientsList(){
@@ -587,6 +630,34 @@ class AdminController {
 
     }
 
+    public function deleteUnbrandedProduct($params){
+        $productType = $params[0];
+        $productId = $_POST['productId'] ?? '';
+        $productTypeName = "";
+
+        switch ($productType) {
+            case 'feed-ingredients':
+                $productTypeName = "Feed Ingredient";
+                break;
+            case 'feed-additives':
+                $productTypeName = "Feed Additive";
+                break;
+            case 'miscellaneous':
+                $productTypeName = "Miscellaneous";
+                break;
+        }
+
+        // Create new admin record in the database using AdminModel
+        if (UnBrandedProductsModel::deleteProduct($productId)) {
+            // insertion successful, redirect to respective branded products page with success message
+            $_SESSION['success_message'] = "$productTypeName Product Deleted Successfully!";
+            redirect(BASE_URL . "/admin/products/unbranded/$productType");
+        } else {
+            $_SESSION['error_message'] = 'Update failed. Please try again.';
+            redirect(BASE_URL . '/admin/products/unbranded/miscellaneous');
+        }
+    }
+
     public function blogsList($category = ""){
         $category = ($category !== "") ? join(" ",explode("-", $category[0])) : "";
 
@@ -809,7 +880,7 @@ class AdminController {
 
         if (BlogCommentsModel::deleteComment($comment_id)) {
             // upadte successful, redirect to post page with uploaded comment
-            $_SESSION['comment_action_success_message'] = 'Comment was approved successfully!';
+            $_SESSION['comment_action_success_message'] = 'Comment was deleted successfully!';
             redirect(BASE_URL . "/admin/post/single/$post_title#comments");
         } else {
             $_SESSION['comment_action_error_message'] = 'Update failed. Please try again.';
