@@ -75,7 +75,7 @@ class Router
         if (strpos($url, '/tosed-farms/admin') === 0) {
             include VIEW_PATH . '/admin/404.php';
         } else {
-            include VIEW_PATH . '/404.php';
+            include VIEW_PATH . '/home/404.php';
         }
     }
 

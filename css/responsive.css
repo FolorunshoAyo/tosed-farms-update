@@ -336,11 +336,7 @@ hr.divider{
 .dropdown.has-megamenu{
     position: static;
 }
-
-.navbar-expand-lg .navbar-nav .dropdown-menu.megamenu{
-    width: 100%
-}
-    
+   
 }
 
 @media (max-width:850px) { 
@@ -480,7 +476,7 @@ outline: none;
 .navbar-nav > li {
     float: none;
     border-bottom: 1px solid #eff5f5;
-    padding: 3px 10px 3px 5px;
+    padding: 3px 5px 3px 5px;
 }
     
 .dropdown-toggle {

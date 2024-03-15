@@ -65,6 +65,38 @@ class BrandsModel
         }
     }
 
+    public static function getBrandsByCategory($brand_category) {
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM brands WHERE category = '$brand_category' ORDER BY name ASC";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brands;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function getFeaturedBrands() {
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM brands WHERE featured_status = 1 ORDER BY name ASC";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brands;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function getBrandsAlphabetically($brand_category){
         try{
             global $pdo;
@@ -80,7 +112,59 @@ class BrandsModel
             return false;
         }
     }
+
+    public static function getAllBrandsAlphabetically(){
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM brands ORDER BY name";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brands;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public static function getUniqueCharacters(){
+        try{
+            global $pdo;
+
+            $query = "SELECT DISTINCT SUBSTRING(name, 1, 1) AS first_character
+            FROM brands
+            ORDER BY first_character ASC";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brandCharacters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brandCharacters;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
     
+    public static function getBrandsByFirstChar($char){
+        try{
+            global $pdo;
+
+            $query = "SELECT *
+            FROM brands
+            WHERE name LIKE '$char%'";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute();
+
+            $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brands;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function updateBrand($brand_id, $name, $category, $image_url, $featured_status, $visibility_status)
     {
         try{

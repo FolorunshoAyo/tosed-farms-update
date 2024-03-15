@@ -415,8 +415,6 @@
                 $('#featured').attr ('checked', featured === 'Yes');
                 $('[name="editBrandId"]').attr("value", brandId);
 
-                console.log(brandId);
-
                 // Show the modal
                 $('#editBrandModal').modal('show');
             });

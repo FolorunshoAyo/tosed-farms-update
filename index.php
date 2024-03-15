@@ -13,9 +13,11 @@ require_once 'core/router.php'; // Router class
 $router = new Router();
 
 // Define front routes
-$router->get('/', 'HomeController@index');
-$router->get('/about', 'AboutController@index');
-$router->post('/contact', 'ContactController@store');
+$router->get('/tosed-farms/', 'HomeController@index');
+$router->get('/tosed-farms/brands', 'HomeController@listAllBrands');
+$router->get('/tosed-farms/brand/:name', 'HomeController@listAllBrandProducts');
+$router->get('/tosed-farms/about', 'HomeController@about');
+$router->post('tosed-farms/contact', 'ContactController@contactForm');
 
 // Admin routes
 $router->get('/tosed-farms/admin/register', 'AdminController@registrationForm'); // Display registration form
