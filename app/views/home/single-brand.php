@@ -1,5 +1,6 @@
 <?php
-  $brandName = ucwords($data['brand_name']);
+  $brandDetails = $data['brand_details']; 
+  $brandName = ucwords($brandDetails['name']);
 ?>
 <!DOCTYPE html>
 <html lang="en-US" class="no-js">
@@ -74,7 +75,7 @@
         <div class="pages-title">
           <h1>
             Brand <br />
-            <span>Brand Title</span>
+            <span><?= $brandDetails['name'] ?></span>
           </h1>
           <p>
             <a href="#">Home</a> &nbsp; > &nbsp;
@@ -88,8 +89,8 @@
       <div class="item-background">
         <div class="container">
           <div class="single-brand-title">
-            <figure><img src="<?= BASE_URL . "/brand-images/aller-aqua-logo.png"?>" alt="#" /></figure>
-            <h2>Brand Name</h2>
+            <figure><img src="<?= BASE_URL . "/brand-images/" . $brandDetails['image_url'] ?>" alt="#" /></figure>
+            <h2><?= $brandDetails['name'] ?></h2>
           </div>
 
           <!-- Table of products here -->

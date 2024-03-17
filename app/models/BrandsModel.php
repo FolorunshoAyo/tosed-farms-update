@@ -49,6 +49,23 @@ class BrandsModel
         }
     }
 
+    public static function getBrandByName($brand_name)
+    {
+        try{
+            global $pdo;
+
+            $query = "SELECT * FROM brands WHERE name = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$brand_name]);
+
+            $brand = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $brand;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function getAllBrands() {
         try{
             global $pdo;

@@ -38,9 +38,39 @@ class HomeController {
             'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             'products' =>  BrandedProductsModel::getAllSingleBrandProducts($brand_name),
-            'brand_name' => $brand_name, 
+            'brand_details' => BrandsModel::getBrandByName($brand_name), 
         ];
 
         include VIEW_PATH . "/home/single-brand.php";
+    }
+
+    public function listPoultryFeeds(){
+        $data = [
+            'products' => BrandedProductsModel::getAllBrandedProducts('poultry'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'poultry'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function listFishFeeds(){
+        $data = [
+            'products' => BrandedProductsModel::getAllBrandedProducts('fish'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'fish'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
+    }
+
+    public function listVeterinaryProducts(){
+        $data = [
+            'products' => BrandedProductsModel::getAllBrandedProducts('drug'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'product_type' => 'drugs'
+        ];
+
+        include VIEW_PATH . '/admin/branded-products.php'; 
     }
 }
