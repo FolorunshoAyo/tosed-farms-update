@@ -1,10 +1,20 @@
 <?php
-  $brandDetails = $data['brand_details']; 
-  $brandName = ucwords($brandDetails['name']);
+    $productTypeTitle = $data['product_type'];
+
+    switch ($productTypeTitle) {
+      case 'poultry':
+        $productTypeTitle = "Poultry Feeds";
+        break;
+      case 'fish':
+        $productTypeTitle = "Fish Feeds";
+        break;
+      case 'drugs':
+        $productTypeTitle = "Veterinary Drugs";
+        break;
+    }
 ?>
 <!DOCTYPE html>
-<html lang="en-US" class="no-js">
-
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -16,11 +26,15 @@
     <!-- ==============================================
 		TITLE AND META TAGS
 		=============================================== -->
-    <title> <?= $brandName ?> Products | Tosed Farms</title>
+    <title><?= $productTypeTitle ?> Products | Tosed Farms</title>
+    <meta
+      name="keywords"
+      content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands"
+    />
     <meta name="author" content="Aycodes" />
     <meta
       name="description"
-      content="Explore our range of <?= $brand_name ?> products today! Discover high-quality livestock feeds and drugs from leading brands. Partner with us for innovative solutions in poultry farming and livestock management. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
+      content="Discover high-quality livestock feeds and drugs from leading brands. Partner with us for innovative solutions in poultry farming and livestock management. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry. Explore our range of products and services today!"
     />
     <meta name="theme-color" content="#EEC344" />
 
@@ -74,12 +88,12 @@
       <div class="container">
         <div class="pages-title">
           <h1>
-            Brand <br />
-            <span><?= $brandDetails['name'] ?></span>
+            Collection <br />
+            <span><?= $productTypeTitle ?></span>
           </h1>
           <p>
             <a href="#">Home</a> &nbsp; > &nbsp;
-            <a href="brands.html">Brands</a> &nbsp; > &nbsp; <?= $brandName ?>
+            <a href="<?= BASE_URL ?>/categories">Categories</a> &nbsp; > &nbsp; <?= $productTypeTitle ?>
           </p>
         </div>
       </div>
@@ -88,9 +102,9 @@
     <section>
       <div class="item-background">
         <div class="container">
-          <div class="single-brand-title">
-            <figure><img src="<?= BASE_URL . "/brand-images/" . $brandDetails['image_url'] ?>" alt="#" /></figure>
-            <h2><?= $brandDetails['name'] ?></h2>
+          <div class="section-title">
+            <h2><?= $productTypeTitle ?></h2>
+            <p><?= $data['category_caption'] ?></p>
           </div>
 
           <!-- Table of products here -->
@@ -99,6 +113,7 @@
               <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Brand</th>
                 <th>Net Weight</th>
                 <th>Price</th>
                 <th>Availability</th>
@@ -108,24 +123,26 @@
                 <?php
                   foreach ($data['products'] as $product) {
                   $in_stock = $product['availability_status'] === 1; 
+                  $formatted_brand_name = strtolower(join("-", explode(" ", $product['brand_name'])));
                 ?>
                 <tr>
                   <td><?= $product['name'] ?></td>
                   <td><?= $product['description'] ?></td>
+                  <td><a href="<?= BASE_URL . "/brand/" . $formatted_brand_name ?>"><?= $product['brand_name'] ?></a></td>
                   <td><?= $product['net_weight'] ?></td>
                   <td>₦ <?= number_format($product['price'], 2, '.', ',') ?></td>
                   <td>
                     <span class="badge badge-<?= $in_stock? "success" : "danger" ?> badge-pill"><?= $in_stock? "In Stock" : "Out of stock" ?></span>
                   </td>
-                </tr>            
+                </tr>  
                 <?php
                   }
                 ?>          
-            </tbody>
             <tfoot>
               <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Brand</th>
                 <th>Net Weight</th>
                 <th>Price</th>
                 <th>Availability</th>
@@ -294,24 +311,24 @@
         .dataTable( {
           responsive: true,
           columnDefs: [
-            {
-                target: 3,
-                render: DataTable.render.number(null, null, 0, '₦ '),
-            },
-            {
-                target: [0,2,3],
-                className: 'font-weight-bold',
-            },
-            {
-                targets: [3, 4],
-                className: 'dt-body-right'
-            },
-            {
-                "targets": [1], 
-                "render": function ( data, type, row ) {
-                    return '<div class="table-description">'+data+'</div>';
-                }
-            }    
+              {
+                  target: 4,
+                  render: DataTable.render.number(null, null, 0, '₦ '),
+              },
+              {
+                  targets: [4, 5],
+                  className: 'dt-body-right'
+              },
+              {
+                  targets: [0,2,3,4],
+                  className: 'font-weight-bold'
+              },
+              {
+                  "targets": [1], 
+                  "render": function ( data, type, row ) {
+                      return '<div class="table-description">'+data+'</div>';
+                  }
+              }    
           ]
         });
       });

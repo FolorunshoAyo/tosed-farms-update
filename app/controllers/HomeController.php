@@ -46,31 +46,78 @@ class HomeController {
 
     public function listPoultryFeeds(){
         $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             'products' => BrandedProductsModel::getAllBrandedProducts('poultry'),
             'current_page' => $_SERVER['REQUEST_URI'],
-            'product_type' => 'poultry'
+            'product_type' => 'poultry',
+            'category_caption' => "Here is our collection of quality feeds for poultry birds"
         ];
 
-        include VIEW_PATH . '/admin/branded-products.php'; 
+        include VIEW_PATH . '/home/branded-products.php'; 
     }
 
     public function listFishFeeds(){
         $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             'products' => BrandedProductsModel::getAllBrandedProducts('fish'),
             'current_page' => $_SERVER['REQUEST_URI'],
-            'product_type' => 'fish'
+            'product_type' => 'fish',
+            'category_caption' => "Here is our collection of quality feeds for fishes"
         ];
 
-        include VIEW_PATH . '/admin/branded-products.php'; 
+        include VIEW_PATH . '/home/branded-products.php'; 
     }
 
     public function listVeterinaryProducts(){
         $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             'products' => BrandedProductsModel::getAllBrandedProducts('drug'),
             'current_page' => $_SERVER['REQUEST_URI'],
-            'product_type' => 'drugs'
+            'product_type' => 'drugs',
+            'category_caption' => "Here is our collection of quality veterinary drugs for animals"
         ];
 
-        include VIEW_PATH . '/admin/branded-products.php'; 
+        include VIEW_PATH . '/home/branded-products.php'; 
+    }
+
+    public function feedIngredientsList(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('ingredients'),
+        ];
+
+        include VIEW_PATH . '/home/feed-ingredients.php'; 
+    }
+
+    public function feedAdditivesList(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('additives')
+
+        ];
+
+        include VIEW_PATH . '/home/feed-additives.php'; 
+    }
+
+    public function miscellaneousList(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'products' => UnBrandedProductsModel::getAllUnBrandedProducts('miscellaneous'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/home/miscellaneous.php'; 
     }
 }

@@ -5,7 +5,7 @@
             <nav class="navbar navbar-expand-lg align-items-center">
                 <a class="navbar-brand" href="index.html">
                     <div class="logo-brand">
-                        <img src="img/master/new-logo-white.png" alt="">
+                        <img src="<?= BASE_URL ?>/img/master/new-logo-white.png" alt="">
                     </div>
                 </a>
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,9 @@
                                 <li class="divider"></li>
                                 <li><a class="dropdown-item" href="<?= BASE_URL ?>/category/feed-ingredients">Feed Ingredients</a></li>
                                 <li class="divider"></li>
-                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/feed-additives">Feed Additives</a></li>
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/category/feed-additives">Feed Additives</a></li>
+                                <li class="divider"></li>
+                                <li><a class="dropdown-item" href="<?= BASE_URL ?>/category/miscellaneous">Miscellaneous</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">

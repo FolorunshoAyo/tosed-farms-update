@@ -429,7 +429,7 @@
                 var netWeight = row.find('td:eq(3)').text().trim();
                 var price = row.find('td:eq(4)').text().trim().toLowerCase();
                 var availability = row.find('td:eq(5)').text().trim().toLowerCase();
-                var productId = $(this).data("brand-id");
+                var productId = $(this).data("product-id");
 
                 // Populate the modal fields with the data
                 $('#name').val(name);
@@ -438,7 +438,8 @@
                 $('#net_weight').val(netWeight);
                 $('#price').val(price);
                 $('#in_stock').attr('checked', availability === 'in stock');
-                $('[name="productId"]').attr("value", productId);
+                $('#editProductModal [name="productId"]').attr("value", productId);
+                console.log($('#editProductModal [name="productId"]'));
 
                 // Show the modal
                 $('#editProductModal').modal('show');

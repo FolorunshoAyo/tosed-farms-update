@@ -16,6 +16,9 @@ $router = new Router();
 $router->get('/tosed-farms/', 'HomeController@index');
 $router->get('/tosed-farms/brands', 'HomeController@listAllBrands');
 $router->get('/tosed-farms/brand/:name', 'HomeController@listAllBrandProducts');
+$router->get('/tosed-farms/category/poultry-feeds', 'HomeController@listPoultryFeeds');
+$router->get('/tosed-farms/category/fish-feeds', 'HomeController@listFishFeeds');
+$router->get('/tosed-farms/category/veterinary-products', 'HomeController@listVeterinaryProducts');
 $router->get('/tosed-farms/about', 'HomeController@about');
 $router->post('tosed-farms/contact', 'ContactController@contactForm');
 

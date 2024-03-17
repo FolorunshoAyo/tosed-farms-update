@@ -1,10 +1,5 @@
-<?php
-  $brandDetails = $data['brand_details']; 
-  $brandName = ucwords($brandDetails['name']);
-?>
 <!DOCTYPE html>
-<html lang="en-US" class="no-js">
-
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -16,11 +11,15 @@
     <!-- ==============================================
 		TITLE AND META TAGS
 		=============================================== -->
-    <title> <?= $brandName ?> Products | Tosed Farms</title>
+    <title>Leading Livestock Feeds and Drugs Supplier | Tosed Farms</title>
+    <meta
+      name="keywords"
+      content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands"
+    />
     <meta name="author" content="Aycodes" />
     <meta
       name="description"
-      content="Explore our range of <?= $brand_name ?> products today! Discover high-quality livestock feeds and drugs from leading brands. Partner with us for innovative solutions in poultry farming and livestock management. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
+      content="Discover high-quality livestock feeds and drugs from leading brands. Partner with us for innovative solutions in poultry farming and livestock management. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry. Explore our range of products and services today!"
     />
     <meta name="theme-color" content="#EEC344" />
 
@@ -74,12 +73,11 @@
       <div class="container">
         <div class="pages-title">
           <h1>
-            Brand <br />
-            <span><?= $brandDetails['name'] ?></span>
+            Our <br />
+            <span>Feed Ingredients</span>
           </h1>
           <p>
-            <a href="#">Home</a> &nbsp; > &nbsp;
-            <a href="brands.html">Brands</a> &nbsp; > &nbsp; <?= $brandName ?>
+            <a href="#">Home</a> &nbsp; > &nbsp; Feed Ingredients
           </p>
         </div>
       </div>
@@ -88,9 +86,9 @@
     <section>
       <div class="item-background">
         <div class="container">
-          <div class="single-brand-title">
-            <figure><img src="<?= BASE_URL . "/brand-images/" . $brandDetails['image_url'] ?>" alt="#" /></figure>
-            <h2><?= $brandDetails['name'] ?></h2>
+          <div class="section-title">
+            <h2>Feed <span>Ingredients</span></h2>
+            <p>Discover our extensive range of premium feed ingredients meticulously selected to optimize the health and performance of your livestock</p>
           </div>
 
           <!-- Table of products here -->
@@ -99,35 +97,26 @@
               <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Net Weight</th>
-                <th>Price</th>
+                <th>Manufacturer</th>
+                <th>Price/kg</th>
                 <th>Availability</th>
               </tr>
             </thead>
             <tbody>
-                <?php
-                  foreach ($data['products'] as $product) {
-                  $in_stock = $product['availability_status'] === 1; 
-                ?>
                 <tr>
-                  <td><?= $product['name'] ?></td>
-                  <td><?= $product['description'] ?></td>
-                  <td><?= $product['net_weight'] ?></td>
-                  <td>₦ <?= number_format($product['price'], 2, '.', ',') ?></td>
-                  <td>
-                    <span class="badge badge-<?= $in_stock? "success" : "danger" ?> badge-pill"><?= $in_stock? "In Stock" : "Out of stock" ?></span>
-                  </td>
-                </tr>            
-                <?php
-                  }
-                ?>          
+                    <td>Product 1</td>
+                    <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium ipsa in expedita dicta, vero est, nihil nam reiciendis neque magnam aspernatur eius repellat voluptate! Nobis magni consectetur cupiditate delectus ipsam, nulla corporis eos amet velit incidunt qui iusto. Cumque a pariatur eveniet voluptas dolore quae consequatur error quod hic. Eaque incidunt quia culpa dignissimos temporibus maiores minima voluptas possimus deleniti omnis modi, facere velit animi quaerat, aperiam enim delectus, repudiandae obcaecati id. Laboriosam aliquid, alias hic ducimus excepturi optio ratione.</td>
+                    <td>Tosed Farms</td>
+                    <td>1000</td>
+                    <td><span class="badge badge-success badge-pill">In stock</span></td>
+                </tr>                        
             </tbody>
             <tfoot>
               <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Net Weight</th>
-                <th>Price</th>
+                <th>Manufacturer</th>
+                <th>Price/kg</th>
                 <th>Availability</th>
               </tr>
             </tfoot>
@@ -288,33 +277,33 @@
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.min.js"></script>
     <script>
-      $(document).ready(function(){
-        $('#products_table')
-        .addClass( 'nowrap' )
-        .dataTable( {
-          responsive: true,
-          columnDefs: [
-            {
-                target: 3,
-                render: DataTable.render.number(null, null, 0, '₦ '),
-            },
-            {
-                target: [0,2,3],
-                className: 'font-weight-bold',
-            },
-            {
-                targets: [3, 4],
-                className: 'dt-body-right'
-            },
-            {
-                "targets": [1], 
-                "render": function ( data, type, row ) {
-                    return '<div class="table-description">'+data+'</div>';
-                }
-            }    
-          ]
+        $(document).ready(function(){
+          $('#products_table')
+          .addClass( 'nowrap' )
+          .dataTable( {
+            responsive: true,
+            columnDefs: [
+                {
+                    target: 3,
+                    render: DataTable.render.number(null, null, 0, '₦ '),
+                },
+                {
+                    targets: [0,2,3],
+                    className: 'dt-body-right'
+                },
+                {
+                    targets: [3, 4],
+                    className: 'font-weight-bold'
+                },
+                {
+                    "targets": [1],
+                    "render": function ( data, type, row ) {
+                        return '<div class="table-description">'+data+'</div>';
+                    }
+                }    
+            ]
+          });
         });
-      });
     </script>
     <script src="<?= BASE_URL ?>/js/agrom.js"></script>
     <script src="<?= BASE_URL ?>/js/util.js"></script>
