@@ -123,7 +123,7 @@
                                                         if ($start > 1) {
                                                             echo '
                                                             <li class="page-item disabled">
-                                                                <a class="page-link" href="javascript:void(0)">....</a>
+                                                                <a class="page-link" href="javascript:void(0)">...</a>
                                                             </li>';
                                                         }
 

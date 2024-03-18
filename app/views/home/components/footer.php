@@ -3,8 +3,8 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="footer-col">
-            <a href="index-2.html">
-              <figure class="footer-logo"><img src="img/master/new-logo-white.png" alt=""></figure>
+            <a href="<?= BASE_URL ?>/">
+              <figure class="footer-logo"><img src="<?= BASE_URL ?>/img/master/new-logo-white.png" alt=""></figure>
             </a>
             <p>Your one stop shop for poultry and fish feeds.</p>
           </div>

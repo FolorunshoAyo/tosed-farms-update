@@ -16,11 +16,17 @@ $router = new Router();
 $router->get('/tosed-farms/', 'HomeController@index');
 $router->get('/tosed-farms/brands', 'HomeController@listAllBrands');
 $router->get('/tosed-farms/brand/:name', 'HomeController@listAllBrandProducts');
+$router->get('/tosed-farms/categories', 'HomeController@allCategories');
 $router->get('/tosed-farms/category/poultry-feeds', 'HomeController@listPoultryFeeds');
 $router->get('/tosed-farms/category/fish-feeds', 'HomeController@listFishFeeds');
 $router->get('/tosed-farms/category/veterinary-products', 'HomeController@listVeterinaryProducts');
+$router->get('/tosed-farms/category/feed-ingredients', 'HomeController@feedIngredientsList');
+$router->get('/tosed-farms/category/feed-additives', 'HomeController@feedAdditivesList');
+$router->get('/tosed-farms/category/miscellaneous', 'HomeController@miscellaneousList');
 $router->get('/tosed-farms/about', 'HomeController@about');
-$router->post('tosed-farms/contact', 'ContactController@contactForm');
+$router->get('/tosed-farms/contact', 'HomeController@contactForm');
+$router->get('/tosed-farms/posts', 'HomeController@blogsList');
+$router->get('/tosed-farms/posts/category/:category', 'HomeController@blogsList');
 
 // Admin routes
 $router->get('/tosed-farms/admin/register', 'AdminController@registrationForm'); // Display registration form

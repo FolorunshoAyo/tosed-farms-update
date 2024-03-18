@@ -11,7 +11,7 @@
     <!-- ==============================================
 		TITLE AND META TAGS
 		=============================================== -->
-    <title>Feed Ingredients for your Livestock | Tosed Farms</title>
+    <title>Feed Additives for your Livestock | Tosed Farms</title>
     <meta
       name="keywords"
       content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands"
@@ -19,7 +19,7 @@
     <meta name="author" content="Aycodes" />
     <meta
       name="description"
-      content="Discover high-quality livestock feeds ingredients from leading brands/manufacturers. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
+      content="Discover high-quality livestock feeds additives from leading brands/manufacturers. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
     />
     <meta name="theme-color" content="#EEC344" />
 
@@ -74,11 +74,11 @@
         <div class="pages-title">
           <h1>
             Our <br />
-            <span>Feed Ingredients</span>
+            <span>Feed Additives</span>
           </h1>
           <p>
             <a href="#">Home</a> &nbsp; > &nbsp;
-            <a href="<?= BASE_URL ?>/categories">Categories</a> &nbsp; > &nbsp; Feed Ingredients
+            <a href="<?= BASE_URL ?>/categories">Categories</a> &nbsp; > &nbsp; Feed Additives
           </p>
         </div>
       </div>
@@ -88,8 +88,8 @@
       <div class="item-background">
         <div class="container">
           <div class="section-title">
-            <h2>Feed <span>Ingredients</span></h2>
-            <p>Discover our extensive range of premium feed ingredients meticulously selected to optimize the health and performance of your livestock</p>
+            <h2>Feed <span>Additives</span></h2>
+            <p>Discover our extensive range of premium feed additives meticulously selected to optimize the health and performance of your livestock</p>
           </div>
 
           <!-- Table of products here -->
@@ -99,7 +99,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Manufacturer</th>
-                <th>Price/kg</th>
+                <th>Price (per 100g)</th>
                 <th>Availability</th>
               </tr>
             </thead>

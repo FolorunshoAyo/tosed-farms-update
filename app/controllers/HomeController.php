@@ -44,6 +44,16 @@ class HomeController {
         include VIEW_PATH . "/home/single-brand.php";
     }
 
+    public function allCategories(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug')
+        ];
+
+        include VIEW_PATH . "/home/categories.php";
+    }
+
     public function listPoultryFeeds(){
         $data = [
             'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
@@ -119,5 +129,72 @@ class HomeController {
         ];
 
         include VIEW_PATH . '/home/miscellaneous.php'; 
+    }
+
+    public function about(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/home/about.php'; 
+    }
+
+    public function contactForm(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'current_page' => $_SERVER['REQUEST_URI'],
+        ];
+
+        include VIEW_PATH . '/home/contact-form.php'; 
+    }
+
+    public function blogsList($category = ""){
+        $category = ($category !== "") ? join(" ",explode("-", $category[0])) : "";
+
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        $totalPosts = BlogPostsModel::total();
+        $totalPages = ceil($totalPosts / $limit);
+        
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            'blogs' => BlogPostsModel::getAllBlogPosts($category, $limit, $offset),
+            'totalPages' => $totalPages,
+            'categories' => BlogPostsModel::getAllBlogCategories(),
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3)
+        ];
+
+        include VIEW_PATH . '/home/blogs.php';
+    }
+
+    public function blogSingle($params){
+        $post_title = join(" ", explode("-", $params[0]));
+
+        $post = BlogPostsModel::getBlogPostByTitle($post_title);
+
+        if(!$post){
+            redirect(BASE_URL . "/posts");
+            return;
+        }
+
+        $data = [
+            'current_page' => $_SERVER['REQUEST_URI'],
+            'post' => $post,
+            'categories' => BlogPostsModel::getAllBlogCategories(),
+            'latest_posts' => BlogPostsModel::getLatestBlogPosts(3),
+            'comments_total' => BlogCommentsModel::total($post['post_id']),
+            'comments' => BlogCommentsModel::getAllComments($post['post_id'])
+        ];
+
+        include VIEW_PATH . '/admin/single-post.php';
     }
 }

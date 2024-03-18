@@ -182,6 +182,27 @@ class BlogPostsModel{
 
     }
 
+    public static function getBlogCategoriesCount($category) {
+        try{
+            global $pdo;
+
+            $query = "SELECT COUNT(*) as total 
+            FROM blog_posts 
+            INNER JOIN blog_categories ON
+            blog_posts.category_id = blog_categories.category_id
+            WHERE blog_categories.name = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$category]);
+
+            $blogCategoryCount = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $blogCategoryCount['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+
+    }
+
     public function searchBlogPosts($search_term){
         try{
             global $pdo;
