@@ -54,6 +54,7 @@ class BlogPostsModel{
             SET category_id = ?, title = ?, content = ?, status = ?
             WHERE post_id = ?";
             $stmt = $pdo->prepare($query);
+            
             return $stmt->execute([$category_id, $title, $content, $status, $post_id]);
 
         }catch (PDOException $e) {

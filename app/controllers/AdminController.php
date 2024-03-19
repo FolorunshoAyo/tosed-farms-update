@@ -770,7 +770,7 @@ class AdminController {
         $title = $_POST['title'] ?? '';
         $content = $_POST['content'] ?? '';
         $action = $_POST['action'] ?? '';
-        $category= $_POST['category'] ?? '';
+        $category= $_POST['category'] ?? ''; 
 
         // Server-side validation
         if (empty($title) || empty($content) || empty($action) || empty($category)) {
@@ -795,14 +795,18 @@ class AdminController {
 
                     redirect(BASE_URL . "/admin/post/$post_id/edit");
                 } else {
+                    print_r($_POST);
+                    print_r(empty($_FILES['featured_image'])? "0" : "1");
+                    return;
                     // Insertion failed, redirect back to new brand form with error
                     $_SESSION['error_message'] = 'Update failed. Please try again.';
                     redirect(BASE_URL . "/admin/post/$post_id/edit");
                 }
             }
-        }
+            return;
+        } 
 
-        if (BlogPostsModel::updateWithoutImage($post_id, $title, $category, $title, $content, $action)) {
+        if (BlogPostsModel::updateWithoutImage($post_id, $category, $title, $content, $action)) {
             if($action === "1"){
                 $_SESSION['success_message'] = 'Blog Post Updated and Saved As Draft Successfully!';
             }else{
