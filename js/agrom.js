@@ -525,25 +525,26 @@ $(function () {
 
   $('#blog-comment').on('submit', function (e) {
     if (!e.isDefaultPrevented()) {
-      var url = "contact.php";
+      var postId = $('input[name="postId"]').val().trim();
+      var url = `http://localhost/tosed-farms/post/${postId}/comment/new`;
 
-      console.log($(this).serialize());
-      // $.ajax({
-      //     type: "POST",
-      //     url: url,
-      //     data: $(this).serialize(),
-      //     success: function (data)
-      //     {
-      //         var messageAlert = 'alert-' + data.type;
-      //         var messageText = data.message;
+      $.ajax({
+          type: "POST",
+          url: url,
+          data: $(this).serialize(),
+          success: function (data)
+          {
+            var data = JSON.parse(data);
+            var messageAlert = 'alert-' + data.type;
+            var messageText = data.message;
 
-      //         var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-      //         if (messageAlert && messageText) {
-      //             $('#contact-form').find('.messages').html(alertBox);
-      //             $('#contact-form')[0].reset();
-      //         }
-      //     }
-      // });
+            var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+            if (messageAlert && messageText) {
+              $('#blog-comment').find('.messages').html(alertBox);
+              $('#blog-comment')[0].reset();
+            }
+          }
+      });
       return false;
     }
   })
@@ -555,25 +556,35 @@ $(function () {
 
     $el.on('submit', function (e) {
       if (!e.isDefaultPrevented()) {
-        var url = "contact.php";
+        var formData = $(this).serializeArray();
 
-        console.log($(this).serialize());
-        // $.ajax({
-        //     type: "POST",
-        //     url: url,
-        //     data: $(this).serialize(),
-        //     success: function (data)
-        //     {
-        //         var messageAlert = 'alert-' + data.type;
-        //         var messageText = data.message;
-  
-        //         var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-        //         if (messageAlert && messageText) {
-        //             $('#contact-form').find('.messages').html(alertBox);
-        //             $('#contact-form')[0].reset();
-        //         }
-        //     }
-        // });
+        var commentId;
+        $.each(formData, function(index, field) {
+          if (field.name === 'commentId') {
+            commentId = field.value;
+            return false;
+          }
+        });
+
+        var url = `http://localhost/tosed-farms/comment/${commentId.trim()}/reply/new`;        
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: $(this).serialize(),
+          success: function (data)
+          {
+            var data = JSON.parse(data);
+            var messageAlert = 'alert-' + data.type;
+            var messageText = data.message;
+
+            var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+            if (messageAlert && messageText) {
+              $el.find('.messages').html(alertBox);
+              $el[0].reset();
+            }
+          }
+        });
         return false;
       }
     })

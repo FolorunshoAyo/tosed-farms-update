@@ -9,7 +9,7 @@
   <!-- ==============================================
   TITLE AND META TAGS
   =============================================== -->
-  <title>Leading Livestock Feeds and Drugs Supplier | Tosed Farms</title>
+  <title>Blog Post - <?= $data['post']['title'] ?> | Tosed Farms</title>
   <meta name="keywords" content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands">
   <meta name="author" content="Aycodes">
   <meta name="description" content="Discover high-quality livestock feeds and drugs from leading brands. Partner with us for innovative solutions in poultry farming and livestock management. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry. Explore our range of products and services today!">
@@ -55,7 +55,7 @@
       <div class="container">
         <div class="pages-title">
           <h1><span>Post</span></h1>
-          <p><a href="#">Home</a> &nbsp; > &nbsp; <a href="#">Posts</a> &nbsp; > &nbsp; Freeze Concern Hits Wheat Farms</p>
+          <p><a href="<?= BASE_URL ?>/">Home</a> &nbsp; > &nbsp; <a href="<?= BASE_URL ?>/posts">Posts</a> &nbsp; > &nbsp; <?= $post['title'] ?></p>
         </div>
       </div>
   </div>
@@ -67,98 +67,77 @@
           <div class="col-lg-9">              
             <div class="post-single">
               <figure class="post-preview">
-                  <img src="img/images/blog5.jpg" alt="">
+                  <img src="<?= BASE_URL . "/blog-images/" . $post['featured_image'] ?>" alt="">
                   <div class="post-overlay"></div>
               </figure>
               <div class="single-post-caption">
-                <h2>Freeze Concern Hits Wheat Farms</h2>
+                <h2><?= $post['title'] ?></h2>
                 <div class="single-post-details">
                     <div class="post-author">
-                        <figure class="author-avatar"><img src="img/images/post-avatar1.jpg" alt=""></figure>
+                        <figure class="author-avatar"><img src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt=""></figure>
                         <div class="about-author">
-                            <h4 class="author-name"><a href="#">John Wilson</a></h4>
-                            <p class="posted-on">January 15, 2019</p>
+                            <h4 class="author-name"><a href="#"><?= $post['first_name'] . " " . $post['last_name'] ?></a></h4>
+                            <p class="posted-on"><?= date("M d, Y", strtotime($post['date_posted'])) ?></p>
                         </div>        
                     </div>
                 </div>
                 <hr class="posts"> 
-                <h1>Heading One</h1>
-                <h2>Heading One</h2>
-                <h3>Heading One</h3>
-                <h4>Heading One</h4>
-                <h5>Heading One</h5>
-                <h6>Heading One</h6>
-                <p>Creating value for clients is our sole objective and everything else revolves around it. No matter what we are working on, we devise innovative ways to meet the campaign goals following the best SEO practices.</p>
-                <p>Before you read any further, we want to warn you to be cautious of all those so-called social media experts who claim to know everything about Social Media Marketing.  No one knows everything and these mediums are changing constantly.  Remember that those who are offering legitimate SMM services should also be experts in customer engagement, value propositions and using these sites to build your business.</p>
-                <ul>
-                  <li>Unordered List Item 1</li>
-                  <li>Unordered List Item 2</li>
-                  <li>Unordered List Item 3</li>
-                </ul>
-                <ol>
-                  <li>Ordered List Item 1</li>
-                  <li>Ordered List Item 2</li>
-                  <li>Ordered List Item 3</li>
-                </ol>
-                <blockquote>
-                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi. 
-                </blockquote>
-                <p>Creating value for clients is our sole objective and everything else revolves around it. No matter what we are working on, we devise innovative ways to meet the campaign goals following the best SEO practices.</p>
-                <img src="img/images/media-thumb3.jpg" alt="#">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Table Header 1</th>
-                      <th>Table Header 2</th>
-                      <th>Table Header 3</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Table Cell 1</td>
-                      <td>Table Cell 2</td>
-                      <td>Table Cell 3</td>
-                    </tr>
-                    <tr>
-                      <td>Table Cell 4</td>
-                      <td>Table Cell 5</td>
-                      <td>Table Cell 6</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <?= $post['content'] ?>
               </div>
             </div>  
             <div class="comments">
-              <h3>Comments (3)</h3>
+              <h3>Comments (<?= $data['comments_total'] ?>)</h3>
+              <?php if($data['comments_total'] > 0): ?>
               <hr class="comments">
+              <?php
+                foreach($data['comments'] as $comment){
+                  $replies = BlogCommentsRepliesModel::getAllCommentReplies($comment['comment_id']);
+
+                  if($comment['approved'] !== 0 && $comment['approved'] !== null){
+              ?>
               <div class="comment-block">
                 <div class="comment-box">
-                  <figure class="user-avatar"><img src="img/images/avatar1.jpg" alt=""></figure>
+                  <figure class="user-avatar"><img src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt=""></figure>
                   <div class="comment-details">
-                    <h4>Lori Thomas</h4>
-                    <p class="comment-date">January 9, 2019</p>
-                    <p class="comment">Reader will be distracted by the readable content of a page when looking at its grid-item. The point of using Lorem Ipsum is that it.</p>
+                    <h4>
+                    <?php 
+                      if(!empty($comment['admin_id'])){
+                        // is admin
+                        $admin = AdminModel::findById($comment['admin_id']);
+                        $commenter = $admin['first_name'] . " " . $admin['last_name'];
+                        echo $commenter;
+                      }elseif(!empty($user_id)){ 
+                        // is registered user
+                      } else {
+                        $commenter = $comment['name'];
+                        echo $commenter;
+                      }
+                    ?>
+                    </h4>
+                    <p class="comment-date"><?= date('M d, Y, h:i a', strtotime($comment['date_posted'])) ?></p>
+                    <p class="comment"><?= $comment['message'] ?></p>
                     <div class="comment-interaction">
                         <div class="replay-box">
-                          <a href="#" data-toggle="comment-1"><i class="fas fa-reply"></i>reply</a>
+                          <a href="#" data-toggle="comment-<?= $comment['comment_id'] ?>"><i class="fas fa-reply"></i>reply</a>
                         </div>
                     </div>
                   </div>
                 </div>
                 <div class="replies">
-                  <div id="comment-1" class="comment-form reply">
+                  <div id="comment-<?= $comment['comment_id'] ?>" class="comment-form reply">
                     <button
                       style="float: right;"
                       type="button"
                       class="btn-close"
-                      data-dismiss="comment-1"
+                      data-dismiss="comment-<?= $comment['comment_id'] ?>"
                       aria-label="Close"
                     >
                       <span aria-hidden="true">×</span>
                     </button>
-                    <h3>Reply To Lori Thomas</h3>
+                    <h3>Reply To <?= $commenter ?></h3>
                     <hr class="comments">
                     <form class="blog-reply">
+                      <div class="messages"></div>
                       <div class="form-row">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -172,6 +151,7 @@
                             <div class="help-block with-errors"></div>
                           </div>
                         </div>
+                        <input type="hidden" name="commentId" value="<?= $comment['comment_id'] ?>">
                         <div class="col-md-12">
                           <div class="form-group">
                             <textarea name="message" class="form-control customize" placeholder="Your message" rows="6" required="required" data-error="Please,leave us a reply message."></textarea>
@@ -180,132 +160,52 @@
                         </div>
                       </div>
                       <div class="btn-comments">
-                        <button type="submit" class="btn btn-custom" role="button">SEND Reply</button>
+                        <button type="submit" class="btn btn-custom" role="button">Send Reply</button>
                       </div>
                     </form>
-                  </div>  
-                  <div class="comment-box">
-                    <figure class="user-avatar"><img src="img/images/avatar1.jpg" alt=""></figure>
-                    <div class="comment-details">
-                      <h4>Lori Thomas</h4>
-                      <p class="comment-date">January 9, 2019</p>
-                      <p class="comment">Reader will be distracted by the readable content of a page when looking at its grid-item. The point of using Lorem Ipsum is that it.</p>
-                    </div>
                   </div>
+                  <?php if(count($replies) > 0): ?>
+                    <?php 
+                      foreach($replies as $reply){ 
+                        if($reply['approved'] !== 0 && $reply['approved'] !== null){
+                    ?>  
+                    <div class="comment-box">
+                      <figure class="user-avatar"><img src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt=""></figure>
+                      <div class="comment-details">
+                        <h4>
+                          <?php 
+                            if(!empty($reply['admin_id'])){
+                              // is admin
+                              $admin = AdminModel::findById($reply['admin_id']);
+                              $replier = $admin['first_name'] . " " . $admin['last_name'];
+                              echo $replier;
+                            }elseif(!empty($user_id)){ 
+                                // is registered user
+                            } else {
+                              $replier = $reply['name'];
+                              echo $replier;
+                            }
+                          ?>
+                        </h4>
+                        <p class="comment-date"><?= date('M d, Y, h:i a', strtotime($reply['date_posted'])) ?></p>
+                        <p class="comment"><?= $reply['message'] ?></p>
+                      </div>
+                    </div>
+                    <?php
+                        } 
+                      } 
+                    ?>
+                  <?php endif; ?>
                 </div>
               </div>
               <hr class="comments">
-              <div class="comment-block">
-                <div class="comment-box">
-                  <figure class="user-avatar"><img src="img/images/avatar2.jpg" alt=""></figure>
-                  <div class="comment-details">
-                      <h4>Robert Smith</h4>
-                      <p class="comment-date">January 6, 2019</p>
-                      <p class="comment">Reader will be distracted by the readable content of a page when looking at its grid-item. The point of using Lorem Ipsum is that it.</p>
-                      <div class="comment-interaction">
-                        <div class="replay-box">
-                          <a href="#" data-toggle="comment-2"><i class="fas fa-reply"></i>reply</a>
-                        </div>
-                      </div>
-                  </div>
-                </div>
-                <div class="replies">
-                  <div id="comment-2" class="comment-form reply">
-                    <button
-                      style="float: right;"
-                      type="button"
-                      class="btn-close"
-                      data-dismiss="comment-2"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h3>Reply To Lori Thomas</h3>
-                    <hr class="comments">
-                    <form class="blog-reply">
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <input type="text" name="name" class="form-control customize" placeholder="Name" required="required" data-error="Full Name is required.">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <input type="email" name="email" class="form-control customize" placeholder="Email address" required="required" data-error="Valid email is required.">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <textarea name="message" class="form-control customize" placeholder="Your message" rows="6" required="required" data-error="Please,leave us a reply message."></textarea>
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="btn-comments">
-                        <button type="submit" class="btn btn-custom" role="button">SEND Reply</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <hr class="comments">
-              <div class="comment-block">
-                <div class="comment-box">
-                  <figure class="user-avatar"><img src="img/images/avatar3.jpg" alt=""></figure>
-                  <div class="comment-details">
-                    <h4>Joe Luke</h4>
-                    <p class="comment-date">January 3, 2019</p>
-                    <p class="comment">Reader will be distracted by the readable content of a page when looking at its grid-item. The point of using Lorem Ipsum is that it.</p>
-                    <div class="comment-interaction">
-                      <div class="replay-box">
-                        <a href="#" data-toggle="comment-3"><i class="fas fa-reply"></i>reply</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="replies">
-                  <div id="comment-3" class="comment-form reply">
-                    <button
-                      style="float: right;"
-                      type="button"
-                      class="btn-close"
-                      data-dismiss="comment-3"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
-                    <h3>Reply To Lori Thomas</h3>
-                    <hr class="comments">
-                    <form class="blog-reply">
-                      <div class="form-row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <input type="text" name="name" class="form-control customize" placeholder="Name" required="required" data-error="Full Name is required.">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <input type="email" name="email" class="form-control customize" placeholder="Email address" required="required" data-error="Valid email is required.">
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="form-group">
-                            <textarea name="message" class="form-control customize" placeholder="Your message" rows="6" required="required" data-error="Please,leave us a reply message."></textarea>
-                            <div class="help-block with-errors"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="btn-comments">
-                        <button type="submit" class="btn btn-custom" role="button">SEND Reply</button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
+              <?php
+                  }
+                }
+              ?>
+              <?php else: ?>
+                <p class="text-muted font-15">No comment in this post. Be the first to comment below.</p>
+              <?php endif; ?>
             </div>
 
             <div class="comment-form">
@@ -329,7 +229,7 @@
                   <!-- <div class="col-md-12">
                     <input type="text" class="form-control customize" placeholder="Your website">
                   </div> -->
-                  <input type="hidden" name="comment" value="513">
+                  <input type="hidden" name="postId" value="<?= $post['post_id']?> ">
                   <div class="col-md-12">
                     <div class="form-group">
                       <textarea name="message" class="form-control customize" placeholder="Your message" rows="6" required="required" data-error="Please,leave us a message."></textarea>

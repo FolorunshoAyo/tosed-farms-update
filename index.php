@@ -27,6 +27,9 @@ $router->get('/tosed-farms/about', 'HomeController@about');
 $router->get('/tosed-farms/contact', 'HomeController@contactForm');
 $router->get('/tosed-farms/posts', 'HomeController@blogsList');
 $router->get('/tosed-farms/posts/category/:category', 'HomeController@blogsList');
+$router->get('/tosed-farms/post/:title', 'HomeController@blogSingle');
+$router->post('/tosed-farms/post/:id/comment/new', 'HomeController@newPostComment');
+$router->post('/tosed-farms/comment/:id/reply/new', 'HomeController@newCommentReply');
 
 // Admin routes
 $router->get('/tosed-farms/admin/register', 'AdminController@registrationForm'); // Display registration form

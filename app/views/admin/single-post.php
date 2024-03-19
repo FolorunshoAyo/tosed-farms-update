@@ -16,7 +16,7 @@
 
     <style>
         table{
-            width: 100% !important;
+            width: auto !important;
             max-width: 100% !important;
         }
     </style>
@@ -164,7 +164,7 @@
                                                                 <?= $comment['message'] ?>
                                                             </p>
                                                             <div class="my-1 d-flex flex-wrap">
-                                                                <?php if(empty($comment['admin_id']) && ($comment['approved'] === "null")): ?>
+                                                                <?php if(empty($comment['admin_id']) && ($comment['approved'] === null)): ?>
                                                                     <a href="#" data-comment-action="approve" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
                                                                     <a href="#" data-comment-action="unapprove" data-action-type="comment" data-comment-id="<?= $comment['comment_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
                                                                 <?php endif; ?>
@@ -240,9 +240,9 @@
                                                                                 <?= $reply['message'] ?>
                                                                             </p>
                                                                             <div class="my-1 d-flex flex-wrap">
-                                                                                <?php if(empty($reply['admin_id']) && ($reply['approved'] === "null")): ?>
+                                                                                <?php if(empty($reply['admin_id']) && ($reply['approved'] === null)): ?>
                                                                                     <a href="#" data-comment-action="approve" data-action-type="reply" data-reply-id="<?= $reply['reply_id'] ?>" href="#" class="text-warning mr-2">Approve</a>
-                                                                                    <a href="#" data-comment-action="unapprove" data-action-type="reply" data-reply-id="<?= $comment['reply_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
+                                                                                    <a href="#" data-comment-action="unapprove" data-action-type="reply" data-reply-id="<?= $reply['reply_id'] ?>" href="#" class="text-danger mr-2">Unapprove</a>
                                                                                 <?php endif; ?>
                                                                                 <a href="#" data-comment-type="reply" data-edit-id="<?= $reply['reply_id'] ?>" class="text-success mr-2">Edit</a>
                                                                                 <a href="#" data-comment-action="delete" data-action-type="reply" data-reply-id="<?= $reply['reply_id'] ?>" href="#" class="text-danger mr-2">Delete</a>

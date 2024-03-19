@@ -17,6 +17,22 @@ class BlogCommentsModel
         }
     }
 
+    public static function totalForClient($post_id) {
+        try{
+            global $pdo;
+
+            $query = "SELECT COUNT(*) as total FROM blog_comments WHERE post_id = ? AND approved = 1";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$post_id]);
+
+            $commentsTotal = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $commentsTotal['total'];
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function createComment($post_id, $comment, $admin_id = "", $user_id = "", $comment_details = array())
     {
         if (!empty($admin_id)) {

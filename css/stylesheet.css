@@ -1584,8 +1584,8 @@ a.active:after {
 
 .alert-success {
   color: #FFF;
-  background-color: #EEC344;
-  border-color: #EEC344;
+  background-color: #04AA6D;
+  border-color: #04AA6D;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   line-height: 1.5;
@@ -1596,7 +1596,6 @@ a.active:after {
   font-size: 1rem;
   font-weight: 700;
   line-height: 1;
-  color: #000;
   text-shadow: none;
   opacity: 1;
 }
@@ -1938,6 +1937,7 @@ aside h3:after {
 }
 
 .post-single table{
+  width: auto !important;
   font-size: 0.68rem;
   border-collapse: collapse;
   margin: 25px 0;
@@ -2161,19 +2161,19 @@ blockquote em{
 }
 
 .comment-details h4{
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     font-weight: 500;
     margin-bottom: 2px;
 }
 
 p.comment-date{
-    font-size: 13px;
+    font-size: 0.6rem;
     color: #9dadaf;
     margin-bottom: 2px;
 }
 
 p.comment{
-    font-size: 12px;
+    font-size: 0.7rem;
     line-height: 1.5;
     margin-bottom: 10px;
 }

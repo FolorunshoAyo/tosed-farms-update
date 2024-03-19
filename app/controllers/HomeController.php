@@ -187,14 +187,66 @@ class HomeController {
         }
 
         $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             'current_page' => $_SERVER['REQUEST_URI'],
             'post' => $post,
             'categories' => BlogPostsModel::getAllBlogCategories(),
             'latest_posts' => BlogPostsModel::getLatestBlogPosts(3),
-            'comments_total' => BlogCommentsModel::total($post['post_id']),
+            'comments_total' => BlogCommentsModel::totalForClient($post['post_id']),
             'comments' => BlogCommentsModel::getAllComments($post['post_id'])
         ];
 
-        include VIEW_PATH . '/admin/single-post.php';
+        include VIEW_PATH . '/home/single-post.php';
+    }
+
+    public function newPostComment($params){
+        $post_id = $params[0];
+
+        $name = $_POST['name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $message = $_POST['message'] ?? '';
+
+        $post = BlogPostsModel::getBlogPost($post_id);
+
+        if(!$post){
+            echo json_encode(array('type' => "danger", 'message' => 'This post does not exist'));
+            return;
+        }
+
+        // Returned content must be JSON data
+        if (empty($name) || empty($email) || empty($message)) {
+            echo json_encode(array('type' => "danger", 'message' => 'All fields are required'));
+            return;
+        }
+
+        if (BlogCommentsModel::createComment($post_id, $message, "", "", array('name' => $name, 'email' => $email))) {
+            // insertion successful, redirect to post page with uploaded comment
+            echo json_encode(array('type' => "success", 'message' => 'Your comment was posted successfully and is under review'));
+        } else {
+            echo json_encode(array('type' => "danger", 'message' => 'Update failed. Please try again.'));
+        }
+
+    }
+
+    public function newCommentReply($params){
+        $comment_id = $params[0];
+
+        $name = $_POST['name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $message = $_POST['message'] ?? '';
+
+        if (empty($name) || empty($email) || empty($message)) {
+            echo json_encode(array('type' => "danger", 'message' => 'All fields are required'));
+            return;
+        }
+
+        if (BlogCommentsRepliesModel::createReply($comment_id, $message, "", "", array('name' => $name, 'email' => $email))) {
+            // insertion successful, redirect to post page with uploaded comment
+            echo json_encode(array('type' => "success", 'message' => 'Your reply was posted successfully and is under review'));
+        } else {
+            echo json_encode(array('type' => "danger", 'message' => 'Update failed. Please try again.'));
+        }
     }
 }
