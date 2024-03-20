@@ -159,7 +159,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= BASE_URL ?>/blogs">Blog</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>/posts">Blog</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= BASE_URL ?>/about">About Us</a>
@@ -172,7 +172,7 @@
                         <li class="nav-item">
                             <span class="nav-link">
                                 <div class="btn-more-box mt-0">
-                                    <a class="btn-hover-corner py-2 px-2" href="contact.html">
+                                    <a class="btn-hover-corner py-2 px-2" href="<?= BASE_URL ?>/cart-to-invoice/cart">
                                         Cart To Invoice
                                     </a>
                                 </div>

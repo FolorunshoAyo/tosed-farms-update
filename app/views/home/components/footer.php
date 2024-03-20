@@ -14,7 +14,7 @@
           <div class="location">
             <p><a href="<?= BASE_URL ?>/">Home</a></p>
             <p><a href="<?= BASE_URL ?>/brands">Our Brands</a></p>
-            <p><a href="<?= BASE_URL ?>/blogs">Blog</a></p>
+            <p><a href="<?= BASE_URL ?>/posts">Blog</a></p>
             <p><a href="<?= BASE_URL ?>/about">About Us</a></p>
             <p><a href="<?= BASE_URL ?>/contact">Contact Us</a></p>
           </div>
@@ -23,8 +23,8 @@
           <h4>FIND US</h4>
           <div class="location">
             <p>Adddres: 23/27 Ikorodu - Shagamu Rd, Ikorodu, 104101, Lagos</p>
-            <p>Phone: 0809 282 6813</p>
-            <p>Email: 0809 282 6813</p>
+            <p>Phone: <a href="tel:0809 282 6813">0809 282 6813</a></p>
+            <p>Email: <a href="mailto:info@tosedfarms.com">info@tosedfarms.com</a></p>
             <div class="social-networks mt-2">
               <div class="networks-list"><a href="#"><i class="fab fa-facebook-f"></i></a></div>
               <div class="networks-list"><a href="#"><i class="fab fa-twitter"></i></a></div>

@@ -200,7 +200,26 @@ a:hover {
 .btn-custom:hover {
   color: #FFF;
   background: #EEC344;
-  
+}
+
+.btn-custom.btn-success{
+  border: solid 2px #04AA6D;
+  color: #04AA6D;
+}
+
+.btn-custom.btn-success:hover{
+  color: #FFF;
+  background: #04AA6D;
+}
+
+.btn-custom.btn-danger{
+  border: solid 2px #c82333;
+  color: #c82333;
+}
+
+.btn-custom.btn-danger:hover{
+  color: #FFF;
+  background: #c82333;
 }
 
 .btn-custom:focus, .btn-custom.focus {

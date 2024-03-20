@@ -42,7 +42,7 @@
     <!-- LOADER -->
     <div id="loader-wrapper">
         <div class="loader">
-            <img src="img/master/favicon.jpg" alt="loader image" width="80" height="80">
+            <img src="<?= BASE_URL ?>/img/master/favicon.jpg" alt="loader image" width="80" height="80">
         </div>
     </div>
     <!-- LOADER -->

@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html lang="en-US" class="no-js">
 	
-<!-- Mirrored from quickdevs.com/templates/agrom/services.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 13:22:12 GMT -->
-    <head>
+  <head>
 		<meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
         
 		<!-- ==============================================
 		TITLE AND META TAGS
 		=============================================== -->
 		<title>Our Product Categories | Tosed Farms</title>
-        <meta
-            name="keywords"
-            content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands"
-        />
-        <meta name="author" content="Aycodes" />
-        <meta name="theme-color" content="#EEC344">
-        <meta
-            name="description"
-            content="Discover our collection of high-quality livestock products from leading brands/manufacturers. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
-        />
+    <meta
+        name="keywords"
+        content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands"
+    />
+    <meta name="author" content="Aycodes" />
+    <meta name="theme-color" content="#EEC344">
+    <meta
+        name="description"
+        content="Discover our collection of high-quality livestock products from leading brands/manufacturers. Trusted by farmers and veterinarians for superior products and expertise in the livestock industry."
+    />
 
 		<!-- ==============================================
 		FAVICON
 		=============================================== -->  
-        <link rel="shortcut icon" href="<?= BASE_URL ?>/img/master/favicon.png">
+    <link rel="shortcut icon" href="<?= BASE_URL ?>/img/master/favicon.png">
              
 		<!-- ==============================================
 		CSS
 		=============================================== -->  
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/timeline.css" />
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/stylesheet.css">
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/responsive.css">
-        <link rel="stylesheet" href="<?= BASE_URL ?>/fonts/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="<?= BASE_URL ?>/fonts/css/all.min.css">
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/slick.min.css"> 
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/owl.carousel.min.css">
-        <link rel="stylesheet" href='<?= BASE_URL ?>/css/animation.aos.min.css'>
-        <link rel="stylesheet" href="<?= BASE_URL ?>/css/animate.min.css">
-        <script src="<?= BASE_URL ?>/js/modernizr-custom.js"></script>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/timeline.css" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/stylesheet.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/responsive.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/fonts/css/all.min.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/slick.min.css"> 
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/owl.carousel.min.css">
+    <link rel="stylesheet" href='<?= BASE_URL ?>/css/animation.aos.min.css'>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/animate.min.css">
+    <script src="<?= BASE_URL ?>/js/modernizr-custom.js"></script>
         
 	</head>
     

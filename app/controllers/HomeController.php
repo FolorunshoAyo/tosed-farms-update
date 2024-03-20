@@ -249,4 +249,14 @@ class HomeController {
             echo json_encode(array('type' => "danger", 'message' => 'Update failed. Please try again.'));
         }
     }
+
+    public function cartToInvoice(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+        ];
+
+        include VIEW_PATH . '/home/cart-to-invoice.php'; 
+    }
 }
