@@ -355,11 +355,24 @@ class HomeController {
         include VIEW_PATH . '/home/cart-to-invoice.php'; 
     }
 
+    public function checkout(){ 
+        $prooducts = $_POST['selectedProducts'];
+        $_SESSION['selected_products'] = $prooducts;
+
+        redirect(BASE_URL . '/cart-to-invoice/contact-details');
+    }
+
     public function invoiceContactDetailsForm(){
+        if(!isset($_SESSION['selected_products']) && empty($_SESSION['selected_products'])){
+            redirect(BASE_URL . '/cart-to-invoice/cart');
+            return;
+        }
+
         $data = [
             'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
             'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+            "products" => $_SESSION['selected_products']
         ];
 
         include VIEW_PATH . '/home/invoice-contact-details.php';

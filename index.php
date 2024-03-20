@@ -32,6 +32,7 @@ $router->post('/tosed-farms/post/:id/comment/new', 'HomeController@newPostCommen
 $router->post('/tosed-farms/comment/:id/reply/new', 'HomeController@newCommentReply');
 $router->get('/tosed-farms/all-products', 'HomeController@getAllProducts');
 $router->get('/tosed-farms/cart-to-invoice/cart', 'HomeController@cartToInvoice');
+$router->post('/tosed-farms/cart-to-invoice/cart/checkout', 'HomeController@checkout');
 $router->get('/tosed-farms/cart-to-invoice/contact-details', 'HomeController@invoiceContactDetailsForm');
 
 

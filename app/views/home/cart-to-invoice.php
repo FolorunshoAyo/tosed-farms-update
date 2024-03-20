@@ -272,7 +272,7 @@
                                 <p id="totalPrice" class="mb-1 mb-sm-0 text-dark" style="font-size: 18px;">Total: ₦ <strong>0.00</strong></p>
                                 <div>
                                     <button class="mr-1 btn btn-custom btn-success" onclick="openModal()">Add Product</button>
-                                    <button class="btn btn-custom" onclick="calculateTotal()">Print Invoice</button>
+                                    <button class="btn btn-custom" onclick="checkout()">Print Invoice</button>
                                 </div>
                             </div>
                         </div>
@@ -462,6 +462,39 @@
                     // Set a timeout over;lay for refreshing page
                 }
             });
+        }
+
+        function checkout(){
+            if(selectedProducts.length > 0){
+                var data = {selectedProducts};
+                
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/tosed-farms/cart-to-invoice/cart/checkout",
+                    data: data,
+                    success: function (data)
+                    {
+                        var data = JSON.parse(data);
+                        var messageAlert = 'alert-' + data.status;
+                        var products = data.products;
+                        
+                        if (messageAlert === "danger" && products) {
+                            var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Unable to fetch products please try again</div>';
+                            $el.find('.messages').html(alertBox);
+                            $el[0].reset();
+                        }else{
+                            productsData = data.products;
+                            populateProductList();
+                            getSelectedProducts();
+                        }
+                    },
+                    error: function (data){
+                        // Set a timeout over;lay for refreshing page
+                    }
+                });
+            }else{
+                alert("You need to add at least one product to cart");
+            }
         }
 
         function getSelectedProducts() {
