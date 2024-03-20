@@ -61,6 +61,25 @@ class BrandedProductsModel
         }
     }
 
+    public static function getAllBrandedProductsTotal($product_type) {
+        try{
+            global $pdo;
+
+            $query = "SELECT branded_products.*, brands.category as brand_category
+            FROM branded_products
+            INNER JOIN brands ON branded_products.brand_id = brands.brand_id WHERE brands.category = ?
+            ORDER BY branded_products.name ASC";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$product_type]);
+
+            $brandedProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $brandedProducts;
+        }catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function getAllSingleBrandProducts($brand_name){
         try{
             global $pdo;

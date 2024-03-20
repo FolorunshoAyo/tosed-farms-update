@@ -30,7 +30,9 @@ $router->get('/tosed-farms/posts/category/:category', 'HomeController@blogsList'
 $router->get('/tosed-farms/post/:title', 'HomeController@blogSingle');
 $router->post('/tosed-farms/post/:id/comment/new', 'HomeController@newPostComment');
 $router->post('/tosed-farms/comment/:id/reply/new', 'HomeController@newCommentReply');
+$router->get('/tosed-farms/all-products', 'HomeController@getAllProducts');
 $router->get('/tosed-farms/cart-to-invoice/cart', 'HomeController@cartToInvoice');
+$router->get('/tosed-farms/cart-to-invoice/contact-details', 'HomeController@invoiceContactDetailsForm');
 
 
 // Admin routes

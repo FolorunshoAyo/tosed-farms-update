@@ -131,6 +131,101 @@ class HomeController {
         include VIEW_PATH . '/home/miscellaneous.php'; 
     }
 
+    public function getAllProducts(){
+        $allProducts = array();
+
+        // each product is an associative array
+        $branded_products_polutry = BrandedProductsModel::getAllBrandedProductsTotal('poultry');
+        $branded_products_fish = BrandedProductsModel::getAllBrandedProductsTotal('fish');
+        $branded_products_drug = BrandedProductsModel::getAllBrandedProductsTotal('drug');
+        $unbranded_products_ingredients = UnBrandedProductsModel::getAllUnBrandedProducts('ingredients');
+        $unbranded_products_additives = UnBrandedProductsModel::getAllUnBrandedProducts('additives');
+        $unbranded_products_miscellaneous = UnBrandedProductsModel::getAllUnBrandedProducts('miscellaneous');
+        
+        $count = 1;
+
+        foreach ($branded_products_polutry as $branded_product_poultry){
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $branded_product_poultry['product_id'],
+                'name' => $branded_product_poultry['name'],
+                'type' => 'branded',
+                'category' => $branded_product_poultry['brand_category'],
+                'net_weight' => $branded_product_poultry['net_weight'],
+                'price' => (int) (float) $branded_product_poultry['price']
+            ));
+            $count++;
+        }
+
+        foreach ($branded_products_fish as $branded_product_fish){
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $branded_product_fish['product_id'],
+                'name' => $branded_product_fish['name'],
+                'type' => 'branded',
+                'category' => $branded_product_fish['brand_category'],
+                'net_weight' => $branded_product_fish['net_weight'],
+                'price' => (int) (float) $branded_product_fish['price']
+            ));
+            $count++;
+        }
+
+        foreach ($branded_products_drug as $branded_product_drug){
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $branded_product_drug['product_id'],
+                'name' => $branded_product_drug['name'],
+                'type' => 'branded',
+                'category' => $branded_product_drug['brand_category'],
+                'net_weight' => $branded_product_drug['net_weight'],
+                'price' => (int) (float) $branded_product_drug['price']
+            ));
+            $count++;
+        }
+
+        foreach ($unbranded_products_ingredients as $unbranded_product_ingredients) {
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $unbranded_product_ingredients['product_id'],
+                'name' => $unbranded_product_ingredients['name'],
+                'type' => 'unbranded',
+                'category' => 'ingredient',
+                'unit' => 'kg',
+                'manufacturer' => $unbranded_product_ingredients['manufacturer'],
+                'price' => (int) (float) $unbranded_product_ingredients['price']
+            ));
+            $count++;
+        }
+
+        foreach ($unbranded_products_additives as $unbranded_product_additives) {
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $unbranded_product_additives['product_id'],
+                'name' => $unbranded_product_additives['name'],
+                'type' => 'unbranded',
+                'category' => 'additive',
+                'unit' => 'g',
+                'manufacturer' => $unbranded_product_additives['manufacturer'],
+                'price' => (int) (float) $unbranded_product_additives['price']
+            ));
+            $count++;
+        }
+
+        foreach ($unbranded_products_miscellaneous as $unbranded_product_miscellaneous) {
+            array_push($allProducts, array(
+                'id' => $count,
+                'product_id' => $unbranded_product_miscellaneous['product_id'],
+                'name' => $unbranded_product_miscellaneous['name'],
+                'type' => 'unbranded',
+                'category' => 'miscellaneous',
+                'manufacturer' => $unbranded_product_miscellaneous['manufacturer'],
+                'price' => (int) (float) $unbranded_product_miscellaneous['price']
+            ));
+        }
+
+        echo json_encode(array("status" => "success", "products" => $allProducts));
+    }
+
     public function about(){
         $data = [
             'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
@@ -258,5 +353,15 @@ class HomeController {
         ];
 
         include VIEW_PATH . '/home/cart-to-invoice.php'; 
+    }
+
+    public function invoiceContactDetailsForm(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+        ];
+
+        include VIEW_PATH . '/home/invoice-contact-details.php';
     }
 }

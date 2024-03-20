@@ -42,6 +42,10 @@
             font-size: 15px;
         }
 
+        strong{
+            font-weight: bold;
+        }
+
         #products p{
             color: #343a40;
             font-size: 0.8rem;
@@ -218,7 +222,7 @@
     ?>
     <!--HEADER END-->
 
-    <div class="sections services-background">
+    <div class="sections gallery-background">
         <div class="container">
             <div class="pages-title">
                 <h1><span>Cart To Invoice</span></h1>
@@ -418,58 +422,8 @@
     <script>
         // Fetch Products From Local Storage
         $("#product").select2();
-        let productsData = [{
-                "id": 1,
-                "name": "product1",
-                "type": "branded",
-                "category": "fish",
-                "net_weight": "15kg",
-                "price": 20000
-            },
-            {
-                "id": 2,
-                "name": "product2",
-                "type": "branded",
-                "category": "poultry",
-                "net_weight": "25kg",
-                "price": 8000
-            },
-            {
-                "id": 3,
-                "name": "product3",
-                "type": "branded",
-                "category": "drug",
-                "net_weight": "100ml",
-                "price": 2500
-            },
-            {
-                "id": 4,
-                "name": "product4",
-                "type": "unbranded",
-                "category": "additive",
-                "unit": "g",
-                "manufacturer": "Tosed Farms",
-                "price": 5000
-            },
-            {
-                "id": 5,
-                "name": "product5",
-                "type": "unbranded",
-                "category": "ingredient",
-                "unit": "kg",
-                "manufacturer": "Tosed Farms",
-                "price": 600
-            },
-            {
-                "id": 6,
-                "name": "product6",
-                "type": "unbranded",
-                "category": "miscellaneous",
-                "manufacturer": "Tosed Farms",
-                "price": 1000
-            }
-        ];
-
+        let productsData = [];
+        let optgroupMap = {};
         let selectedProducts = [];
 
         function storeSelectedProducts(selectedProducts) {
@@ -479,6 +433,36 @@
                 localStorage.setItem("cart", JSON.stringify(selectedProducts));
             }
         };
+
+
+        // After ajax call
+        initiateApp();
+
+        function initiateApp(){
+            $.ajax({
+                type: "GET",
+                url: "http://localhost/tosed-farms/all-products",
+                success: function (data)
+                {
+                    var data = JSON.parse(data);
+                    var messageAlert = 'alert-' + data.status;
+                    var products = data.products;
+                    
+                    if (messageAlert === "danger" && products) {
+                        var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Unable to fetch products please try again</div>';
+                        $el.find('.messages').html(alertBox);
+                        $el[0].reset();
+                    }else{
+                        productsData = data.products;
+                        populateProductList();
+                        getSelectedProducts();
+                    }
+                },
+                error: function (data){
+                    // Set a timeout over;lay for refreshing page
+                }
+            });
+        }
 
         function getSelectedProducts() {
             if (localStorage.getItem("cart") !== null) {
@@ -494,11 +478,9 @@
             // Remove preloader in this area
         }
 
-        populateProductList();
-        getSelectedProducts();
-
         // Populate the product datalist
         function populateProductList() {
+            console.log(productsData);
             const productList = document.getElementById("product");
             const option = document.createElement("option");
             option.value = "";
@@ -506,10 +488,36 @@
             productList.appendChild(option);
 
             productsData.forEach(product => {
+                if (!optgroupMap[product.category]) {
+                    var optgroup = document.createElement("optgroup");
+                    switch (product.category) {
+                        case "poultry":
+                            optgroup.label = "Poultry Feeds";       
+                            break;
+                        case "fish":
+                            optgroup.label = "Fish Feeds";       
+                            break;
+                        case "drug":
+                            optgroup.label = "Veterinary Products";       
+                            break;
+                        case "additive":
+                            optgroup.label = "Feed Additives";       
+                            break;
+                        case "ingredient":
+                            optgroup.label = "Feed Ingredients";       
+                            break;
+                        case "miscellaneous":
+                            optgroup.label = "Miscellaneous";       
+                            break;
+                    }
+                    optgroupMap[product.category] = optgroup;
+                    productList.appendChild(optgroup);
+                }
                 const option = document.createElement("option");
                 option.value = product.id;
-                option.innerHTML = product.name + (product.unit ? ' (₦' + parseInt(product.price).toLocaleString() + ' per ' + (product.unit === 'g' ? '100g' : '1kg') + ')' : ' (₦' + parseInt(product.price).toLocaleString() + ')');
-                productList.appendChild(option);
+                option.innerHTML = product.name + (product.unit ? ' (₦' + parseInt(product.price).toLocaleString() + ' per ' + (product.unit === 'g' ? '100g' : '1kg') + ')' : ' (₦' + parseInt(product.price).toLocaleString() + ')' + (product.category !== 'miscellaneous'? ' (' + product.net_weight + ')' : ''));
+                // Append the option to the corresponding optgroup
+                optgroupMap[product.category].appendChild(option);
             });
         }
 
@@ -604,12 +612,17 @@
 
                 if (!isNaN(selectedProductQuantity) && selectedProductQuantity > 0) {
                     selectedProductDetails.id = product.id;
+                    selectedProductDetails.product_id = product.product_id;
                     selectedProductDetails.name = product.name;
                     selectedProductDetails.quantity = selectedProductQuantity;
                     selectedProductDetails.type = product.type;
                     selectedProductDetails.single_price = product.price;
                     selectedProductDetails.category = product.category;
                     selectedProductDetails.total_price = selectedProductDetails.total_price ? selectedProductDetails.total_price : selectedProductQuantity * product.price;
+
+                    if(product.net_weight){
+                        selectedProductDetails.net_weight = product.net_weight;
+                    }
 
                     // check if products exists in the selectedProducts Array and update
                     const matchingProductsIndexes = selectedProducts.map((product, index) => [product, index]).filter(details => details[0].id === selectedProductDetails.id).map(details => details[1]);
@@ -678,9 +691,10 @@
                 productsContainer.innerHTML +=
                     `<div class="row text-dark">
                         <div class="col-6 mb-4 mb-sm-0">
-                            <p class="mb-1"><strong>${product.name}</strong></p>
+                            <h5 class="mb-1">${product.name}</h5>
                             <p class="mb-1">Price: ₦ ${parseFloat(product.single_price).toLocaleString()} ${product.unit? `per ${product.unit === "g"? "100g" : " 1kg"}` : "" }</p>
-                            ${product.weight? `<p>Weight: ${product.weight + product.unit}</p>` : ''}
+                            ${product.weight? `<p class="mb-1">Weight: ${product.weight + product.unit}</p>` : ''}
+                            ${product.net_weight? `<p class="mb-1">Net Weight: ${product.net_weight}</p>` : ''}
                             <button type="button" class="btn btn-custom btn-danger btn-sm me-1 mb-2" title="Trash Product" onclick="deleteProduct('${productIndex}')">
                                 Delete
                             </button>
@@ -688,10 +702,10 @@
 
                         <div class="col-6 mb-4 mb-sm-0 text-right">   
                             <p class="mb-2">
-                                <strong>Qty: ${product.quantity}</strong>
+                                Qty: ${product.quantity}
                             </p>
                             <p>
-                                <strong>Total: ₦ ${product.total_price.toLocaleString()}</strong>
+                                Total: <strong>₦ ${product.total_price.toLocaleString()}</strong>
                             </p>
                         </div>
                     </div>
@@ -801,7 +815,7 @@
             for (const product of selectedProducts) {
                 totalPrice += product.total_price;
             }
-            document.getElementById("totalPrice").innerHTML = `Total Price: ₦ <strong>${totalPrice === 0? "0.00" : totalPrice.toLocaleString()}</strong>`;
+            document.getElementById("totalPrice").innerHTML = `Total Price: <strong>₦ ${totalPrice === 0? "0.00" : totalPrice.toLocaleString()}</strong>`;
         }
     </script>
 </body>

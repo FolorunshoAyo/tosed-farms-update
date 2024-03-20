@@ -212,6 +212,16 @@ a:hover {
   background: #04AA6D;
 }
 
+.btn-custom.btn-light{
+  border: solid 2px #dee2e6;
+  color: #212529;
+}
+
+.btn-custom.btn-light:hover{
+  color: #212529;
+  background: #dee2e6;
+}
+
 .btn-custom.btn-danger{
   border: solid 2px #c82333;
   color: #c82333;
