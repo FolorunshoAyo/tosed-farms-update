@@ -35,13 +35,41 @@
   <link rel="stylesheet" href="<?= BASE_URL ?>/css/animate.min.css">
   <script src="<?= BASE_URL ?>/js/modernizr-custom.js"></script>
   <style>
+    .just-validate-error-label{
+      font-size: 12px;
+      font-family: 'Poppins', sans-serif;
+      color: red !important;
+    }
     label {
       font-family: 'Poppins', sans-serif;
       font-size: 15px;
     }
+    hr{
+      border-top: 1px solid rgba(0,0,0,.1);
+    }
     .badge{
       font-family: var(--font-primary);
     }
+    .form-loader {
+      width: 15px;
+      height: 15px;
+      border: 2px solid #f0f0f0;
+      border-bottom-color: #04AA6D;
+      border-radius: 50%;
+      display: inline-block;
+      vertical-align: middle;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    } 
   </style>
 </head>
 
@@ -80,34 +108,38 @@
         <div class="col-xl-8 col-lg-8 mb-4">
           <!-- Checkout -->
           <div class="card shadow-0 border">
-            <div class="p-4">
+            <form id="invoice-contact-details-form" class="p-4" method="post" action="#">
               <h5 class="card-title mb-3">Generate Invoice</h5>
               <div class="row">
                 <div class="col-6 mb-3">
                   <p class="mb-0">First name</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" placeholder="Type here" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="text" id="first_name" name="first_name" placeholder="Type here" class="form-control customize" required="required" data-error="First Name is required."/>
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
                 <div class="col-6">
                   <p class="mb-0">Last name</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" placeholder="Type here" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="text" id="last_name" name="last_name" placeholder="Type here" class="form-control customize" required="required" data-error="Last Name is required."/>
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
                 <div class="col-6 mb-3">
                   <p class="mb-0">Phone</p>
-                  <div class="form-outline">
-                    <input type="tel" id="typePhone" value="+234 " class="form-control customize" />
+                  <div class="form-group">
+                    <input type="tel" id="phone" name="phone" value="+234 " class="form-control customize" required="required" data-error="Phone Number is required."/>
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
                 <div class="col-6 mb-3">
                   <p class="mb-0">Email</p>
-                  <div class="form-outline">
-                    <input type="email" id="typeEmail" placeholder="example@gmail.com" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="example@gmail.com" class="form-control customize" required="required" data-error="Email is required." />
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
               </div>
@@ -144,61 +176,66 @@
               </div> -->
 
               <div class="row">
-                <div class="col-sm-8 mb-3">
+                <div class="col-sm-12 mb-3">
                   <p class="mb-0">Address</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" placeholder="Type here" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="text" name="address" id="address" placeholder="Type here" class="form-control customize" required="required" data-error="Address is required." />
+                    <div class="help-block with-errors"></div>
                   </div>
                 </div>
 
-                <div class="col-sm-4 mb-3">
-                  <p class="mb-0">City</p>
-                  <select class="form-select form-control customize">
-                    <option value="1">New York</option>
-                    <option value="2">Moscow</option>
-                    <option value="3">Samarqand</option>
+                <div class="col-sm-6 mb-3">
+                  <p class="mb-0">State</p>
+                  <select name="state" id="state" class="form-control customize" data-error="State is required.">
+                    <option value="">Select State</option>
+                    <option>Lagos</option>
+                    <option>Anambra</option>
                   </select>
+                  <div class="help-block with-errors"></div>
                 </div>
 
-                <div class="col-sm-4 mb-3">
-                  <p class="mb-0">House</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" placeholder="Type here" class="form-control customize" />
-                  </div>
+                <div class="col-sm-6 mb-3">
+                  <p class="mb-0">City</p>
+                  <select name="city" id="city" class="form-control customize" data-error="City is required.">
+                    <option value="">Select City</option>
+                    <option>Ojota</option>
+                    <option>Ikeja</option>
+                  </select>
+                  <div class="help-block with-errors"></div>
                 </div>
 
-                <div class="col-sm-4 col-6 mb-3">
+                <!-- <div class="col-sm-4 col-6 mb-3">
                   <p class="mb-0">Postal code</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="text" id="pcode" class="form-control customize" />
                   </div>
                 </div>
 
                 <div class="col-sm-4 col-6 mb-3">
                   <p class="mb-0">Zip</p>
-                  <div class="form-outline">
-                    <input type="text" id="typeText" class="form-control customize" />
+                  <div class="form-group">
+                    <input type="text" id="zip" class="form-control customize" />
                   </div>
-                </div>
+                </div> -->
               </div>
 
               <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
-                <label class="form-check-label" for="flexCheckDefault1">Save this contact details</label>
+                <input class="form-check-input" type="checkbox" id="saveContact" name="saveContact" />
+                <label class="form-check-label" for="saveContact">Save this contact details</label>
               </div>
 
               <div class="mb-3">
                 <p class="mb-0">Additional Notes</p>
-                <div class="form-outline">
-                  <textarea class="form-control customize" id="textAreaExample1" rows="5"></textarea>
+                <div class="form-group">
+                  <textarea class="form-control customize" name="additionalNotes" rows="5"></textarea>
                 </div>
               </div>
 
               <div class="float-end">
-                <button class="btn btn-light btn-custom border">Cancel</button>
-                <button class="btn btn-success btn-custom shadow-0 border">Continue</button>
+                <a href="<?= BASE_URL ?>/cart-to-invoice/cart" class="btn btn-light btn-custom border">Cancel</a>
+                <button type="submit" class="btn btn-success btn-custom border">Continue</button>
               </div>
-            </div>
+            </form>
           </div>
           <!-- Checkout -->
         </div>
@@ -207,7 +244,7 @@
             <h6 class="mb-3">Summary</h6>
             <div class="d-flex justify-content-between">
               <p class="mb-2">Total price:</p>
-              <p class="mb-2">$195.90</p>
+              <p class="mb-2">₦ <?= number_format($total_price, 0, '.', ',') ?></p>
             </div>
             <!-- <div class="d-flex justify-content-between">
               <p class="mb-2">Discount:</p>
@@ -217,11 +254,11 @@
               <p class="mb-2">Shipping cost:</p>
               <p class="mb-2">+ $14.00</p>
             </div> -->
-            <hr />
+            <!-- <hr />
             <div class="d-flex justify-content-between">
               <p class="mb-2">Total price:</p>
-              <p class="mb-2 fw-bold">$149.90</p>
-            </div>
+              <p class="mb-2 fw-bold">₦ 3,000</p>
+            </div> -->
 
             <!-- <div class="input-group mt-3 mb-4">
               <input type="text" class="form-control customize border" name="" placeholder="Promo code" />
@@ -230,51 +267,35 @@
 
             <hr />
             <h6 class="text-dark my-4">Items in cart</h6>
-
+            <?php
+              $count = 1;
+              foreach ($products as $product) {
+            ?>
             <div class="d-flex mb-4">
               <div class="mr-3">
                 <span class="start-100 badge rounded-pill badge-secondary">
-                  1
+                  <?= $count ?>
                 </span>
               </div>
               <div class="">
                 <p class="mb-2">
-                  Gaming Headset with Mic X 2 <br />
-                  Weight: 100kg
+                  <?= $product['name'] ?> X <?= $product['quantity'] ?><br />
+                  <?php 
+                    if(isset($product['unit'])){
+                      echo "Weight: " . $product['weight'] . $product['unit'];
+                    }
+                    if(isset($product['net_weight'])){
+                      echo "Net Weight: " . $product['net_weight'];
+                    }
+                  ?>
                 </p>
-                <p class="price text-muted">Total: $295.99</p>
+                <p class="price text-muted">Total: ₦ <?= number_format($product['total_price'], 0, '.', ',') ?></p>
               </div>
             </div>
-
-            <div class="d-flex mb-4">
-              <div class="mr-3">
-                <span class="start-100 badge rounded-pill badge-secondary">
-                  2
-                </span>
-              </div>
-              <div class="">
-                <p class="mb-2">
-                  Gaming Headset with Mic X 2 <br />
-                  Weight: 100kg
-                </p>
-                <p class="price text-muted">Total: $295.99</p>
-              </div>
-            </div>
-
-            <div class="d-flex mb-4">
-              <div class="mr-3">
-                <span class="start-100 badge rounded-pill badge-secondary">
-                  3
-                </span>
-              </div>
-              <div class="">
-                <p class="mb-2">
-                  Gaming Headset with Mic X 2 <br />
-                  Weight: 100kg
-                </p>
-                <p class="price text-muted">Total: $295.99</p>
-              </div>
-            </div>
+            <?php
+                $count++;
+              }
+            ?>
           </div>
         </div>
       </div>
@@ -384,11 +405,156 @@
   <!--SCROLL TOP START-->
 
   <!-- ==============================================
-        JAVASCRIPTS
-        =============================================== -->
+      JAVASCRIPTS
+      =============================================== -->
   <script src="<?= BASE_URL ?>/js/plugins.js"></script>
   <script src="<?= BASE_URL ?>/js/bootstrap.min.js"></script>
   <script src="<?= BASE_URL ?>/js/agrom.js"></script>
+  <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+    <script>
+        //FORM VALIDATION WITH VALIDATE.JS
+
+        const validation = new JustValidate('#invoice-contact-details-form', {
+            errorFieldCssClass: 'is-invalid',
+        });
+
+        validation
+        .addField('#first_name', [
+            {
+                rule: 'required',
+                errorMessage: "Field is required"
+            },
+            {
+            rule: 'minLength',
+            value: 3,
+            },
+            {
+            rule: 'maxLength',
+            value: 30,
+            },
+        ])
+        .addField('#last_name', [
+            {
+                rule: 'required',
+                errorMessage: "Field is required"
+            },
+            {
+            rule: 'minLength',
+            value: 3,
+            },
+            {
+            rule: 'maxLength',
+            value: 30,
+            },
+        ])
+        .addField('#email', [
+            {
+            rule: 'required',
+            errorMessage: 'Field is required',
+            },
+            {
+            rule: 'email',
+            errorMessage: 'Email is invalid!',
+            },
+        ])
+        .addField('#phone', [
+            {
+                rule: 'required',
+                errorMessage: "Field is required"
+            },
+            {
+            rule: 'minLength',
+            value: 11,
+            },
+            {
+            rule: 'maxLength',
+            value: 11,
+            },
+        ])
+        .addField('#address', [
+            {
+                rule: 'required',
+                errorMessage: "Field is required"
+            },
+        ])
+        .addField('#state', [
+            {
+              rule: 'required',
+              errorMessage: "Field is required"
+            },
+        ])
+        .addField('#city', [
+            {
+              rule: 'required',
+              errorMessage: "Field is required"
+            },
+        ])
+        .onSuccess(() => {
+          const form = $('#invoice-contact-details-form');
+
+          var formData = form.serializeArray();
+
+          var submittedData = {};
+
+          $.each(formData, function(index, field) {
+            submittedData[field.name] = field.value;
+          });
+
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: $(this).serialize(),
+            beforeSend: function (){
+              $("[type='submit']").attr("disabled", true);
+              $("[type='submit']").hml("<span class='form-loader'></span>");
+            },
+            success: function (data)
+            {
+              var messageAlert = 'alert-' + data.type;
+              var messageText = data.message;
+
+              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+              if (data.type === "danger" && data.message) {
+                $('#invoice-contact-details-form').find('.messages').html(alertBox);
+                $("[type='submit']").attr("disabled", false);
+                $("[type='submit']").hml("Container");
+              }else{
+                // Check If user checked storing of address and keep in local storage and redirect to download invoice pdf 
+                location.href = "";
+              }
+            }
+          });
+        });
+
+        //SCRIPT TO FETCH ALL SCHOOLS ACCROSS ALL STATES IN NIGERIA
+        // fetch("schools.json")
+        //     .then(data => data.json())
+        //     .then(result => {
+        //         updateSelect(result);
+        //     });
+
+        // function updateSelect(schoolsObj) {
+        //     let htmlOutput = "";
+
+        //     htmlOutput += `<option value="">Select school</option>`;
+
+        //     if (schoolsObj.length !== 0) {
+        //         schoolsObj.forEach((schoolObj, index) => {
+        //             const state = Object.keys(schoolObj)[0];
+        //             htmlOutput += `<optgroup label="${state}">`;
+
+        //             for (let schoolID in schoolObj[state]) {
+        //                 htmlOutput += `<option>${schoolObj[state][schoolID].toLowerCase()}</option>`;
+        //             }
+
+        //             htmlOutput += `</optgroup>`;
+
+        //         });
+        //     }
+
+        //     $("#school_name").html(htmlOutput);
+        // }
+    </script>
 </body>
 
 </html>

@@ -356,10 +356,11 @@ class HomeController {
     }
 
     public function checkout(){ 
-        $prooducts = $_POST['selectedProducts'];
-        $_SESSION['selected_products'] = $prooducts;
+        $products = $_POST['selectedProducts'];
+        $_SESSION['selected_products'] = $products;
 
-        redirect(BASE_URL . '/cart-to-invoice/contact-details');
+        // send success message back to client
+        echo json_encode(array('status' => 'success'));
     }
 
     public function invoiceContactDetailsForm(){
@@ -368,11 +369,17 @@ class HomeController {
             return;
         }
 
+        $products = $_SESSION['selected_products']; 
+        $total_price = 0;
+
+        foreach ($products as $product) {
+            $total_price += (int) $product['total_price'];
+        }
+
         $data = [
             'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
             'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
-            "products" => $_SESSION['selected_products']
         ];
 
         include VIEW_PATH . '/home/invoice-contact-details.php';

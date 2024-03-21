@@ -37,9 +37,51 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/animate.min.css">
     <script src="<?= BASE_URL ?>/js/modernizr-custom.js"></script>
     <style>
+        #cart-section .overlay{
+            position: absolute;
+            inset: 0px;
+            background-color: #f0f5f5ab;
+            opacity: 0;
+            z-index: 2;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .5s ease-in;
+        }
+
+        #cart-section .overlay.act{
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #FFF;
+            border-bottom-color: #04AA6D;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        } 
+
         label {
             font-family: var(--font-primary);
             font-size: 15px;
+        }
+
+        hr{
+            border-top: 1px solid rgba(0,0,0,.1);
         }
 
         strong{
@@ -231,7 +273,7 @@
         </div>
     </div>
 
-    <section>
+    <section id="cart-section">
         <div class="container">
             <div class="section-title">
                 <h2><span>Cart</span></h2>
@@ -241,6 +283,9 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12">
                         <div class="card mb-4">
+                            <div class="overlay">
+                                <span class="cart-spinner"></span>
+                            </div>
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Cart - <span id="cartNumber">0</span> item(s)</h5>
                             </div>
@@ -467,11 +512,14 @@
         function checkout(){
             if(selectedProducts.length > 0){
                 var data = {selectedProducts};
-                
+
                 $.ajax({
                     type: "POST",
                     url: "http://localhost/tosed-farms/cart-to-invoice/cart/checkout",
                     data: data,
+                    beforeSend: function(){
+                        $("#cart-section .overlay").addClass("act");
+                    },
                     success: function (data)
                     {
                         var data = JSON.parse(data);
@@ -479,13 +527,11 @@
                         var products = data.products;
                         
                         if (messageAlert === "danger" && products) {
-                            var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Unable to fetch products please try again</div>';
-                            $el.find('.messages').html(alertBox);
-                            $el[0].reset();
+                            // var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Unable to fetch products please try again</div>';
+                            // $el.find('.messages').html(alertBox);
+                            alert("Unable to process request");
                         }else{
-                            productsData = data.products;
-                            populateProductList();
-                            getSelectedProducts();
+                            location.href = "<?= BASE_URL ?>/cart-to-invoice/contact-details";
                         }
                     },
                     error: function (data){
@@ -513,7 +559,6 @@
 
         // Populate the product datalist
         function populateProductList() {
-            console.log(productsData);
             const productList = document.getElementById("product");
             const option = document.createElement("option");
             option.value = "";

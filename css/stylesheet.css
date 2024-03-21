@@ -212,6 +212,11 @@ a:hover {
   background: #04AA6D;
 }
 
+.btn-custom.btn-success.disabled, .btn-custom.btn-success:disabled {
+  color: #fff;
+  border-color: #04AA6D;
+}
+
 .btn-custom.btn-light{
   border: solid 2px #dee2e6;
   color: #212529;
@@ -230,6 +235,11 @@ a:hover {
 .btn-custom.btn-danger:hover{
   color: #FFF;
   background: #c82333;
+}
+
+.btn-custom.btn-danger.disabled, .btn-custom.btn-danger:disabled {
+  color: #fff;
+  border-color: #c82333;
 }
 
 .btn-custom:focus, .btn-custom.focus {
