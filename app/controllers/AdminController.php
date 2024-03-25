@@ -331,7 +331,7 @@ class AdminController {
         $productNetWeight = $_POST['net_weight'] ?? '';
         $productPrice = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
-        $$showPrice = isset($_POST['show_price']);
+        $showPrice = isset($_POST['show_price']);
 
         // Retrieve Brand Category i.e (poultry, fish or drug) for proper redirect
         $redirect = "";
@@ -537,7 +537,7 @@ class AdminController {
         $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
-        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
+        if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerG)) {
             $_SESSION['error_message'] = 'All fields are required.';
             redirect(BASE_URL . '/admin/products/unbranded/feed-ingredients');
             return;
@@ -547,7 +547,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
+        if (UnBrandedProductsModel::update($productId, 'additives', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Feed Additive Updated Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/feed-additives");

@@ -176,7 +176,7 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                  <form id="editBrandForm" method="post" action="<?= BASE_URL ?>/admin/products/unbranded/feed-ingredient/edit" onsubmit="return validateForm()">
+                  <form id="editBrandForm" method="post" action="<?= BASE_URL ?>/admin/products/unbranded/feed-additive/edit" onsubmit="return validateForm()">
                     <div class="form-group row">
                         <label for="name" class="col-md-2 control-label">Name</label>
                         <div class="col-md-10">

@@ -499,6 +499,7 @@
                         $el[0].reset();
                     }else{
                         productsData = data.products;
+                        console.log(productsData);
                         populateProductList();
                         getSelectedProducts();
                     }
@@ -515,7 +516,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/tosed-farms/cart-to-invoice/cart/checkout",
+                    url: "http://localhost/tosed-farms/cart/checkout",
                     data: data,
                     beforeSend: function(){
                         $("#cart-section .overlay").addClass("act");
@@ -531,7 +532,7 @@
                             // $el.find('.messages').html(alertBox);
                             alert("Unable to process request");
                         }else{
-                            location.href = "<?= BASE_URL ?>/cart-to-invoice/contact-details";
+                            location.href = "<?= BASE_URL ?>/request";
                         }
                     },
                     error: function (data){
@@ -593,7 +594,7 @@
                 }
                 const option = document.createElement("option");
                 option.value = product.id;
-                option.innerHTML = product.name + (product.unit ? ' (₦' + parseInt(product.price).toLocaleString() + ' per ' + (product.unit === 'g' ? '100g' : '1kg') + ')' : ' (₦' + parseInt(product.price).toLocaleString() + ')' + (product.category !== 'miscellaneous'? ' (' + product.net_weight + ')' : ''));
+                option.innerHTML = product.name + (product.show_price? (product.unit ? ' (₦' + parseInt(product.price).toLocaleString() + ' per ' + (product.unit === 'g' ? '100g' : '1kg') + ')' : ' (₦' + parseInt(product.price).toLocaleString() + ')') : '') + (product.category !== 'miscellaneous' && product.type !== "unbranded"? ' (' + product.net_weight + ')' : '');
                 // Append the option to the corresponding optgroup
                 optgroupMap[product.category].appendChild(option);
             });
@@ -611,11 +612,11 @@
                 if (product.unit) {
                     const minInput = product.unit === "g" ? 100 : 1;
                     modalFormHTML += `<label for='productWeight'>Enter Product Weight in (${product.unit === "g"? "grams" : "kilograms"}):</label>`;
-                    modalFormHTML += `<input type="number" class="form-control customize" id="productWeight" min="${minInput}" step="${minInput}" onkeyup="calculateSingleProductTotal()" required>`;
+                    modalFormHTML += `<input type="number" class="form-control customize" id="productWeight" min="${minInput}" step="${minInput}" ${product.show_price? "onkeyup='calculateSingleProductTotal()'" : ""} required>`;
                 }
 
                 modalFormHTML += "<label for='productQuantity'>Enter Quantity:</label>";
-                modalFormHTML += `<input type="number" class="form-control customize" id="productQuantity" onkeyup="calculateSingleProductTotal()" required>`;
+                modalFormHTML += `<input type="number" class="form-control customize" id="productQuantity" ${product.show_price? "onkeyup='calculateSingleProductTotal()'" : ""} required>`;
 
                 document.getElementById("modalForm").innerHTML = modalFormHTML;
             } else {
@@ -684,7 +685,7 @@
                     } else {
                         selectedProductDetails.unit = product.unit;
                         selectedProductDetails.weight = selectedProductWeight;
-                        selectedProductDetails.total_price = ((parseFloat(selectedProductWeight / (product.unit === "g" ? 100 : 1)) * parseFloat(product.price)) * parseFloat(selectedProductQuantity))
+                        selectedProductDetails.total_price = product.show_price? ((parseFloat(selectedProductWeight / (product.unit === "g" ? 100 : 1)) * parseFloat(product.price)) * parseFloat(selectedProductQuantity)) : 0;
                     }
                 }
 
@@ -696,7 +697,8 @@
                     selectedProductDetails.type = product.type;
                     selectedProductDetails.single_price = product.price;
                     selectedProductDetails.category = product.category;
-                    selectedProductDetails.total_price = selectedProductDetails.total_price ? selectedProductDetails.total_price : selectedProductQuantity * product.price;
+                    selectedProductDetails.show_price = product.show_price;
+                    selectedProductDetails.total_price = product.show_price? selectedProductQuantity * product.price : 0;
 
                     if(product.net_weight){
                         selectedProductDetails.net_weight = product.net_weight;
@@ -763,6 +765,8 @@
             document.getElementById("cartNumber").innerText = selectedProducts.length;
             productsContainer.innerHTML = "";
 
+            console.log(selectedProducts);
+            
             // Should be {id: number, quantity: number, weight: number (in g or kg), type: 'unbranded', category: 'miscellaneous', total_price: number }
             let productIndex = 0;
             for (let product of selectedProducts) {
@@ -770,7 +774,7 @@
                     `<div class="row text-dark">
                         <div class="col-6 mb-4 mb-sm-0">
                             <h5 class="mb-1">${product.name}</h5>
-                            <p class="mb-1">Price: ₦ ${parseFloat(product.single_price).toLocaleString()} ${product.unit? `per ${product.unit === "g"? "100g" : " 1kg"}` : "" }</p>
+                            ${product.show_price? `<p class="mb-1">Price: ₦ ${parseFloat(product.single_price).toLocaleString()} ${product.unit? `per ${product.unit === "g"? "100g" : " 1kg"}` : "" }</p>` : ""}
                             ${product.weight? `<p class="mb-1">Weight: ${product.weight + product.unit}</p>` : ''}
                             ${product.net_weight? `<p class="mb-1">Net Weight: ${product.net_weight}</p>` : ''}
                             <button type="button" class="btn btn-custom btn-danger btn-sm me-1 mb-2" title="Trash Product" onclick="deleteProduct('${productIndex}')">
@@ -783,7 +787,7 @@
                                 Qty: ${product.quantity}
                             </p>
                             <p>
-                                Total: <strong>₦ ${product.total_price.toLocaleString()}</strong>
+                                Total: <strong>${product.show_price? "₦ " + product.total_price.toLocaleString() : "Call For Pricing" }</strong>
                             </p>
                         </div>
                     </div>

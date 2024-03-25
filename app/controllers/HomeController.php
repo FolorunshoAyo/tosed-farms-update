@@ -152,6 +152,7 @@ class HomeController {
                 'type' => 'branded',
                 'category' => $branded_product_poultry['brand_category'],
                 'net_weight' => $branded_product_poultry['net_weight'],
+                'show_price' => $branded_product_poultry['show_price'],
                 'price' => (int) (float) $branded_product_poultry['price']
             ));
             $count++;
@@ -165,6 +166,7 @@ class HomeController {
                 'type' => 'branded',
                 'category' => $branded_product_fish['brand_category'],
                 'net_weight' => $branded_product_fish['net_weight'],
+                'show_price' => $branded_product_fish['show_price'],
                 'price' => (int) (float) $branded_product_fish['price']
             ));
             $count++;
@@ -178,6 +180,7 @@ class HomeController {
                 'type' => 'branded',
                 'category' => $branded_product_drug['brand_category'],
                 'net_weight' => $branded_product_drug['net_weight'],
+                'show_price' => $branded_product_drug['show_price'],
                 'price' => (int) (float) $branded_product_drug['price']
             ));
             $count++;
@@ -192,6 +195,7 @@ class HomeController {
                 'category' => 'ingredient',
                 'unit' => 'kg',
                 'manufacturer' => $unbranded_product_ingredients['manufacturer'],
+                'show_price' => $unbranded_product_ingredients['show_price'],
                 'price' => (int) (float) $unbranded_product_ingredients['price']
             ));
             $count++;
@@ -206,6 +210,7 @@ class HomeController {
                 'category' => 'additive',
                 'unit' => 'g',
                 'manufacturer' => $unbranded_product_additives['manufacturer'],
+                'show_price' => $unbranded_product_additives['show_price'],
                 'price' => (int) (float) $unbranded_product_additives['price']
             ));
             $count++;
@@ -219,10 +224,10 @@ class HomeController {
                 'type' => 'unbranded',
                 'category' => 'miscellaneous',
                 'manufacturer' => $unbranded_product_miscellaneous['manufacturer'],
+                'show_price' => $unbranded_product_miscellaneous['show_price'],
                 'price' => (int) (float) $unbranded_product_miscellaneous['price']
             ));
         }
-
         echo json_encode(array("status" => "success", "products" => $allProducts));
     }
 
@@ -364,6 +369,8 @@ class HomeController {
     }
 
     public function requestContactDetailsForm(){
+        $action = $_GET['action'];
+
         if(!isset($_SESSION['selected_products']) && empty($_SESSION['selected_products'])){
             redirect(BASE_URL . '/cart');
             return;
@@ -376,12 +383,23 @@ class HomeController {
             $total_price += (int) $product['total_price'];
         }
 
-        $data = [
-            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
-            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
-            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
-        ];
-
-        include VIEW_PATH . '/home/contact-details.php';
+        if(isset($action) && !empty($action)){
+            if($action === "quote" || $action === "invoice"){
+                $data = [
+                    'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+                    'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+                    "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+                    "action" => $action
+                ];
+        
+                include VIEW_PATH . '/home/contact-details.php';
+            }else{
+                include VIEW_PATH . '/home/404.php';
+                return;
+            }
+        }else{
+            include VIEW_PATH . '/home/404.php';
+            return;
+        }
     }
 }

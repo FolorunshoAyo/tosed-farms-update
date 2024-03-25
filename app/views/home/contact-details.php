@@ -9,7 +9,7 @@
   <!-- ==============================================
 		TITLE AND META TAGS
 		=============================================== -->
-  <title>Invoice Contact Details - Cart To Invoice | Tosed Farms</title>
+  <title><?= $data['action'] === "invoice"? "Invoice" : "Request for Quote" ?> Contact Details - Cart To Invoice | Tosed Farms</title>
   <meta name="keywords" content="livestock feeds, livestock drugs, poultry farming, livestock industry, poultry industry, animal health, animal nutrition, agriculture, farming, livestock products, poultry products, livestock brands, poultry brands, livestock feed brands, livestock drug brands" />
   <meta name="author" content="Aycodes" />
   <meta name="theme-color" content="#EEC344">
@@ -92,7 +92,7 @@
   <div class="sections gallery-background">
     <div class="container">
       <div class="pages-title">
-        <h1>Contact Details for <br> <span>Invoice</span></h1>
+        <h1>Contact Details for <br> <span><?= $data['action'] === "invoice"? "Invoice" : "Request for Quote" ?></span></h1>
         <p><a href="<?= BASE_URL ?>/">Home</a> &nbsp; > &nbsp; <a href="<?= BASE_URL ?>/cart-to-invoice/cart">Cart</a> &nbsp; > &nbsp; Contact Details for Invoice</p>
       </div>
     </div>
@@ -102,14 +102,14 @@
     <div class="container">
       <div class="section-title">
         <h2><span>Contact Details</span></h2>
-        <p>Please fill the following information to generate invoice for your order.</p>
+        <p>Please fill the following information to <?= $data['action'] === "invoice"? "generate invoice" : "request for quote" ?> for your order.</p>
       </div>
       <div class="row">
         <div class="col-xl-8 col-lg-8 mb-4">
           <!-- Checkout -->
           <div class="card shadow-0 border">
             <form id="invoice-contact-details-form" class="p-4" method="post" action="#">
-              <h5 class="card-title mb-3">Generate Invoice</h5>
+              <h5 class="card-title mb-3">Generate <?= $data['action'] === "invoice"? "invoice" : "request for quote" ?></h5>
               <div class="row">
                 <div class="col-6 mb-3">
                   <p class="mb-0">First name</p>
@@ -289,7 +289,7 @@
                     }
                   ?>
                 </p>
-                <p class="price text-muted">Total: ₦ <?= number_format($product['total_price'], 0, '.', ',') ?></p>
+                <p class="price text-muted">Total:  <?= $product['show_price']? "₦ " . number_format($product['total_price'], 0, '.', ',') : "" ?></p>
               </div>
             </div>
             <?php
