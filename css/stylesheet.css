@@ -242,6 +242,21 @@ a:hover {
   border-color: #c82333;
 }
 
+.btn-custom.btn-secondary{
+  border: solid 2px #6c757d;
+  color: #6c757d;
+}
+
+.btn-custom.btn-secondary:hover{
+  color: #FFF;
+  background: #6c757d;
+}
+
+.btn-custom.btn-secondary.disabled, .btn-custom.btn-secondary:disabled {
+  color: #fff;
+  border-color: #6c757d;
+}
+
 .btn-custom:focus, .btn-custom.focus {
   box-shadow: none;
 }

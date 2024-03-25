@@ -102,7 +102,7 @@
     <div class="container">
       <div class="section-title">
         <h2><span>Contact Details</span></h2>
-        <p>Please fill the following information to <?= $data['action'] === "invoice"? "generate invoice" : "request for quote" ?> for your order.</p>
+        <p>Please fill the following information to <?= $data['action'] === "invoice"? "generate invoice" : "request quote" ?> for your order.</p>
       </div>
       <div class="row">
         <div class="col-xl-8 col-lg-8 mb-4">
@@ -289,7 +289,7 @@
                     }
                   ?>
                 </p>
-                <p class="price text-muted">Total:  <?= $product['show_price']? "₦ " . number_format($product['total_price'], 0, '.', ',') : "" ?></p>
+                <p class="price text-muted">Total:  <?= $product['show_price']? "₦ " . number_format($product['total_price'], 0, '.', ',') : "Call for pricing" ?></p>
               </div>
             </div>
             <?php

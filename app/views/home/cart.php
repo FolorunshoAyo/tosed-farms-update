@@ -316,8 +316,9 @@
                             <div class="card-footer d-flex flex-wrap align-items-center justify-content-between p-2">
                                 <p id="totalPrice" class="mb-1 mb-sm-0 text-dark" style="font-size: 18px;">Total: ₦ <strong>0.00</strong></p>
                                 <div>
-                                    <button class="mr-1 btn btn-custom btn-success" onclick="openModal()">Add Product</button>
-                                    <button class="btn btn-custom" onclick="checkout()">Print Invoice</button>
+                                    <button class="mr-1 mb-1 mb-sm-0  btn btn-custom btn-success" onclick="openModal()">Add Product</button>
+                                    <button class="btn btn-custom mr-1 mb-1 mb-sm-0" onclick="printInvoice()">Print Invoice</button>
+                                    <button class="mb-1 mb-sm-0 btn btn-custom btn-secondary" onclick="RFQ()">Request Quote</button>
                                 </div>
                             </div>
                         </div>
@@ -510,7 +511,7 @@
             });
         }
 
-        function checkout(){
+        function printInvoice(){
             if(selectedProducts.length > 0){
                 var data = {selectedProducts};
 
@@ -532,7 +533,41 @@
                             // $el.find('.messages').html(alertBox);
                             alert("Unable to process request");
                         }else{
-                            location.href = "<?= BASE_URL ?>/request";
+                            location.href = "<?= BASE_URL ?>/request?action=invoice";
+                        }
+                    },
+                    error: function (data){
+                        // Set a timeout over;lay for refreshing page
+                    }
+                });
+            }else{
+                alert("You need to add at least one product to cart");
+            }
+        }
+
+        function RFQ(){
+            if(selectedProducts.length > 0){
+                var data = {selectedProducts};
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/tosed-farms/cart/checkout",
+                    data: data,
+                    beforeSend: function(){
+                        $("#cart-section .overlay").addClass("act");
+                    },
+                    success: function (data)
+                    {
+                        var data = JSON.parse(data);
+                        var messageAlert = 'alert-' + data.status;
+                        var products = data.products;
+                        
+                        if (messageAlert === "danger" && products) {
+                            // var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> Unable to fetch products please try again</div>';
+                            // $el.find('.messages').html(alertBox);
+                            alert("Unable to process request");
+                        }else{
+                            location.href = "<?= BASE_URL ?>/request?action=quote";
                         }
                     },
                     error: function (data){
@@ -766,7 +801,7 @@
             productsContainer.innerHTML = "";
 
             console.log(selectedProducts);
-            
+
             // Should be {id: number, quantity: number, weight: number (in g or kg), type: 'unbranded', category: 'miscellaneous', total_price: number }
             let productIndex = 0;
             for (let product of selectedProducts) {
