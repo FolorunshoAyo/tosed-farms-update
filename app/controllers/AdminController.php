@@ -284,6 +284,7 @@ class AdminController {
         $productNetWeight = $_POST['net_weight'] ?? '';
         $productPrice = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showProduct = isset($_POST['show_product']);
 
         // Server-side validation
         if (empty($productName) || empty($productDesc) || empty($productBrand) || empty($productNetWeight) || empty($productPrice)) {
@@ -296,7 +297,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (BrandedProductsModel::create($productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price)) {
+        if (BrandedProductsModel::create($productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price, $showProduct)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Product Added Successfully!';
 
@@ -330,6 +331,7 @@ class AdminController {
         $productNetWeight = $_POST['net_weight'] ?? '';
         $productPrice = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $$showPrice = isset($_POST['show_price']);
 
         // Retrieve Brand Category i.e (poultry, fish or drug) for proper redirect
         $redirect = "";
@@ -356,7 +358,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (BrandedProductsModel::update($productId, $productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price)) {
+        if (BrandedProductsModel::update($productId, $productBrand,  $productName, $productNetWeight, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Product Updated Successfully!';
             redirect($redirect);
@@ -421,6 +423,7 @@ class AdminController {
         $productManufacturer = $_POST['manufacturer'] ?? '';
         $productPricePerKg = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -433,7 +436,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::create('ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::create('ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Feed Ingredient Added Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/feed-ingredients");
@@ -451,6 +454,7 @@ class AdminController {
         $productManufacturer = $_POST['manufacturer'] ?? '';
         $productPricePerKg = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -463,7 +467,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Feed Ingredient Updated Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/feed-ingredients");
@@ -499,6 +503,7 @@ class AdminController {
         $productManufacturer = $_POST['manufacturer'] ?? '';
         $productPricePerKg = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -511,7 +516,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::create('additives', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::create('additives', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Feed Additive Added Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/feed-additives");
@@ -527,8 +532,9 @@ class AdminController {
         $productName = $_POST['name'] ?? '';
         $productDesc = $_POST['desc'] ?? '';
         $productManufacturer = $_POST['manufacturer'] ?? '';
-        $productPricePerKg = $_POST['price'] ?? '';
+        $productPricePerG = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -537,11 +543,11 @@ class AdminController {
             return;
         }   
 
-        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerKg)));
+        $re_formatted_price = trim(str_replace("₦","",str_replace(",","",$productPricePerG)));
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::update($productId, 'ingredients', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Feed Additive Updated Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/feed-additives");
@@ -577,6 +583,7 @@ class AdminController {
         $productManufacturer = $_POST['manufacturer'] ?? '';
         $productPricePerKg = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -589,7 +596,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::create('miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::create('miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Miscellaneous Product Added Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/miscellaneous");
@@ -607,6 +614,7 @@ class AdminController {
         $productManufacturer = $_POST['manufacturer'] ?? '';
         $productPricePerKg = $_POST['price'] ?? '';
         $productInStock = isset($_POST['in_stock']);
+        $showPrice = isset($_POST['show_price']);
 
         // Server-side validation
         if (empty($productId) || empty($productName) || empty($productDesc) || empty($productManufacturer) || empty($productPricePerKg)) {
@@ -619,7 +627,7 @@ class AdminController {
 
 
         // Create new admin record in the database using AdminModel
-        if (UnBrandedProductsModel::update($productId, 'miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price)) {
+        if (UnBrandedProductsModel::update($productId, 'miscellaneous', $productName, $productManufacturer, $productInStock, $productDesc, $re_formatted_price, $showPrice)) {
             // insertion successful, redirect to respective branded products page with success message
             $_SESSION['success_message'] = 'Miscellaneous Product Updated Successfully!';
             redirect(BASE_URL . "/admin/products/unbranded/miscellaneous");

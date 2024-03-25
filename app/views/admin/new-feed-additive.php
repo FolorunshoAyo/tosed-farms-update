@@ -122,6 +122,13 @@
                                             </div>
 
                                             <div class="form-group row">
+                                                <label for="show_price" class="col-sm-2 control-label">Show Price?</label>
+                                                <div class="col-sm-10">
+                                                    <input id="show_price" name="show_price" type="checkbox" checked data-plugin="switchery" data-color="#1bb99a" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
                                                 <label for="in_stock" class="col-sm-2 control-label">In stock</label>
                                                 <div class="col-sm-10">
                                                     <input id="in_stock" name="in_stock" type="checkbox" checked data-plugin="switchery" data-color="#1bb99a" />

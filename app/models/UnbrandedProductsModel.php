@@ -29,14 +29,14 @@ class UnBrandedProductsModel
         }
     }
     
-    public static function create($category, $name, $manufacturer, $availability_status, $description, $price)
+    public static function create($category, $name, $manufacturer, $availability_status, $description, $price, $showPrice)
     {
         try{
             global $pdo;
-            $query = "INSERT INTO unbranded_products (category, name, manufacturer, availability_status, description, price) 
-                      VALUES (?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO unbranded_products (category, name, manufacturer, availability_status, description, price, show_price) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $pdo->prepare($query);
-            return $stmt->execute([$category, $name, $manufacturer, $availability_status, $description, $price]);
+            return $stmt->execute([$category, $name, $manufacturer, $availability_status, $description, $price, $showPrice]);
 
         }catch (PDOException $e) {
             return false;
@@ -61,16 +61,16 @@ class UnBrandedProductsModel
         }
     }
     
-    public static function update($product_id, $category, $name, $manufacturer, $availability_status, $description, $price)
+    public static function update($product_id, $category, $name, $manufacturer, $availability_status, $description, $price, $showPrice)
     {
         try{
             global $pdo;
 
             $query = "UPDATE unbranded_products
-            SET category = ?, name = ?, manufacturer = ?, availability_status = ?, description = ?, price = ?
+            SET category = ?, name = ?, manufacturer = ?, availability_status = ?, description = ?, price = ?, show_price = ?
             WHERE product_id = ?";
             $stmt = $pdo->prepare($query);
-            return $stmt->execute([$category, $name, $manufacturer, $availability_status, $description, $price, $product_id]);
+            return $stmt->execute([$category, $name, $manufacturer, $availability_status, $description, $price, $showPrice, $product_id]);
 
         }catch (PDOException $e) {
             return false;

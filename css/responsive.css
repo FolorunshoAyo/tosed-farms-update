@@ -314,12 +314,12 @@ hr.divider{
     flex-direction: row;
     align-items: center;
   }
+  .navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
   .navbar-expand-lg .navbar-nav .dropdown-menu {
     position: absolute;
-  }
-  .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
   }
   .navbar-expand-lg > .container,
   .navbar-expand-lg > .container-fluid {
@@ -337,7 +337,7 @@ hr.divider{
   }
     
 .nav-link {
-  margin: 0px 10px;
+  margin: 0px 15px;
 }
 .dropdown.has-megamenu{
     position: static;

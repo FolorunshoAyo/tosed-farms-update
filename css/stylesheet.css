@@ -384,10 +384,15 @@ section{
     margin-top: 20px;
 }
 
-.main-nav .container{
-    height: 60px;
-    background: transparent;
-    margin: 0px auto;
+.main-nav .container,
+.main-nav .container-fluid{
+  height: 60px;
+  background: transparent;
+  margin: 0px auto;
+}
+
+.main-nav .container-fluid{
+  padding: 0px 20px;
 }
 
 .affix {

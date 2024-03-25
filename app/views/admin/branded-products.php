@@ -116,6 +116,7 @@
                                             <th>Net weight</th>
                                             <th>Price</th>
                                             <th>Availability</th>
+                                            <th>Show Price</th>
                                             <th>Edit/Delete</th>
                                         </tr>
                                     </thead>
@@ -124,6 +125,7 @@
                                         <?php
                                             foreach ($data['products'] as $product) {
                                             $in_stock = $product['availability_status'] === 1; 
+                                            $show_price = $product['show_price'] === 1; 
                                             $formatted_brand_name = strtolower(join("-", explode(" ", $product['brand_name'])));
                                         ?>
                                         <tr>
@@ -134,6 +136,9 @@
                                             <td>₦ <?= number_format($product['price'], 2, '.', ',') ?></td>
                                             <td>
                                                 <span class="badge badge-<?= $in_stock? "success" : "danger" ?>"><?= $in_stock? "In Stock" : "Out of stock" ?></span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-<?= $show_price? "success" : "danger" ?>"><?= $show_price? "Yes" : "No" ?></span>
                                             </td>
                                             <td>
                                                 <div class="btn-toolbar" style="text-align: left;">
@@ -284,6 +289,14 @@
                     </div>
 
                     <div class="form-group row">
+                        <label class="col-sm-2 control-label">Show Price?</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" id="show_price" name="show_price" data-switch="success"/>
+                            <label for="show_price" data-on-label="Yes" data-off-label="No"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-sm-2 control-label">Availability</label>
                         <div class="col-sm-10">
                             <input type="checkbox" id="in_stock" name="in_stock" data-switch="success"/>
@@ -429,6 +442,7 @@
                 var netWeight = row.find('td:eq(3)').text().trim();
                 var price = row.find('td:eq(4)').text().trim().toLowerCase();
                 var availability = row.find('td:eq(5)').text().trim().toLowerCase();
+                var show_price = row.find('td:eq(6)').text().trim().toLowerCase();
                 var productId = $(this).data("product-id");
 
                 // Populate the modal fields with the data
@@ -438,6 +452,7 @@
                 $('#net_weight').val(netWeight);
                 $('#price').val(price);
                 $('#in_stock').attr('checked', availability === 'in stock');
+                $('#show_price').attr('checked', show_price === 'yes');
                 $('#editProductModal [name="productId"]').attr("value", productId);
                 console.log($('#editProductModal [name="productId"]'));
 

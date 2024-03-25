@@ -345,14 +345,14 @@ class HomeController {
         }
     }
 
-    public function cartToInvoice(){
+    public function cart(){
         $data = [
             'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
             'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
         ];
 
-        include VIEW_PATH . '/home/cart-to-invoice.php'; 
+        include VIEW_PATH . '/home/cart.php'; 
     }
 
     public function checkout(){ 
@@ -363,9 +363,9 @@ class HomeController {
         echo json_encode(array('status' => 'success'));
     }
 
-    public function invoiceContactDetailsForm(){
+    public function requestContactDetailsForm(){
         if(!isset($_SESSION['selected_products']) && empty($_SESSION['selected_products'])){
-            redirect(BASE_URL . '/cart-to-invoice/cart');
+            redirect(BASE_URL . '/cart');
             return;
         }
 
@@ -382,6 +382,6 @@ class HomeController {
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
         ];
 
-        include VIEW_PATH . '/home/invoice-contact-details.php';
+        include VIEW_PATH . '/home/contact-details.php';
     }
 }

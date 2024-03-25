@@ -162,18 +162,18 @@
                             <a class="nav-link" href="<?= BASE_URL ?>/posts">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= BASE_URL ?>/about">About Us</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>/about">About</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="<?= BASE_URL ?>/contact">
-                                Contact Us
+                                Contact
                             </a>
                         </li>
                         <li class="nav-item">
                             <span class="nav-link">
                                 <div class="btn-more-box mt-0">
-                                    <a class="btn-hover-corner py-2 px-2" href="<?= BASE_URL ?>/cart-to-invoice/cart">
-                                        Cart To Invoice
+                                    <a class="btn-hover-corner py-2 px-2" href="<?= BASE_URL ?>/cart">
+                                        Get Quote / Print Invoice
                                     </a>
                                 </div>
                             </span>
