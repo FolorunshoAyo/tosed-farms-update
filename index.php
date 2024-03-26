@@ -34,6 +34,13 @@ $router->get('/tosed-farms/all-products', 'HomeController@getAllProducts');
 $router->get('/tosed-farms/cart', 'HomeController@cart');
 $router->post('/tosed-farms/cart/checkout', 'HomeController@checkout');
 $router->get('/tosed-farms/request', 'HomeController@requestContactDetailsForm');
+$router->post('/tosed-farms/send-quote', 'HomeController@sendQuote');
+$router->post('/tosed-farms/generate-invoice', 'HomeController@generateInvoice');
+$router->get('/tosed-farms/invoice/success', 'HomeController@invoiceSuccessMessage');
+$router->get('/tosed-farms/invoice/error', 'HomeController@invoiceErrorMessage');
+$router->get('/tosed-farms/quote/success', 'HomeController@quoteSuccessMessage');
+$router->get('/tosed-farms/quote/error', 'HomeController@quoteErrorMessage');
+
 
 
 // Admin routes

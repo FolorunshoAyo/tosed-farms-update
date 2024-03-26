@@ -80,9 +80,9 @@ footer, header, hgroup, menu, nav, section {
 }
 
 body{
-    overflow-x: hidden;
-    text-rendering: optimizeSpeed;
-    background-color: #FFF;
+  overflow-x: hidden;
+  text-rendering: optimizeSpeed;
+  background-color: #FFF;
 }
 
 html {

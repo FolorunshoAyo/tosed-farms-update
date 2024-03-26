@@ -402,4 +402,9 @@ class HomeController {
             return;
         }
     }
+
+    public function sendQuote(){
+        print_r($_POST);
+        return;
+    }
 }

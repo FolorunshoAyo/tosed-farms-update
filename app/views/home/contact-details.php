@@ -93,7 +93,7 @@
     <div class="container">
       <div class="pages-title">
         <h1>Contact Details for <br> <span><?= $data['action'] === "invoice"? "Invoice" : "Request for Quote" ?></span></h1>
-        <p><a href="<?= BASE_URL ?>/">Home</a> &nbsp; > &nbsp; <a href="<?= BASE_URL ?>/cart-to-invoice/cart">Cart</a> &nbsp; > &nbsp; Contact Details for Invoice</p>
+        <p><a href="<?= BASE_URL ?>/">Home</a> &nbsp; > &nbsp; <a href="<?= BASE_URL ?>/cart">Cart</a> &nbsp; > &nbsp; Contact Details <?= $data['action'] === "invoice"? "for Invoice" : "to Request for Quote" ?></p>
       </div>
     </div>
   </div>
@@ -188,8 +188,6 @@
                   <p class="mb-0">State</p>
                   <select name="state" id="state" class="form-control customize" data-error="State is required.">
                     <option value="">Select State</option>
-                    <option>Lagos</option>
-                    <option>Anambra</option>
                   </select>
                   <div class="help-block with-errors"></div>
                 </div>
@@ -198,8 +196,6 @@
                   <p class="mb-0">City</p>
                   <select name="city" id="city" class="form-control customize" data-error="City is required.">
                     <option value="">Select City</option>
-                    <option>Ojota</option>
-                    <option>Ikeja</option>
                   </select>
                   <div class="help-block with-errors"></div>
                 </div>
@@ -411,150 +407,193 @@
   <script src="<?= BASE_URL ?>/js/bootstrap.min.js"></script>
   <script src="<?= BASE_URL ?>/js/agrom.js"></script>
   <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
-    <script>
-        //FORM VALIDATION WITH VALIDATE.JS
+  <script>
+    //FORM VALIDATION WITH VALIDATE.JS
+    const validation = new JustValidate('#invoice-contact-details-form', {
+        errorFieldCssClass: 'is-invalid',
+    });
 
-        const validation = new JustValidate('#invoice-contact-details-form', {
-            errorFieldCssClass: 'is-invalid',
-        });
-
-        validation
-        .addField('#first_name', [
-            {
-                rule: 'required',
-                errorMessage: "Field is required"
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            },
-            {
-            rule: 'maxLength',
-            value: 30,
-            },
-        ])
-        .addField('#last_name', [
-            {
-                rule: 'required',
-                errorMessage: "Field is required"
-            },
-            {
-            rule: 'minLength',
-            value: 3,
-            },
-            {
-            rule: 'maxLength',
-            value: 30,
-            },
-        ])
-        .addField('#email', [
-            {
+    validation
+    .addField('#first_name', [
+        {
             rule: 'required',
-            errorMessage: 'Field is required',
-            },
-            {
-            rule: 'email',
-            errorMessage: 'Email is invalid!',
-            },
-        ])
-        .addField('#phone', [
-            {
-                rule: 'required',
-                errorMessage: "Field is required"
-            },
-            {
-            rule: 'minLength',
-            value: 11,
-            },
-            {
-            rule: 'maxLength',
-            value: 11,
-            },
-        ])
-        .addField('#address', [
-            {
-                rule: 'required',
-                errorMessage: "Field is required"
-            },
-        ])
-        .addField('#state', [
-            {
-              rule: 'required',
-              errorMessage: "Field is required"
-            },
-        ])
-        .addField('#city', [
-            {
-              rule: 'required',
-              errorMessage: "Field is required"
-            },
-        ])
-        .onSuccess(() => {
-          const form = $('#invoice-contact-details-form');
+            errorMessage: "Field is required"
+        },
+        {
+        rule: 'minLength',
+        value: 3,
+        },
+        {
+        rule: 'maxLength',
+        value: 30,
+        },
+    ])
+    .addField('#last_name', [
+        {
+            rule: 'required',
+            errorMessage: "Field is required"
+        },
+        {
+        rule: 'minLength',
+        value: 3,
+        },
+        {
+        rule: 'maxLength',
+        value: 30,
+        },
+    ])
+    .addField('#email', [
+        {
+        rule: 'required',
+        errorMessage: 'Field is required',
+        },
+        {
+        rule: 'email',
+        errorMessage: 'Email is invalid!',
+        },
+    ])
+    .addField('#phone', [
+        {
+            rule: 'required',
+            errorMessage: "Field is required"
+        },
+        {
+        rule: 'minLength',
+        value: 11,
+        },
+        {
+        rule: 'maxLength',
+        value: 11,
+        },
+    ])
+    .addField('#address', [
+        {
+            rule: 'required',
+            errorMessage: "Field is required"
+        },
+    ])
+    .addField('#state', [
+        {
+          rule: 'required',
+          errorMessage: "Field is required"
+        },
+    ])
+    .addField('#city', [
+        {
+          rule: 'required',
+          errorMessage: "Field is required"
+        },
+    ])
+    .onSuccess(() => {
+      const form = $('#invoice-contact-details-form');
+      var formData = form.serializeArray();
 
-          var formData = form.serializeArray();
+      var submittedData = {};
 
-          var submittedData = {};
+      $.each(formData, function(index, field) {
+        submittedData[field.name] = field.value;
+      });
 
-          $.each(formData, function(index, field) {
-            submittedData[field.name] = field.value;
-          });
+      if(submittedData['saveContact']){
+        localStorage.setItem("contact", JSON.stringify({
+          first_name: submittedData['first_name'],
+          last_name: submittedData['last_name'],
+          phone: submittedData['phone'], 
+          email: submittedData['email'],
+          address: submittedData['address'], 
+          state: submittedData['state'], 
+          city: submittedData['city'] 
+        }));
+      }
 
-          $.ajax({
-            type: "POST",
-            url: url,
-            data: $(this).serialize(),
-            beforeSend: function (){
-              $("[type='submit']").attr("disabled", true);
-              $("[type='submit']").hml("<span class='form-loader'></span>");
-            },
-            success: function (data)
-            {
-              var messageAlert = 'alert-' + data.type;
-              var messageText = data.message;
+      // $.ajax({
+      //   type: "POST",
+      //   url: <?= $data['action'] === "invoice"? BASE_URL . "/generate-invoice" : BASE_URL . "/send-quote" ?>,
+      //   data: $(this).serialize(),
+      //   beforeSend: function (){
+      //     $("[type='submit']").attr("disabled", true);
+      //     $("[type='submit']").hml("<span class='form-loader'></span>");
+      //   },
+      //   success: function (data)
+      //   {
+      //     var messageAlert = 'alert-' + data.type;
+      //     var messageText = data.message;
 
-              var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-              if (data.type === "danger" && data.message) {
-                $('#invoice-contact-details-form').find('.messages').html(alertBox);
-                $("[type='submit']").attr("disabled", false);
-                $("[type='submit']").hml("Container");
-              }else{
-                // Check If user checked storing of address and keep in local storage and redirect to download invoice pdf 
-                location.href = "";
-              }
-            }
-          });
+      //     var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+      //     if (data.type === "danger" && data.message) {
+      //       $('#invoice-contact-details-form').find('.messages').html(alertBox);
+      //       $("[type='submit']").attr("disabled", false);
+      //       $("[type='submit']").hml("Container");
+      //     }else{
+      //       // Check If user checked storing of address and keep in local storage and redirect to download invoice pdf 
+      //       location.href = "";
+      //     }
+      //   }
+      // });
+    });
+
+    // SCRIPT TO FETCH ALL STATES IN NIGERIA
+    $(document).ready(function(){
+      // Send GET request to JSON file
+      $.get("<?= BASE_URL ?>/places.json", function(data){
+        // Populate states select
+        $.each(data, function(index, state){
+          $("#state").append($('<option>', {
+            value: state.name,
+            text: state.name
+          }));
         });
 
-        //SCRIPT TO FETCH ALL SCHOOLS ACCROSS ALL STATES IN NIGERIA
-        // fetch("schools.json")
-        //     .then(data => data.json())
-        //     .then(result => {
-        //         updateSelect(result);
-        //     });
+        if(localStorage.getItem("contact") !== null){
+          const contactDetails = JSON.parse(localStorage.getItem("contact"));
+          
+          $("#city").html("<option value=''>Select City</option>");
+          // Find cities corresponding to selected state
+          var cities = data.find(item => item.name === contactDetails.state).cities;
 
-        // function updateSelect(schoolsObj) {
-        //     let htmlOutput = "";
+          // Populate cities select
+          $.each(cities, function(index, city){
+            $("#city").append($('<option>', {
+              value: city,
+              text: city
+            }));
+          });
 
-        //     htmlOutput += `<option value="">Select school</option>`;
+          for(let property in contactDetails){
+            if($(`input[name = '${property}']`)){
+              $(`input[name = '${property}']`).attr("value", contactDetails[property]);
+            }
+            if($(`select[name = '${property}']`)){
+              $(`select[name = '${property}']`).val(contactDetails[property]).trigger('change');
+            }
+          }
+        }
 
-        //     if (schoolsObj.length !== 0) {
-        //         schoolsObj.forEach((schoolObj, index) => {
-        //             const state = Object.keys(schoolObj)[0];
-        //             htmlOutput += `<optgroup label="${state}">`;
+        // Handle change event on states select
+        $("#state").change(function(){
+          var selectedState = $(this).val();
+          $("#city").html("<option value=''>Select City</option>");
 
-        //             for (let schoolID in schoolObj[state]) {
-        //                 htmlOutput += `<option>${schoolObj[state][schoolID].toLowerCase()}</option>`;
-        //             }
+          // Find cities corresponding to selected state
+          var cities = data.find(item => item.name === selectedState).cities;
 
-        //             htmlOutput += `</optgroup>`;
+          // Populate cities select
+          $.each(cities, function(index, city){
+            $("#city").append($('<option>', {
+              value: city,
+              text: city
+            }));
+          });
+        });
+      });
+    });
 
-        //         });
-        //     }
-
-        //     $("#school_name").html(htmlOutput);
-        // }
-    </script>
+    function checkStoredContact(){
+      if(localStorage.getItem("contact") !== null){
+        
+      }
+    }
+  </script>
 </body>
 
 </html>
