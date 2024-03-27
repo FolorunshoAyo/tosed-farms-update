@@ -1058,4 +1058,13 @@ class AdminController {
         }
     }
 
+    public function listOrders(){
+        $data = [
+            'admin_details' => AdminModel::findById($_SESSION['admin_id']),
+            'current_page' => $_SERVER['REQUEST_URI']
+        ];
+
+        include VIEW_PATH . '/admin/orders.php';
+    }
+
 }

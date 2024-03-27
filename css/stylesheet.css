@@ -215,6 +215,7 @@ a:hover {
 .btn-custom.btn-success.disabled, .btn-custom.btn-success:disabled {
   color: #fff;
   border-color: #04AA6D;
+  background-color: #04AA6D;
 }
 
 .btn-custom.btn-light{

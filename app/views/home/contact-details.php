@@ -506,30 +506,30 @@
         }));
       }
 
-      // $.ajax({
-      //   type: "POST",
-      //   url: <?= $data['action'] === "invoice"? BASE_URL . "/generate-invoice" : BASE_URL . "/send-quote" ?>,
-      //   data: $(this).serialize(),
-      //   beforeSend: function (){
-      //     $("[type='submit']").attr("disabled", true);
-      //     $("[type='submit']").hml("<span class='form-loader'></span>");
-      //   },
-      //   success: function (data)
-      //   {
-      //     var messageAlert = 'alert-' + data.type;
-      //     var messageText = data.message;
+      $.ajax({
+        type: "POST",
+        url: "<?= $data['action'] === "invoice"? BASE_URL . "/generate-invoice" : BASE_URL . "/send-quote" ?>",
+        data: submittedData,
+        beforeSend: function (){
+          $("[type='submit']").attr("disabled", true);
+          $("[type='submit']").html("<span class='form-loader'></span>");
+        },
+        success: function (data)
+        {
+          data = JSON.parse(data);
+          var messageAlert = 'alert-' + data.type;
+          var messageText = data.message;
 
-      //     var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
-      //     if (data.type === "danger" && data.message) {
-      //       $('#invoice-contact-details-form').find('.messages').html(alertBox);
-      //       $("[type='submit']").attr("disabled", false);
-      //       $("[type='submit']").hml("Container");
-      //     }else{
-      //       // Check If user checked storing of address and keep in local storage and redirect to download invoice pdf 
-      //       location.href = "";
-      //     }
-      //   }
-      // });
+          var alertBox = '<div class="alert ' + messageAlert + ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' + messageText + '</div>';
+          if (data.type === "danger" && data.message) {
+            $('#invoice-contact-details-form').find('.messages').html(alertBox);
+            $("[type='submit']").attr("disabled", false);
+            $("[type='submit']").hml("Continue");
+          }else{ 
+            location.href = data.redirect;
+          }
+        }
+      });
     });
 
     // SCRIPT TO FETCH ALL STATES IN NIGERIA

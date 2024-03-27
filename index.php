@@ -8,6 +8,7 @@ define('BASEPATH', __DIR__);
 require_once 'config/config.php'; // Configuration file
 require_once 'helpers/helpers.php'; // Helper functions
 require_once 'core/router.php'; // Router class
+require_once 'libraries/dompdf/autoload.inc.php';
 
 // Initialize the router
 $router = new Router();
@@ -93,6 +94,7 @@ $router->post('/tosed-farms/admin/post/:id/reply/edit', 'AdminController@editCom
 $router->post('/tosed-farms/admin/post/reply/delete/', 'AdminController@deleteReply'); 
 $router->post('/tosed-farms/admin/post/reply/approve/', 'AdminController@approveReply'); 
 $router->post('/tosed-farms/admin/post/reply/unapprove/', 'AdminController@disproveReply'); 
+$router->post('/tosed-farms/admin/orders', 'AdminController@listOrders'); 
 
 // Dispatch the request
 $router->dispatch();
