@@ -447,4 +447,37 @@ class HomeController {
 
         include VIEW_PATH . '/home/quote-success.php';
     }
+
+    public function generateInvoice(){
+        $lname = $_POST['last_name'] ?? '';
+        $fname = $_POST['first_name'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $address = $_POST['address'] ?? '';
+        $state = $_POST['state'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $state = $_POST['state'] ?? '';
+        $additionalNotes = $_POST['additionalNotes'] ?? '';
+        $selected_products = $_SESSION['selected_products'];
+
+        if(empty($lname) || empty($fname) || empty($phone) || empty($email) || empty($address) || empty($state) || empty($city) || empty($state)){
+            // Validate the data before sending it
+            echo json_encode(array('type' => "danger", 'message' => 'All fields are required'));
+            return;
+        }
+
+        $formatted_address = "$address $city, $state state.";
+        $order_id = OrdersModel::createOrder($fname, $lname, $phone, $email, $formatted_address, $additionalNotes, 2); 
+        // Create new order with contact details
+        if($order_id){
+            foreach($selected_products as $product) {
+                OrderProductModel::createOrderProduct($order_id, $product['product_id'], $product['type'], isset($product['weight'])? $product['weight'] . $product['unit'] : '', $product['quantity'], $product['total_price']);
+            }
+            // Send mail at this line (To alert admin that a request for quote was made).
+            unset($_SESSION['selected_products']);
+            echo json_encode(array('type' => "success", "redirect" => BASE_URL . "/quote/success"));
+        }else{
+            echo json_encode(array('type' => "danger", 'message' => 'All fields are required'));
+        }
+    }
 }
