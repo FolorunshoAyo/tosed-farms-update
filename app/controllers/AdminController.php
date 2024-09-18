@@ -742,7 +742,7 @@ class AdminController {
             // Create new blog post record in the database
             if (BlogPostsModel::create($admin_id, $category, $file, $title, $content, $action)) {
                 $_SESSION['success_message'] = 'New Post Added Successfully!';
-                redirect(BASE_URL . '/admin/blogs');
+                redirect(BASE_URL . '/admin/posts');
             } else {
                 // Insertion failed, redirect back to new post form with error
                 $_SESSION['error_message'] = 'Update failed. Please try again.';

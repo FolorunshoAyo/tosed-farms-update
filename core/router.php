@@ -18,7 +18,6 @@ class Router
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
         if (strpos($url, '/tosed-farms/admin') === 0){
             if(
             $url !== "/tosed-farms/admin/login"
