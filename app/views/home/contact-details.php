@@ -228,7 +228,7 @@
               </div>
 
               <div class="float-end">
-                <a href="<?= BASE_URL ?>/cart-to-invoice/cart" class="btn btn-light btn-custom border">Cancel</a>
+                <a href="<?= BASE_URL ?>/cart" class="btn btn-light btn-custom border">Cancel</a>
                 <button type="submit" class="btn btn-success btn-custom border">Continue</button>
               </div>
             </form>

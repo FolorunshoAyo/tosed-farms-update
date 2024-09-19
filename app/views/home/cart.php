@@ -500,7 +500,7 @@
                         $el[0].reset();
                     }else{
                         productsData = data.products;
-                        console.log(productsData);
+                        // console.log(productsData);
                         populateProductList();
                         getSelectedProducts();
                     }
@@ -733,7 +733,6 @@
                     selectedProductDetails.single_price = product.price;
                     selectedProductDetails.category = product.category;
                     selectedProductDetails.show_price = product.show_price;
-                    selectedProductDetails.total_price = product.show_price? selectedProductQuantity * product.price : 0;
 
                     if(product.net_weight){
                         selectedProductDetails.net_weight = product.net_weight;
@@ -775,7 +774,7 @@
                     } else {
                         selectedProducts.push(selectedProductDetails);
                     }
-
+                    console.log(selectedProducts);
                     storeSelectedProducts(selectedProducts);
                     getSelectedProducts();
                     calculateTotal();
@@ -800,7 +799,7 @@
             document.getElementById("cartNumber").innerText = selectedProducts.length;
             productsContainer.innerHTML = "";
 
-            console.log(selectedProducts);
+            // console.log(selectedProducts);
 
             // Should be {id: number, quantity: number, weight: number (in g or kg), type: 'unbranded', category: 'miscellaneous', total_price: number }
             let productIndex = 0;

@@ -3,7 +3,7 @@
     <div class="main-nav">
         <div class="container">
             <nav class="navbar navbar-expand-lg align-items-center">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="<?= BASE_URL ?>">
                     <div class="logo-brand">
                         <img src="<?= BASE_URL ?>/img/master/new-logo-white.png" alt="">
                     </div>

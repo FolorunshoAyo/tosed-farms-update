@@ -350,7 +350,7 @@
             <h2>Unleash the Potential of Your Birds with <span>Premium Quality Feeds</span></h2>
             <p>Quality livestock feed isn't just a necessity—it's the cornerstone of your animal's health, performance, and overall well-being.</p>
             <p>At Tosed Integrated Farm Ventures, our feeds are meticulously crafted with the finest ingredients, ensuring optimal nutrition at every stage of life.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/poultry-feeds">Explore Poultry Feed Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/poultry-feeds">Explore Poultry Feed Brands</a></div>
           </div>
         </div>
         <div class="col-lg-6 wide-section-info">
@@ -358,7 +358,7 @@
             <h2>Unleash the Potential of Your Birds with <span>Premium Quality Feeds</span></h2>
             <p>Quality livestock feed isn't just a necessity—it's the cornerstone of your animal's health, performance, and overall well-being.</p>
             <p>At Tosed Integrated Farm Ventures, our feeds are meticulously crafted with the finest ingredients, ensuring optimal nutrition at every stage of life.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/poultry-feeds">Explore Poultry Feed Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/poultry-feeds">Explore Poultry Feed Brands</a></div>
           </div>
         </div>
       </div>
@@ -373,7 +373,7 @@
             <h2>Quality Nutrition for <span>Thriving Fish</span></h2>
             <p>We prioritize the health and vitality of your aquatic species. Our curated selection of fish feeds is carefully chosen to provide the essential nutrients your fish need for optimal growth and well-being.</p>
             <p> We partner with trusted brands known for their commitment to quality and sustainability, ensuring that you can rely on our products to support your aquaculture endeavors.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/fish-feeds">Explore Fish Feed Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/fish-feeds">Explore Fish Feed Brands</a></div>
           </div>
         </div>
         <div class="col-lg-6 wide-section-bg" style="background-image: url('./img/images/img11.jpg')">
@@ -381,7 +381,7 @@
             <h2>Quality Nutrition for <span>Thriving Fish</span></h2>
             <p>We prioritize the health and vitality of your aquatic species. Our curated selection of fish feeds is carefully chosen to provide the essential nutrients your fish need for optimal growth and well-being.</p>
             <p> We partner with trusted brands known for their commitment to quality and sustainability, ensuring that you can rely on our products to support your aquaculture endeavors.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/fish-feeds">Explore Fish Feed Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/fish-feeds">Explore Fish Feed Brands</a></div>
           </div>
         </div>
       </div>
@@ -396,7 +396,7 @@
             <h2>Effective Livestock <span>Health Solutions</span></h2>
             <p>We prioritize the health and well-being of livestock through the provision of high-quality drugs and pharmaceuticals.</p>
             <p>Partnering with reputable brands in the pharmaceutical and veterinary industry, we ensure access to a range of effective products that address common ailments and promote optimal health for livestock animals.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/<?= BASE_URL ?>/brands/veterinary-products">Explore Our Livestock Drugs Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/veterinary-products">Explore Our Livestock Drugs Brands</a></div>
           </div>
         </div>
         <div class="col-lg-6 wide-section-info">
@@ -404,7 +404,7 @@
             <h2>Effective Livestock <span>Health Solutions</span></h2>
             <p>We prioritize the health and well-being of livestock through the provision of high-quality drugs and pharmaceuticals.</p>
             <p>Partnering with reputable brands in the pharmaceutical and veterinary industry, we ensure access to a range of effective products that address common ailments and promote optimal health for livestock animals.</p>
-            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/brands/<?= BASE_URL ?>/brands/veterinary-products">Explore Our Livestock Drugs Brands</a></div>
+            <div class="btn-more-box"><a class="btn-hover-corner" href="<?= BASE_URL ?>/category/veterinary-products">Explore Our Livestock Drugs Brands</a></div>
           </div>
         </div>
       </div>
@@ -447,131 +447,38 @@
         <p>We specialise in intelligent &amp; effective search and believe in the power of partnerships to grow business.</p>
       </div>
       <div class="post-list-carousel slider">
-        <div class="slide">
-          <div class="post-list">
-            <a href="#">
-              <figure class="post-preview">
-                <img src="img/images/blog7.jpg" alt="">
-                <div class="post-overlay"></div>
-              </figure>
-            </a>
-            <div class="post-caption">
-              <span class="badge badge-primary badge-pill">Plants</span>
-              <h3 class="mt-1"><a href="#">Freeze Concern Hits Wheat Farms</a></h3>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-              <hr class="posts">
-              <div class="bottom-post">
-                <div class="post-author">
-                  <figure class="author-avatar"><img src="img/images/post-avatar1.jpg" alt=""></figure>
-                  <div class="about-author">
-                    <h4 class="author-name"><a href="#">John Wilson</a></h4>
-                    <p class="posted-on">January 15, 2019</p>
+        <?php
+          $latest_blogs = $data['blog_posts'];
+          foreach ($latest_blogs as $blog) {
+        ?>
+          <div class="slide">
+            <div class="post-list">
+              <a href="#">
+                <figure class="post-preview">
+                  <img src="blog-images/<?= $blog['featured_image'] ?>" alt="">
+                  <div class="post-overlay"></div>
+                </figure>
+              </a>
+              <div class="post-caption">
+                <span class="badge badge-primary badge-pill"><?= $blog['category_name'] ?></span>
+                <h3 class="mt-1"><a href="<?= BASE_URL . "/post/" . convertToSlug($blog['title']) ?>"><?= $blog['title'] ?></a></h3>
+                <!-- <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p> -->
+                <hr class="posts">
+                <div class="bottom-post">
+                  <div class="post-author">
+                    <figure class="author-avatar"><img src="<?= BASE_URL ?>/admin-assets/images/avatar.jpg" alt=""></figure>
+                    <div class="about-author">
+                      <h4 class="author-name"><a href="#"><?= $blog['first_name'] . " " . $blog['last_name'] ?></a></h4>
+                      <p class="posted-on"><?= date("M d, Y", strtotime($blog['date_posted'])) ?></p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="slide">
-          <div class="post-list">
-            <a href="#">
-              <figure class="post-preview">
-                <img src="img/images/blog8.jpg" alt="">
-                <div class="post-overlay"></div>
-              </figure>
-            </a>
-            <div class="post-caption">
-              <span class="badge badge-primary badge-pill">Poultry</span>
-              <h3 class="mt-1"><a href="#">National Association of Wheat Growers</a></h3>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-              <hr class="posts">
-              <div class="bottom-post">
-                <div class="post-author">
-                  <figure class="author-avatar"><img src="img/images/post-avatar2.jpg" alt=""></figure>
-                  <div class="about-author">
-                    <h4 class="author-name"><a href="#">Richard Miller</a></h4>
-                    <p class="posted-on">January 13, 2019</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide">
-          <div class="post-list">
-            <a href="#">
-              <figure class="post-preview">
-                <img src="img/images/blog9.jpg" alt="">
-                <div class="post-overlay"></div>
-              </figure>
-            </a>
-            <div class="post-caption">
-              <span class="badge badge-primary badge-pill">Poultry</span>
-              <h3 class="mt-1"><a href="#">Farmer Sentiment Darkens Hopes Fade</a></h3>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-              <hr class="posts">
-              <div class="bottom-post">
-                <div class="post-author">
-                  <figure class="author-avatar"><img src="img/images/post-avatar3.jpg" alt=""></figure>
-                  <div class="about-author">
-                    <h4 class="author-name"><a href="#">Lisa Smith</a></h4>
-                    <p class="posted-on">January 12, 2019</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide">
-          <div class="post-list">
-            <a href="#">
-              <figure class="post-preview">
-                <img src="img/images/blog9.jpg" alt="">
-                <div class="post-overlay"></div>
-              </figure>
-            </a>
-            <div class="post-caption">
-              <span class="badge badge-primary badge-pill">Poultry</span>
-              <h3 class="mt-1"><a href="#">Farmer Sentiment Darkens Hopes Fade</a></h3>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-              <hr class="posts">
-              <div class="bottom-post">
-                <div class="post-author">
-                  <figure class="author-avatar"><img src="img/images/post-avatar3.jpg" alt=""></figure>
-                  <div class="about-author">
-                    <h4 class="author-name"><a href="#">Lisa Smith</a></h4>
-                    <p class="posted-on">January 12, 2019</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="slide">
-          <div class="post-list">
-            <a href="#">
-              <figure class="post-preview">
-                <img src="img/images/blog9.jpg" alt="">
-                <div class="post-overlay"></div>
-              </figure>
-            </a>
-            <div class="post-caption">
-              <span class="badge badge-primary badge-pill">Poultry</span>
-              <h3 class="mt-1"><a href="#">Farmer Sentiment Darkens Hopes Fade</a></h3>
-              <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration.</p>
-              <hr class="posts">
-              <div class="bottom-post">
-                <div class="post-author">
-                  <figure class="author-avatar"><img src="img/images/post-avatar3.jpg" alt=""></figure>
-                  <div class="about-author">
-                    <h4 class="author-name"><a href="#">Lisa Smith</a></h4>
-                    <p class="posted-on">January 12, 2019</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <?php
+          }
+        ?>
       </div>
     </div>
     <!-- BLOGS END -->

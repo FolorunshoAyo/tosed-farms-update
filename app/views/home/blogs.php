@@ -142,7 +142,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-sm-6 text-center">
                                     <h2 class="text-uppercase text-danger">No Blogs</h2>
-                                    <p class="text-muted mb-2">It's looking like you don't have any blogs posted yet</p>
+                                    <p class="text-muted mb-2">It looks like you don't have any blogs posted yet</p>
                                 </div>
                             </div>
                         </div>

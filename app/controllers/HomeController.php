@@ -16,6 +16,7 @@ class HomeController {
             'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
             "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
             "featured_brands" => BrandsModel::getFeaturedBrands(),
+            "blog_posts" => BlogPostsModel::getLatestBlogPosts(4)
         );
 
         include VIEW_PATH . "/home/index.php";
@@ -467,7 +468,7 @@ class HomeController {
         }
 
         $formatted_address = "$address $city, $state state.";
-        $order_id = OrdersModel::createOrder($fname, $lname, $phone, $email, $formatted_address, $additionalNotes, 2); 
+        $order_id = OrdersModel::createOrder($fname, $lname, $phone, $email, $formatted_address, $additionalNotes, 1); 
         // Create new order with contact details
         if($order_id){
             foreach($selected_products as $product) {
@@ -475,9 +476,19 @@ class HomeController {
             }
             // Send mail at this line (To alert admin that a request for quote was made).
             unset($_SESSION['selected_products']);
-            echo json_encode(array('type' => "success", "redirect" => BASE_URL . "/quote/success"));
+            echo json_encode(array('type' => "success", "redirect" => BASE_URL . "/invoice/success"));
         }else{
             echo json_encode(array('type' => "danger", 'message' => 'All fields are required'));
         }
+    }
+
+    public function invoiceSuccessMessage(){
+        $data = [
+            'poultry_feed_brands' => BrandsModel::getBrandsByCategory("poultry"),
+            'fish_feed_brands' => BrandsModel::getBrandsByCategory("fish"),
+            "drug_brands" => BrandsModel::getBrandsByCategory('drug'),
+        ];
+
+        include VIEW_PATH . '/home/invoice-success.php';
     }
 }
